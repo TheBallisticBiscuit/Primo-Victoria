@@ -91,10 +91,6 @@ const RECT  COLLISION_BOX_PADDLE = {-45,-10,45,10};
 const RECT COLLISION_BOX_PUCK = {-32, -32, 32, 32};
 const float   COLLISION_RADIUS = 29;
 
-// graphic images
-const char PUCK_IMAGE[] = "pictures\\PS4_new.png";  // game textures
-const char PADDLE_IMAGE[] =     "pictures\\paddle.png";      // menu texture
-
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used
 // it would be possible to save and restore key mappings from a data file.
@@ -119,5 +115,5 @@ const char BEEP3[] = "beep3";
 const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
 
-
+const char INFANTRY_SCALING = 0.5;
 #endif
