@@ -4,16 +4,26 @@
 Menu::Menu()
 {
 	selectedItem = -1;	//nothing return
-	menuItemFont = new TextDX();
-	menuHeadingFont = new TextDX();
+
+
+	menuHeading ="Primo Victoria";
+	menuItem1 = "Play Game";
+	menuItem2 = "Level Select";
+	menuItem3 = "Options";
 }
+
+Menu::Menu(std::string s)
+{
+	menuHeading = "Levels";
+	menuItem1 = "Level 1";
+	menuItem2 = "Level 2";
+	menuItem3 = "Level 3";
+}
+
 
 void Menu::initialize(Graphics *g, Input *i)
 {
-	menuHeading ="Test Menu";
-	menuItem1 = "Options";
-	menuItem2 = "Enable SoundFX";
-	menuItem3 = "I'm feeling lucky";
+
 	highlightColor = graphicsNS::RED;
 	normalColor = graphicsNS::WHITE;
 	menuAnchor = D3DXVECTOR2(270,10);

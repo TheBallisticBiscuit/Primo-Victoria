@@ -1,7 +1,7 @@
 
 
 #include "primoVictoria.h"
-
+#include <string>
 
 
 //=============================================================================
@@ -21,21 +21,18 @@ PrimoVictoria::~PrimoVictoria()
 }
 
 //=============================================================================
-// Initializes the game
+// Initializes the game 
 // Throws GameError on error
 //=============================================================================
 void PrimoVictoria::initialize(HWND hwnd)
 {
     Game::initialize(hwnd); // throws GameError
-
+	std::string s;
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
-	optionsMenu = new Menu();
+	optionsMenu = new Menu(s);
 	optionsMenu->initialize(graphics, input);
-	optionsMenu->setMenuHeading("Options Menu");
-	optionsMenu->setMenuItem1("Return to Main Menu");
-	optionsMenu->setMenuItem2("This does nothing");
-	optionsMenu->setMenuItem3("Neither does this");
+
 	currentMenu = 1;
 	outString = "Selected Item: ";
 	output = new TextDX();
@@ -52,7 +49,7 @@ void PrimoVictoria::update()
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
-	if(currentMenu == 1 && mainMenu->getSelectedItem() == 0){
+	if(currentMenu == 1 && mainMenu->getSelectedItem() == 2){
 		currentMenu = 2;
 	}
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 0){
