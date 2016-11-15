@@ -1,3 +1,6 @@
+*.sdf
+*.vxproj
+
 # Prerequisites
 *.d
 

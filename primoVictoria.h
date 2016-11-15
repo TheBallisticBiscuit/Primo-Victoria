@@ -12,6 +12,7 @@ class PrimoVictoria;
 #include "game.h"
 #include "textDX.h"
 #include "menu.h"
+#include "unitManager.h"
 #include "Tile.h"
 #include "TileManager.h"
 #include <sstream>
@@ -27,9 +28,8 @@ private:
 	Menu* optionsMenu;
 
 	TextDX *output;
-	std::string outString;
 	int currentMenu;
-
+	UnitManager unitManager;
 public:
     // Constructor
     PrimoVictoria();
