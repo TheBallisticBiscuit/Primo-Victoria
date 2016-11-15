@@ -30,6 +30,7 @@ private:
 	TextDX *output;
 	int currentMenu;
 	UnitManager unitManager;
+	int keyDownLastFrame;
 public:
     // Constructor
     PrimoVictoria();

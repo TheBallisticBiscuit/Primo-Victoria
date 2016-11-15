@@ -38,6 +38,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	if(output->initialize(graphics, 15, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
 	unitManager.initialize(this, graphics);
+	keyDownLastFrame = NULL;
 #pragma endregion
     return;
 }
@@ -55,6 +56,13 @@ void PrimoVictoria::update()
 	}
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 0){
 		currentMenu = 1;
+	}
+	if(input->isKeyDown(VK_SPACE)){
+		keyDownLastFrame = VK_SPACE;
+	}
+	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
+		keyDownLastFrame = NULL;
+		unitManager.spawnInfantry();
 	}
 	mainMenu->update();
 	optionsMenu->update();

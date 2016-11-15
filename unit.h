@@ -18,8 +18,8 @@ public:
 	void setRange(int newRange);
 	void setTile(int x, int y);
 	void setFrameCounter(float newFrameCounter);
-	virtual void fight(Unit& opponent, float frameTime);
-	virtual bool kill(float frameTime);
+	virtual void fight(Unit& opponent, float frameTime){}
+	virtual bool kill(float frameTime){return true;}
 private:
 	int damage;
 	int HP;

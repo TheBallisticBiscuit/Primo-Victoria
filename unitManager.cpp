@@ -66,6 +66,20 @@ void UnitManager::onLostDevice(){
 	infantryTexture.onLostDevice();
 	infantryTexture2.onLostDevice();
 }
+
+void UnitManager::spawnInfantry(){
+	for(int i = 0; i < 10; i++){
+		if(!player1Infantry[i].getActive()){
+			player1Infantry[i].setActive(true);
+			player1Infantry[i].setVisible(true);
+			player1Infantry[i].setX(0);
+			player1Infantry[i].setY(0);
+			currentSelection = &player1Infantry[i];
+			break;
+		}
+	}
+}
+
 void UnitManager::fight(Unit& opponent, float frameTime){
 	while(currentSelection->getHP() > 0 && opponent.getHP() > 0){
 		currentSelection->fight(opponent, frameTime); 
