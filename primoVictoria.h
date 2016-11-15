@@ -26,6 +26,10 @@ class PrimoVictoria : public Game
 private:
 	Menu *mainMenu;
 	Menu* optionsMenu;
+	TextureManager backgroundTexture;
+	Image background;
+
+	TileManager* tileManager;
 
 	TextDX *output;
 	int currentMenu;

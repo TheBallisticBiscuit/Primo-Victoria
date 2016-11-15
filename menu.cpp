@@ -6,7 +6,7 @@ Menu::Menu()
 	selectedItem = -1;	//nothing return
 
 
-	menuHeading ="Primo Victoria";
+	menuHeading ="";
 	menuItem1 = "Play Game";
 	menuItem2 = "Level Select";
 	menuItem3 = "Options";
@@ -17,31 +17,31 @@ Menu::Menu(std::string s)
 	menuHeading = "Levels";
 	menuItem1 = "Level 1";
 	menuItem2 = "Level 2";
-	menuItem3 = "Level 3";
+	menuItem3 = "Back";
 }
 
 
 void Menu::initialize(Graphics *g, Input *i)
 {
 
-	highlightColor = graphicsNS::RED;
+	highlightColor = graphicsNS::CYAN;
 	normalColor = graphicsNS::WHITE;
-	menuAnchor = D3DXVECTOR2(270,10);
+	menuAnchor = D3DXVECTOR2(270,140);
 	input = i;
-	verticalOffset = 30;
+	verticalOffset = 50;
 	linePtr = 0;
 	selectedItem = -1;
 	graphics = g;
 	menuItemFont = new TextDX();
 	menuHeadingFont = new TextDX();
 	menuItemFontHighlight = new TextDX();
-	if(menuItemFont->initialize(graphics, 15, true, false, "Calibri") == false)
+	if(menuItemFont->initialize(graphics, 36, true, false, "Calibri") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menuItem font"));
-	if(menuItemFontHighlight->initialize(graphics, 18, true, false, "Calibri") == false)
+	if(menuItemFontHighlight->initialize(graphics, 42, true, false, "Calibri") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menuItem font"));
-	if(menuHeadingFont->initialize(graphics, 25, true, false, "Calibri") == false)
+	if(menuHeadingFont->initialize(graphics, 54, true, false, "Calibri") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menuHeading font"));
-	menuHeadingFont->setFontColor(normalColor);
+	menuHeadingFont->setFontColor(graphicsNS::LIME);
 	menuItemFont->setFontColor(normalColor);
 	menuItemFontHighlight->setFontColor(highlightColor);
 	upDepressedLastFrame = false;

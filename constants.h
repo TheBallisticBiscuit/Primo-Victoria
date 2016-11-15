@@ -93,6 +93,7 @@ const float   COLLISION_RADIUS = 29;
 
 // graphic images
 const char TEMP_GRASS[] =	"pictures\\Grass.png";
+const char BACKGROUND_IMAGE[] = "pictures\\background.PNG";
 
 const int TERRAIN_WIDTH = 84;
 const int TERRAIN_HEIGHT = 84;
