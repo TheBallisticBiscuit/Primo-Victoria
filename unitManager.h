@@ -8,7 +8,11 @@ class UnitManager
 public:
 	UnitManager();
 	~UnitManager();
-	bool initialize(Game *gamePtr, Graphics* graphics);
+	void initialize(Game *gamePtr, Graphics* graphics);
+	void draw();
+	void update(float frameTime);
+	void onResetDevice();
+	void onLostDevice();
 private:
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;

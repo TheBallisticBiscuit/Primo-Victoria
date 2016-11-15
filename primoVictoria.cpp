@@ -32,12 +32,12 @@ void PrimoVictoria::initialize(HWND hwnd)
 	mainMenu->initialize(graphics, input);
 	optionsMenu = new Menu(s);
 	optionsMenu->initialize(graphics, input);
-
 	currentMenu = 1;
 	outString = "Selected Item: ";
 	output = new TextDX();
 	if(output->initialize(graphics, 15, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
+	unitManager.initialize(this, graphics);
     return;
 }
 
@@ -57,6 +57,7 @@ void PrimoVictoria::update()
 	}
 	mainMenu->update();
 	optionsMenu->update();
+	unitManager.update(frameTime);
 }
 
 //=============================================================================
@@ -89,6 +90,7 @@ void PrimoVictoria::render()
 		optionsMenu -> displayMenu();
 	}
 	output->print(ss.str(), 0,0);
+	unitManager.draw();
     graphics->spriteEnd();                  // end drawing sprites
 }
 
@@ -98,6 +100,7 @@ void PrimoVictoria::render()
 //=============================================================================
 void PrimoVictoria::releaseAll()
 {
+	unitManager.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -108,6 +111,7 @@ void PrimoVictoria::releaseAll()
 //=============================================================================
 void PrimoVictoria::resetAll()
 {
+	unitManager.onResetDevice();
     Game::resetAll();
     return;
 }

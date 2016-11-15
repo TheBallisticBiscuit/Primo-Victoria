@@ -115,5 +115,40 @@ const char BEEP3[] = "beep3";
 const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
 
-const char INFANTRY_SCALING = 0.5;
+#pragma region Newell
+const float INFANTRY_SCALING = 0.5;
+const float INFANTRY_ANIMATION_DELAY = 0.15;
+const int INFANTRY_ATTACK_RIGHT_START = 0;
+const int INFANTRY_ATTACK_RIGHT_END = 11;
+const int INFANTRY_ATTACK_UP_START = 12;
+const int INFANTRY_ATTACK_UP_END  = 23;
+const int INFANTRY_ATTACK_DOWN_START = 24;
+const int INFANTRY_ATTACK_DOWN_END = 35;
+const int INFANTRY_ATTACK_LEFT_START = 36;
+const int INFANTRY_ATTACK_LEFT_END = 47;
+const int INFANTRY_RUN_RIGHT_START = 48;
+const int INFANTRY_RUN_RIGHT_END = 55;
+const int INFANTRY_RUN_UP_START = 56;
+const int INFANTRY_RUN_UP_END = 63;
+const int INFANTRY_RUN_DOWN_START = 64;
+const int INFANTRY_RUN_DOWN_END = 71;
+const int INFANTRY_RUN_LEFT_START = 72;
+const int INFANTRY_RUN_LEFT_END = 79;
+const int INFANTRY_IDLE_RIGHT_START = 80;
+const int INFANTRY_IDLE_RIGHT_END = 88;
+const int INFANTRY_IDLE_UP_START = 89;
+const int INFANTRY_IDLE_UP_END = 97;
+const int INFANTRY_IDLE_DOWN_START = 98;
+const int INFANTRY_IDLE_DOWN_END = 106;
+const int INFANTRY_IDLE_LEFT_START = 107;
+const int INFANTRY_IDLE_LEFT_END = 115;
+const int INFANTRY_DEATH_RIGHT_START = 116;
+const int INFANTRY_DEATH_RIGHT_END = 121;
+const int INFANTRY_DEATH_UP_START = 122;
+const int INFANTRY_DEATH_UP_END = 127;
+const int INFANTRY_DEATH_DOWN_START = 128;
+const int INFANTRY_DEATH_DOWN_END = 133;
+const int INFANTRY_DEATH_LEFT_START = 134;
+const int INFANTRY_DEATH_LEFT_END = 139;
+#pragma endregion
 #endif

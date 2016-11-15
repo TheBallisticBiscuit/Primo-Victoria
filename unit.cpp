@@ -11,6 +11,8 @@ Unit::~Unit(void)
 }
 
 bool Unit::initialize(int height, int width, int ncols, TextureManager* textureM, Game* game){
+	setX(200);
+	setY(200);
 	return Entity::initialize(game, 96, 96, 3, textureM);
 }
 
