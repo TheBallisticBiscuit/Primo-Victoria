@@ -75,7 +75,7 @@ inline void safeOnResetDevice(T& ptr)
 
 // window
 const char CLASS_NAME[] = "Collisions";
-const char GAME_TITLE[] = "UniPong";
+const char GAME_TITLE[] = "Primo Victoria";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  640;               // width of game in pixels
 const UINT GAME_HEIGHT = 480;               // height of game in pixels
@@ -92,8 +92,6 @@ const RECT COLLISION_BOX_PUCK = {-32, -32, 32, 32};
 const float   COLLISION_RADIUS = 29;
 
 // graphic images
-const char PUCK_IMAGE[] =	"pictures\\PS4_new.png";  // game textures
-const char PADDLE_IMAGE[] =     "pictures\\paddle.png";      // menu texture
 const char TEMP_GRASS[] =	"pictures\\Grass.png";
 
 // key mappings
@@ -158,5 +156,7 @@ const int INFANTRY_DEATH_DOWN_START = 128;
 const int INFANTRY_DEATH_DOWN_END = 133;
 const int INFANTRY_DEATH_LEFT_START = 134;
 const int INFANTRY_DEATH_LEFT_END = 139;
+
+const float SELECTION_BOX_SCALE = 0.5;
 #pragma endregion
 #endif

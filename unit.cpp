@@ -20,7 +20,7 @@ void Unit::setDamage(int newDamage){
 	damage = newDamage;
 }
 
-void Unit::setHealth(int newHP){
+void Unit::setHP(int newHP){
 	HP = newHP;
 }
 
@@ -39,5 +39,12 @@ void Unit::setRange(int newRange){
 void Unit::setTile(int x, int y){
 	tile.x = x;
 	tile.y = y;
+}
+
+void Unit::fight(Unit& opponent){
+	while(HP > 0 && opponent.getHP() > 0){
+		HP -= opponent.getDamage();
+		opponent.setHP(opponent.getHP()-damage);
+	}
 }
 #pragma endregion

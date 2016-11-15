@@ -13,10 +13,14 @@ public:
 	void update(float frameTime);
 	void onResetDevice();
 	void onLostDevice();
+	void spawnInfantry();
 private:
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;
+	TextureManager selectionBoxTexture;
+	Image selectionBox;
 	Infantry* player1Infantry;
 	Infantry* player2Infantry;
+	Unit* currentSelection;
 };
-#pragma endregion
+#pragma endregion 

@@ -25,7 +25,6 @@ private:
 	Menu *mainMenu;
 	Menu* optionsMenu;
 	TextDX *output;
-	std::string outString;
 	int currentMenu;
 	UnitManager unitManager;
 public:
