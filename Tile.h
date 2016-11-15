@@ -1,29 +1,31 @@
 #pragma once
-#include "tilemanager.h"
+#include "game.h"
 #include "graphics.h"
+#include "textureManager.h"
 #include "image.h"
 #include "entity.h"
-#include "game.h"
-#include "textureManager.h"
+#include "constants.h"
 
 
 #pragma region Higgs
-class Tile : public Game
+class Tile : public Entity
 {
 public:
 	Tile(void);
-	Tile(TileManager*, int);
-	~Tile(void);
+	//Tile(TileManager*, int);
 
-	void battle();
+	bool initialize(Graphics* graphics, TextureManager* textureManager, Game* game);
+	bool isOccupied() { return occupied; };
+	
+	Entity* getUnit() { return unit; };
+	TerrainTypeEnum getTerrain() { return terrainType; };
 
 
 private:
 	Entity* unit;
 
-	Image terrainImg;
 	TerrainTypeEnum terrainType;
 
-	bool isOccupied;
+	bool occupied;
 };
 #pragma endregion

@@ -49,7 +49,7 @@ void PrimoVictoria::update()
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
-	if(currentMenu == 1 && mainMenu->getSelectedItem() == 2){
+	if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
 		currentMenu = 2;
 	}
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 0){
@@ -89,6 +89,8 @@ void PrimoVictoria::render()
 		optionsMenu -> displayMenu();
 	}
 	output->print(ss.str(), 0,0);
+
+	
     graphics->spriteEnd();                  // end drawing sprites
 }
 

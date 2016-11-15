@@ -12,6 +12,8 @@ class PrimoVictoria;
 #include "game.h"
 #include "textDX.h"
 #include "menu.h"
+#include "Tile.h"
+#include "TileManager.h"
 #include <sstream>
 #include <string>
 
@@ -23,6 +25,7 @@ class PrimoVictoria : public Game
 private:
 	Menu *mainMenu;
 	Menu* optionsMenu;
+
 	TextDX *output;
 	std::string outString;
 	int currentMenu;

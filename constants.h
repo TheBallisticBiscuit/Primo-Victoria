@@ -96,6 +96,9 @@ const char PUCK_IMAGE[] =	"pictures\\PS4_new.png";  // game textures
 const char PADDLE_IMAGE[] =     "pictures\\paddle.png";      // menu texture
 const char TEMP_GRASS[] =	"pictures\\Grass.png";
 
+const int TERRAIN_WIDTH = 84;
+const int TERRAIN_HEIGHT = 84;
+
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used
 // it would be possible to save and restore key mappings from a data file.

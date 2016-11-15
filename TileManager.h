@@ -4,16 +4,19 @@
 #include "graphics.h"
 #include "textureManager.h"
 #include "image.h"
+#include "constants.h"
 #include "Tile.h"
 
-class TileManager :	public Entity
+#pragma region Higgs
+class TileManager
 {
 public:
 	TileManager(void);
-	TileManager(int x, int y);
+	TileManager(Graphics* graphics, int x, int y, Game* game);
 	~TileManager(void);
-
+	
 	void update();
+	//void battle(Tile* t1, Tile* t2);
 
 private:
 	TextureManager plainsTexture;
@@ -23,3 +26,4 @@ private:
 	Tile** tiles;
 };
 
+#pragma endregion
