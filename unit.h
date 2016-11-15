@@ -10,13 +10,16 @@ public:
 	int getHP(){return HP;}
 	int getRange(){return range;}
 	int getMovement(){return movementLeft;}
+	float getFrameCounter(){return frameCounter;}
 	void setDamage(int newDamage);
 	void setHP(int newHP);
 	void setMovementPerTurn(int newMovement);
 	void setMovementLeft(int newMovement);
 	void setRange(int newRange);
 	void setTile(int x, int y);
-	void fight(Unit& opponent);
+	void setFrameCounter(float newFrameCounter);
+	virtual void fight(Unit& opponent, float frameTime);
+	virtual bool kill(float frameTime);
 private:
 	int damage;
 	int HP;
@@ -27,5 +30,6 @@ private:
 	} tile;
 	int movementPerTurn;
 	int movementLeft;
+	float frameCounter;
 };
 #pragma endregion

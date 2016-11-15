@@ -16,6 +16,10 @@ bool Unit::initialize(int height, int width, int ncols, TextureManager* textureM
 	return Entity::initialize(game, 96, 96, 3, textureM);
 }
 
+void Unit::setFrameCounter(float newFrameCounter){
+	frameCounter = newFrameCounter;
+}
+
 void Unit::setDamage(int newDamage){
 	damage = newDamage;
 }
@@ -39,12 +43,5 @@ void Unit::setRange(int newRange){
 void Unit::setTile(int x, int y){
 	tile.x = x;
 	tile.y = y;
-}
-
-void Unit::fight(Unit& opponent){
-	while(HP > 0 && opponent.getHP() > 0){
-		HP -= opponent.getDamage();
-		opponent.setHP(opponent.getHP()-damage);
-	}
 }
 #pragma endregion

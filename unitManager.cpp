@@ -38,6 +38,7 @@ void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
 		player2Infantry[i].setActive(false);
 		player2Infantry[i].setVisible(false);
 	}
+	currentSelection = nullptr;
 }
 
 void UnitManager::draw(){
@@ -64,5 +65,13 @@ void UnitManager::onLostDevice(){
 	selectionBoxTexture.onLostDevice();
 	infantryTexture.onLostDevice();
 	infantryTexture2.onLostDevice();
+}
+void UnitManager::fight(Unit& opponent, float frameTime){
+	while(currentSelection->getHP() > 0 && opponent.getHP() > 0){
+		currentSelection->fight(opponent, frameTime); 
+	}
+	if(opponent.getHP() < 0){
+		while(!opponent.kill(frameTime)){}
+	}
 }
 #pragma endregion

@@ -14,6 +14,7 @@ public:
 	void onResetDevice();
 	void onLostDevice();
 	void spawnInfantry();
+	void fight(Unit& opponent, float frameTime);
 private:
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;

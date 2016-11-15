@@ -27,4 +27,26 @@ void Infantry::update(float frameTime){
 	}
 	Entity::update(frameTime);
 }
+
+void Infantry::fight(Unit& opponent, float frameTime){
+	setFrames(INFANTRY_ATTACK_RIGHT_START, INFANTRY_ATTACK_RIGHT_END);
+	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
+		setFrameCounter(0);
+		setHP(getHP()-opponent.getDamage());
+		opponent.setHP(opponent.getHP()-getDamage());
+	}
+	setFrameCounter(getFrameCounter()+frameTime);
+}
+
+bool Infantry::kill(float frameTime){
+	setFrames(INFANTRY_DEATH_DOWN_START, INFANTRY_DEATH_DOWN_END);
+	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*6){
+		setFrameCounter(0);
+		setVisible(false);
+		setActive(false);
+		return true;
+	}
+	setFrameCounter(getFrameCounter()+frameTime);
+	return false;
+}
 #pragma endregion

@@ -8,6 +8,8 @@ public:
 	~Infantry(void);
 	bool initialize(int width, int height, int ncols, TextureManager* textureM, Game* game);
 	void update(float frameTime);
+	void fight(Unit& opponent, float frameTime);
+	bool kill(float frameTime);
 private:
 };
 #pragma endregion
