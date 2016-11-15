@@ -15,7 +15,9 @@ public:
 	TileManager(Graphics* graphics, int x, int y, Game* game);
 	~TileManager(void);
 	
-	void update();
+
+	Tile* getTile(int x, int y) {return &tiles[x][y]; };
+	void onLostDevice();
 	//void battle(Tile* t1, Tile* t2);
 
 private:

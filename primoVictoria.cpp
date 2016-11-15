@@ -1,7 +1,7 @@
 
 
 #include "primoVictoria.h"
-#include <string>
+
 
 
 //=============================================================================
@@ -18,6 +18,7 @@ PrimoVictoria::PrimoVictoria()
 PrimoVictoria::~PrimoVictoria()
 {
     releaseAll();           // call onLostDevice() for every graphics item
+	//delete[] tileManager;
 }
 
 //=============================================================================
@@ -34,6 +35,18 @@ void PrimoVictoria::initialize(HWND hwnd)
 	optionsMenu = new Menu(s);
 	optionsMenu->initialize(graphics, input);
 	currentMenu = 1;
+
+#pragma region Higgs
+	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
+	if (!background.initialize(graphics, 0,0,0,&backgroundTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
+	background.setScale(0.8f);
+
+	//tileManager = new TileManager(graphics, 2,1, this);
+
+#pragma endregion
+
 	output = new TextDX();
 	if(output->initialize(graphics, 15, true, false, "Arial") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
@@ -53,7 +66,7 @@ void PrimoVictoria::update()
 	if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
 		currentMenu = 2;
 	}
-	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 0){
+	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
 		currentMenu = 1;
 	}
 	mainMenu->update();
@@ -81,7 +94,11 @@ void PrimoVictoria::render()
 {
 	std::stringstream ss;
 
-    graphics->spriteBegin();                // begin drawing sprites
+    graphics->spriteBegin();  // begin drawing sprites
+	background.draw();
+	
+	//tileManager->getTile(1,1)->draw();
+
 	if(currentMenu == 1){
 		mainMenu->displayMenu();
 	}
@@ -100,6 +117,7 @@ void PrimoVictoria::render()
 void PrimoVictoria::releaseAll()
 {
 	unitManager.onLostDevice();
+	//tileManager->onLostDevice();
     Game::releaseAll();
     return;
 }
