@@ -20,12 +20,18 @@ public:
 
 	void setTileVisibility(bool);
 	void draw(int x, int y);
+	int getWidth() { return width; };
+	int getHeight() { return height; };
+
 
 	void onLostDevice();
 	void onResetDevice();
 	//void battle(Tile* t1, Tile* t2);
 
 private:
+	int width;
+	int height;
+
 	TextureManager grassTexture1;
 	TextureManager grassTexture2;
 	TextureManager grassTexture3;

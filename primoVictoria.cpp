@@ -45,6 +45,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 
 	if (!tileManager.initialize(graphics, 7,5, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
+	tileManager.setTileVisibility(true);
 
 #pragma endregion
 
@@ -109,7 +110,6 @@ void PrimoVictoria::update()
 	}
 
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
-		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 	}
 	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
@@ -118,78 +118,82 @@ void PrimoVictoria::update()
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
 		currentMenu = 1;
 	}
-	if(input->isKeyDown(VK_SPACE)){
-		keyDownLastFrame = VK_SPACE;
-	}
-	if(input->isKeyDown(VK_UP)){
-		keyDownLastFrame = VK_UP;
-	}
-	if(input->isKeyDown(VK_DOWN)){
-		keyDownLastFrame = VK_DOWN;
-	}
-	if(input->isKeyDown(VK_LEFT)){
-		keyDownLastFrame = VK_LEFT;
-	}
-	if(input->isKeyDown(VK_RIGHT)){
-		keyDownLastFrame = VK_RIGHT;
-	}
-	if(input->isKeyDown(VK_RETURN)){
-		keyDownLastFrame = VK_RETURN;
-	}
-	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
-		keyDownLastFrame = NULL;
-		//fightTarget = unitManager.getCurrentSelection();
-		spawnUnit(0);
-		//fighting = true;
-	}
-	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionUp();
+	if (currentMenu == 0) {
+		if(input->isKeyDown(VK_SPACE)){
+			keyDownLastFrame = VK_SPACE;
 		}
-		else{
-			moving = 1;
+		if(input->isKeyDown(VK_UP)){
+			keyDownLastFrame = VK_UP;
 		}
-	}
-	if(!input->isKeyDown(VK_DOWN) && keyDownLastFrame == VK_DOWN){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionDown();
+		if(input->isKeyDown(VK_DOWN)){
+			keyDownLastFrame = VK_DOWN;
 		}
-		else{
-			moving = 2;
+		if(input->isKeyDown(VK_LEFT)){
+			keyDownLastFrame = VK_LEFT;
 		}
-	}
-	if(!input->isKeyDown(VK_LEFT) && keyDownLastFrame == VK_LEFT){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionLeft();
+		if(input->isKeyDown(VK_RIGHT)){
+			keyDownLastFrame = VK_RIGHT;
 		}
-		else{
-			moving = 3;
+		if(input->isKeyDown(VK_RETURN)){
+			keyDownLastFrame = VK_RETURN;
 		}
-	}
-	if(!input->isKeyDown(VK_RIGHT) && keyDownLastFrame == VK_RIGHT){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionRight();
+		if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
+			keyDownLastFrame = NULL;
+			//fightTarget = unitManager.getCurrentSelection();
+			spawnUnit(0);
+			//fighting = true;
 		}
-		else{
-			moving = 4;
+		if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionUp();
+			}
+			else{
+				moving = 1;
+			}
 		}
-	}
-	if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() != nullptr){
-			unitManager.setCurrentSelection(nullptr);
+		if(!input->isKeyDown(VK_DOWN) && keyDownLastFrame == VK_DOWN){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionDown();
+			}
+			else{
+				moving = 2;
+			}
 		}
-		else{
-			unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+		if(!input->isKeyDown(VK_LEFT) && keyDownLastFrame == VK_LEFT){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionLeft();
+			}
+			else{
+				moving = 3;
+			}
 		}
-	}
-	//mainMenu->update();
-	//optionsMenu->update();
+		if(!input->isKeyDown(VK_RIGHT) && keyDownLastFrame == VK_RIGHT){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionRight();
+			}
+			else{
+				moving = 4;
+			}
+		}
+		if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() != nullptr){
+				unitManager.setCurrentSelection(nullptr);
+			}
+			else{
+				unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+			}
+		}
 	unitManager.update(frameTime);
+	}
+	else {
+		mainMenu->update();
+		optionsMenu->update();
+	}
 #pragma region Newell
 }
 
@@ -216,9 +220,9 @@ void PrimoVictoria::render()
 	graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
 
-	tileManager.draw(7,5);
 
 	if (currentMenu == 0){
+		tileManager.draw(7,5);
 	}
 	else if(currentMenu == 1){
 		mainMenu->displayMenu();
@@ -249,7 +253,7 @@ void PrimoVictoria::releaseAll()
 //=============================================================================
 void PrimoVictoria::resetAll()
 {
-
+	tileManager.onResetDevice();
 	unitManager.onResetDevice();
 	Game::resetAll();
 	return;

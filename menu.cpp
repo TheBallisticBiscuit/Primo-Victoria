@@ -3,9 +3,6 @@
 
 Menu::Menu()
 {
-	selectedItem = -1;	//nothing return
-
-
 	menuHeading ="";
 	menuItem1 = "Play Game";
 	menuItem2 = "Level Select";

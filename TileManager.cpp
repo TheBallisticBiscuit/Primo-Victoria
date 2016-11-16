@@ -20,6 +20,9 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 	if (!forestTexture2.initialize(graphics, FOREST_2_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture2 init failure"));
 	
+	width = x;
+	height = y;
+
 	int r; //What terrain type the tile will be
 	int s; //What texture for that terrain
 	srand(time(0));
