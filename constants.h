@@ -97,6 +97,8 @@ const char TEMP_GRASS[] =	"pictures\\Grass.png";
 const char GRASS_1_IMAGE[] = "pictures\\Grass1.png";
 const char GRASS_2_IMAGE[] = "pictures\\Grass2.png";
 const char GRASS_3_IMAGE[] = "pictures\\Grass3.png";
+const char FOREST_1_IMAGE[] = "pictures\\Forest1.png";
+const char FOREST_2_IMAGE[] = "pictures\\Forest2.png";
 const char BACKGROUND_IMAGE[] = "pictures\\background.PNG";
 
 const int TERRAIN_WIDTH = 96;
