@@ -6,11 +6,11 @@ Tile::Tile(void) {}
 //Tile::Tile(TileManager* T, int type) {}
 
 
-bool Tile::initialize(Graphics* graphics, TextureManager* tileTexture, int x, int y, Game* game) {
+bool Tile::initialize(Graphics* graphics, TextureManager* tileTexture, TerrainTypeEnum terrain, int x, int y, Game* game) {
 	unit = nullptr;
 	occupied = false;
-	terrainType = Plains;
-	visible = true;
+	terrainType = terrain;
+	visible = false;
 	
 	setX(x * TERRAIN_WIDTH);
 	setY(y * TERRAIN_HEIGHT);

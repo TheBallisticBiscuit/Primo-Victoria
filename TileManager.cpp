@@ -25,6 +25,7 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 	srand(time(0));
 
 	tiles = new Tile*[x];
+
 	for (int i = 0; i < x; i++) {
 		tiles[i] = new Tile[y];
 
@@ -32,35 +33,31 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 			r = rand()%2; 
 
 			if (r == 0) { //Grass
+				tileTerrain = Plains;
 				s = rand()%3;
 				if (s == 0) {
-					if (!tiles[i][j].initialize(graphics, &grassTexture1, i, j, game)) {
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + 
-							"][" + std::to_string(j) + "] init fail"));
-					}
+					if (!tiles[i][j].initialize(graphics, &grassTexture1, tileTerrain, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
 				}
 				if (s == 1) {
-					if (!tiles[i][j].initialize(graphics, &grassTexture2, i, j, game)) {
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + 
-							"][" + std::to_string(j) + "] init fail"));
-					}
+					if (!tiles[i][j].initialize(graphics, &grassTexture2, tileTerrain, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
 				}
 				else {
-					if (!tiles[i][j].initialize(graphics, &grassTexture3, i, j, game)) {
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + 
-							"][" + std::to_string(j) + "] init fail"));
-					}
+					if (!tiles[i][j].initialize(graphics, &grassTexture3, tileTerrain, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
 				}
 			}
 
 			else if (r == 1) { //Forest
+				tileTerrain = Forest;
 				s = rand()%2;
 				if (s == 0) {
-					if (!tiles[i][j].initialize(graphics, &forestTexture1, i, j, game)) 
+					if (!tiles[i][j].initialize(graphics, &forestTexture1, tileTerrain, i, j, game)) 
 						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
 				}
 				else {
-					if (!tiles[i][j].initialize(graphics, &forestTexture2, i, j, game)) 
+					if (!tiles[i][j].initialize(graphics, &forestTexture2, tileTerrain, i, j, game)) 
 						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
 				}
 			}
@@ -72,6 +69,23 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 	return 1;
 }
 
+void TileManager::setTileVisibility(bool isVisible) {
+	if (isVisible == true) {
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 5; j++) {
+				tiles[i][j].setVisible();
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 5; j++) {
+				tiles[i][j].setInvisible();
+			}
+		}
+	}
+}
+
 void TileManager::draw(int x, int y) {
 	for (int i = 0; i < x; i++) {
 		for (int j = 0; j < y; j++) {
@@ -79,7 +93,6 @@ void TileManager::draw(int x, int y) {
 		}
 	}
 }
-
 
 void TileManager::onLostDevice() {
 	grassTexture1.onLostDevice();
@@ -98,6 +111,5 @@ void TileManager::onResetDevice() {
 	forestTexture2.onResetDevice();
 	hillsTexture.onResetDevice();
 }
-
  
 #pragma endregion

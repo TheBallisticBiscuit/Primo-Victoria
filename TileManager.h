@@ -16,9 +16,11 @@ public:
 	
 	bool initialize(Graphics* graphics, int x, int y, Game* game);
 
+	Tile* getTile(int x, int y) {return &tiles[x][y]; };
+
+	void setTileVisibility(bool);
 	void draw(int x, int y);
 
-	Tile* getTile(int x, int y) {return &tiles[x][y]; };
 	void onLostDevice();
 	void onResetDevice();
 	//void battle(Tile* t1, Tile* t2);
@@ -30,6 +32,8 @@ private:
 	TextureManager forestTexture1;
 	TextureManager forestTexture2;
 	TextureManager hillsTexture;
+
+	TerrainTypeEnum tileTerrain;
 
 	Tile** tiles;
 };

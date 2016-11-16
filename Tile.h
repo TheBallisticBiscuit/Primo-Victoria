@@ -13,11 +13,14 @@ class Tile : public Entity
 public:
 	Tile(void);
 
-	bool initialize(Graphics* graphics, TextureManager* textureManager, int x, int y, Game* game);
-	bool isOccupied() { return occupied; };
-	
+	bool initialize(Graphics*, TextureManager*, TerrainTypeEnum, int, int, Game*);
+
 	Entity* getUnit() { return unit; };
 	TerrainTypeEnum getTerrain() { return terrainType; };
+	bool isOccupied() { return occupied; };
+	
+	void setVisible() { visible = true; };
+	void setInvisible() { visible = false; };
 
 
 private:

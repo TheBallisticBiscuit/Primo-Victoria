@@ -65,6 +65,10 @@ void PrimoVictoria::initialize(HWND hwnd)
 //=============================================================================
 void PrimoVictoria::update()
 {
+	if(input->isKeyDown(VK_ESCAPE)){
+		exit(0);
+	}
+
 	if(fighting == true){
 		if(unitManager.fight(*fightTarget, frameTime)){
 			fighting = false;
@@ -74,10 +78,12 @@ void PrimoVictoria::update()
 		unitManager.update(frameTime);
 		return;
 	}
-	if(input->isKeyDown(VK_ESCAPE)){
-		exit(0);
+
+	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
+		tileManager.setTileVisibility(true);
+		currentMenu = 0;
 	}
-	if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
+	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
 		currentMenu = 2;
 	}
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
@@ -120,9 +126,11 @@ void PrimoVictoria::render()
     graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
 	
-	tileManager.draw(7,5);
+	tileManager.draw(7,5); 
 
-	if(currentMenu == 1){
+	if (currentMenu == 0){
+	}
+	else if(currentMenu == 1){
 		mainMenu->displayMenu();
 	}
 	else if(currentMenu == 2){
