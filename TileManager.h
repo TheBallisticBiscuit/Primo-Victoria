@@ -27,8 +27,9 @@ private:
 	TextureManager grassTexture1;
 	TextureManager grassTexture2;
 	TextureManager grassTexture3;
+	TextureManager forestTexture1;
+	TextureManager forestTexture2;
 	TextureManager hillsTexture;
-	TextureManager forestTexture;	
 
 	Tile** tiles;
 };
