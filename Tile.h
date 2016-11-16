@@ -5,6 +5,7 @@
 #include "image.h"
 #include "entity.h"
 #include "constants.h"
+#include "unit.h"
 
 
 #pragma region Higgs
@@ -16,12 +17,12 @@ public:
 	bool initialize(Graphics* graphics, TextureManager* textureManager, int x, int y, Game* game);
 	bool isOccupied() { return occupied; };
 	
-	Entity* getUnit() { return unit; };
+	Unit* getUnit() { return unit; };
 	TerrainTypeEnum getTerrain() { return terrainType; };
-	void occupy(Entity* newUnit);
-
+	void occupy(Unit* newUnit);
+	void leave();
 private:
-	Entity* unit;
+	Unit* unit;
 
 	TerrainTypeEnum terrainType;
 

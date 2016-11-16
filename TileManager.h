@@ -18,7 +18,7 @@ public:
 
 	void draw(int x, int y);
 
-	Tile* getTile(int x, int y) {return &tiles[x][y]; };
+	Tile* getTile(int x, int y) {return &tiles[x][y];}
 	void onLostDevice();
 	void onResetDevice();
 	//void battle(Tile* t1, Tile* t2);

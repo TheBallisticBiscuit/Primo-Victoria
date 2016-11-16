@@ -12,6 +12,8 @@ public:
 	int getMovement(){return movementLeft;}
 	float getFrameCounter(){return frameCounter;}
 	enum LastDirection {up, down, left, right} getLastDirection(){return lastDirection;}
+	int getTileX(){return tile.x;}
+	int getTileY(){return tile.y;}
 	bool isAnimating(){return animating;}
 	void setDamage(int newDamage);
 	void setHP(int newHP);
@@ -24,6 +26,10 @@ public:
 	void setLastDirection(LastDirection newDirection);
 	virtual void fight(Unit& opponent, float frameTime){}
 	virtual bool kill(float frameTime){return true;}
+	virtual bool moveUp(){return true;}
+	virtual bool moveDown(){return true;}
+	virtual bool moveLeft(){return true;}
+	virtual bool moveRight(){return true;}
 private:
 	int damage;
 	int HP;

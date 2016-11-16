@@ -10,6 +10,10 @@ public:
 	void update(float frameTime);
 	void fight(Unit& opponent, float frameTime);
 	bool kill(float frameTime);
+	bool moveUp();
+	bool moveDown();
+	bool moveLeft();
+	bool moveRight();
 private:
 };
 #pragma endregion

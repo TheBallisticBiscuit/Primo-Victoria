@@ -134,6 +134,7 @@ enum TerrainTypeEnum {Plains, Hills, Forest};
 #pragma region Newell
 const float INFANTRY_SCALING = 1;
 const float INFANTRY_ANIMATION_DELAY = 0.1;
+const float INFANTRY_SPEED = 30;
 const int INFANTRY_ATTACK_RIGHT_START = 0;
 const int INFANTRY_ATTACK_RIGHT_END = 11;
 const int INFANTRY_ATTACK_UP_START = 12;

@@ -37,7 +37,7 @@ private:
 	Unit* fightTarget;
 	int keyDownLastFrame;
 	bool fighting;
-	bool animating;
+	int moving;
 public:
     // Constructor
     PrimoVictoria();

@@ -11,15 +11,16 @@ Infantry::~Infantry(void)
 }
 
 bool Infantry::initialize(int width, int height, int ncols, TextureManager* textureM, Game* game){
-		setScale(INFANTRY_SCALING);
-		setMovementPerTurn(3);
-		setMovementLeft(0);
-		setRange(1);
-		setHP(10);
-		setDamage(2);
-		setFrameDelay(INFANTRY_ANIMATION_DELAY);
-		setFrameCounter(0);
-		return Unit::initialize(width, height, ncols, textureM, game);
+	setScale(INFANTRY_SCALING);
+	setMovementPerTurn(3);
+	setMovementLeft(0);
+	setRange(1);
+	setHP(10);
+	setDamage(2);
+	setFrameDelay(INFANTRY_ANIMATION_DELAY);
+	setFrameCounter(0);
+	setVelocity(VECTOR2(0, 0));
+	return Unit::initialize(width, height, ncols, textureM, game);
 }
 
 void Infantry::update(float frameTime){
@@ -35,6 +36,8 @@ void Infantry::update(float frameTime){
 			setFrames(INFANTRY_IDLE_RIGHT_START, INFANTRY_IDLE_RIGHT_END);
 		}
 	}
+	setX(getX()+getVelocity().x*INFANTRY_SPEED*frameTime);
+	setY(getY()+getVelocity().y*INFANTRY_SPEED*frameTime);
 	Entity::update(frameTime);
 }
 
@@ -64,5 +67,36 @@ bool Infantry::kill(float frameTime){
 	}
 	setFrameCounter(getFrameCounter()+frameTime);
 	return false;
+}
+
+bool Infantry::moveUp(){
+	setLastDirection(up);
+	setFrames(INFANTRY_RUN_UP_START, INFANTRY_RUN_UP_END);
+	setVelocity(VECTOR2(0, -1));
+	if(getY() < getTileY()-1*TERRAIN_HEIGHT){
+		setTile(getTileX(), getTileY()-1);
+		setVelocity(VECTOR2(0, 0));
+		setY(getTileY()*TERRAIN_HEIGHT);
+		return true;
+	}
+	return false;
+}
+bool Infantry::moveDown(){
+	setLastDirection(down);
+	setFrames(INFANTRY_RUN_DOWN_START, INFANTRY_RUN_DOWN_END);
+	setVelocity(VECTOR2(0, 1));
+	if(getY() < getTileY()+1*TERRAIN_HEIGHT){
+		setTile(getTileX(), getTileY()+1);
+		setVelocity(VECTOR2(0, 0));
+		setY(getTileY()*TERRAIN_HEIGHT);
+		return true;
+	}
+	return false;
+}
+bool Infantry::moveLeft(){
+	return true;
+}
+bool Infantry::moveRight(){
+	return true;
 }
 #pragma endregion
