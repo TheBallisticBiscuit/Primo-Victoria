@@ -73,13 +73,14 @@ void UnitManager::onLostDevice(){
 	infantryTexture2.onLostDevice();
 }
 
-void UnitManager::spawnInfantry(){
+void UnitManager::spawnInfantry(int x, int y){
 	for(int i = 0; i < 10; i++){
 		if(!player1Infantry[i].getActive()){
 			player1Infantry[i].setActive(true);
 			player1Infantry[i].setVisible(true);
-			player1Infantry[i].setX(0);
-			player1Infantry[i].setY(0);
+			player1Infantry[i].setTile(x, y);
+			player1Infantry[i].setX(x*TERRAIN_WIDTH);
+			player1Infantry[i].setY(y*TERRAIN_HEIGHT);
 			currentSelection = &player1Infantry[i];
 			break;
 		}

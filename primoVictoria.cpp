@@ -17,7 +17,7 @@ PrimoVictoria::PrimoVictoria()
 //=============================================================================
 PrimoVictoria::~PrimoVictoria()
 {
-    releaseAll();           // call onLostDevice() for every graphics item
+	releaseAll();           // call onLostDevice() for every graphics item
 	//delete[] tileManager;
 }
 
@@ -28,7 +28,7 @@ PrimoVictoria::~PrimoVictoria()
 void PrimoVictoria::initialize(HWND hwnd)
 {
 #pragma region Newell
-    Game::initialize(hwnd); // throws GameError
+	Game::initialize(hwnd); // throws GameError
 	std::string s;
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
@@ -50,14 +50,14 @@ void PrimoVictoria::initialize(HWND hwnd)
 
 	output = new TextDX();
 	if(output->initialize(graphics, 15, true, false, "Arial") == false)
-        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
 	unitManager.initialize(this, graphics);
 	keyDownLastFrame = NULL;
 	animating = false;
 	fighting = false;
 	fightTarget = nullptr;
 #pragma endregion
-    return;
+	return;
 }
 
 //=============================================================================
@@ -89,7 +89,7 @@ void PrimoVictoria::update()
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
 		//fightTarget = unitManager.getCurrentSelection();
-		unitManager.spawnInfantry();
+		spawnUnit(0);
 		//fighting = true;
 	}
 	mainMenu->update();
@@ -117,9 +117,9 @@ void PrimoVictoria::render()
 {
 	std::stringstream ss;
 
-    graphics->spriteBegin();  // begin drawing sprites
+	graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
-	
+
 	tileManager.draw(7,5);
 
 	if(currentMenu == 1){
@@ -130,7 +130,7 @@ void PrimoVictoria::render()
 	}
 	output->print(ss.str(), 0,0);
 	unitManager.draw();
-    graphics->spriteEnd();                  // end drawing sprites
+	graphics->spriteEnd();                  // end drawing sprites
 }
 
 //=============================================================================
@@ -141,8 +141,8 @@ void PrimoVictoria::releaseAll()
 {
 	unitManager.onLostDevice();
 	tileManager.onLostDevice();
-    Game::releaseAll();
-    return;
+	Game::releaseAll();
+	return;
 }
 
 //=============================================================================
@@ -153,6 +153,67 @@ void PrimoVictoria::resetAll()
 {
 
 	unitManager.onResetDevice();
-    Game::resetAll();
-    return;
+	Game::resetAll();
+	return;
 }
+
+#pragma region Newell
+void PrimoVictoria::spawnUnit(int unitType){
+	if(!(tileManager.getTile(0, 2)->isOccupied())){
+		switch(unitType){
+		case 0:
+			unitManager.spawnInfantry(0, 2);
+		case 1:
+			unitManager.spawnInfantry(0, 2);
+		case 2:
+			unitManager.spawnInfantry(0, 2);
+		
+		}
+		tileManager.getTile(0, 2)->occupy(unitManager.getCurrentSelection());
+	}
+	else if(!(tileManager.getTile(0, 1)->isOccupied())){
+		switch(unitType){
+		case 0:
+			unitManager.spawnInfantry(0, 1);
+		case 1:
+			unitManager.spawnInfantry(0, 1);
+		case 2:
+			unitManager.spawnInfantry(0, 1);
+		}
+		tileManager.getTile(0, 1)->occupy(unitManager.getCurrentSelection());
+	}
+	else if(!(tileManager.getTile(0, 3)->isOccupied())){
+		switch(unitType){
+		case 0:
+			unitManager.spawnInfantry(0, 3);
+		case 1:
+			unitManager.spawnInfantry(0, 3);
+		case 2:
+			unitManager.spawnInfantry(0, 3);
+		}
+		tileManager.getTile(0, 3)->occupy(unitManager.getCurrentSelection());
+	}
+	else if(!(tileManager.getTile(0, 0)->isOccupied())){
+		switch(unitType){
+		case 0:
+			unitManager.spawnInfantry(0, 0);
+		case 1:
+			unitManager.spawnInfantry(0, 0);
+		case 2:
+			unitManager.spawnInfantry(0, 0);
+		}
+		tileManager.getTile(0, 0)->occupy(unitManager.getCurrentSelection());
+	}
+	else if(!(tileManager.getTile(0, 4)->isOccupied())){
+		switch(unitType){
+		case 0:
+			unitManager.spawnInfantry(0, 4);
+		case 1:
+			unitManager.spawnInfantry(0, 4);
+		case 2:
+			unitManager.spawnInfantry(0, 4);
+		}
+		tileManager.getTile(0, 4)->occupy(unitManager.getCurrentSelection());
+	}
+}
+#pragma endregion

@@ -19,4 +19,9 @@ bool Tile::initialize(Graphics* graphics, TextureManager* tileTexture, int x, in
 	return Entity::initialize(game, TERRAIN_WIDTH, TERRAIN_HEIGHT, 0, tileTexture);
 }
 
+
+void Tile::occupy(Entity* newUnit){
+	unit = newUnit;
+	occupied = true;
+}
 #pragma endregion

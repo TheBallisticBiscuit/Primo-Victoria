@@ -13,7 +13,7 @@ public:
 	void update(float frameTime);
 	void onResetDevice();
 	void onLostDevice();
-	void spawnInfantry();
+	void spawnInfantry(int x, int y);
 	bool fight(Unit& opponent, float frameTime);
 	Unit* getCurrentSelection(){return currentSelection;}
 private:

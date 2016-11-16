@@ -18,7 +18,7 @@ public:
 	
 	Entity* getUnit() { return unit; };
 	TerrainTypeEnum getTerrain() { return terrainType; };
-
+	void occupy(Entity* newUnit);
 
 private:
 	Entity* unit;
