@@ -43,7 +43,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
 	background.setScale(0.8f);
 
-	//tileManager = new TileManager(graphics, 2,1, this);
+	if (!tileManager.initialize(graphics, 7,5, this))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 
 #pragma endregion
 
@@ -105,7 +106,7 @@ void PrimoVictoria::render()
     graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
 	
-	//tileManager->getTile(1,1)->draw();
+	tileManager.draw(7,5);
 
 	if(currentMenu == 1){
 		mainMenu->displayMenu();
@@ -125,7 +126,7 @@ void PrimoVictoria::render()
 void PrimoVictoria::releaseAll()
 {
 	unitManager.onLostDevice();
-	//tileManager->onLostDevice();
+	tileManager.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -136,6 +137,7 @@ void PrimoVictoria::releaseAll()
 //=============================================================================
 void PrimoVictoria::resetAll()
 {
+
 	unitManager.onResetDevice();
     Game::resetAll();
     return;

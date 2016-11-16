@@ -13,7 +13,7 @@ class Tile : public Entity
 public:
 	Tile(void);
 
-	bool initialize(Graphics* graphics, TextureManager textureManager, Game* game);
+	bool initialize(Graphics* graphics, TextureManager* textureManager, int x, int y, Game* game);
 	bool isOccupied() { return occupied; };
 	
 	Entity* getUnit() { return unit; };

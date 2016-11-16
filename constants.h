@@ -91,13 +91,19 @@ const RECT  COLLISION_BOX_PADDLE = {-45,-10,45,10};
 const RECT COLLISION_BOX_PUCK = {-32, -32, 32, 32};
 const float   COLLISION_RADIUS = 29;
 
+#pragma region Higgs
 // graphic images
 const char TEMP_GRASS[] =	"pictures\\Grass.png";
+const char GRASS_1_IMAGE[] = "pictures\\Grass1.png";
+const char GRASS_2_IMAGE[] = "pictures\\Grass2.png";
+const char GRASS_3_IMAGE[] = "pictures\\Grass3.png";
 const char BACKGROUND_IMAGE[] = "pictures\\background.PNG";
 
-const int TERRAIN_WIDTH = 84;
-const int TERRAIN_HEIGHT = 84;
+const int TERRAIN_WIDTH = 96;
+const int TERRAIN_HEIGHT = 96;
+const int TERRAIN_SCALE = 1;
 
+#pragma endregion
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used
 // it would be possible to save and restore key mappings from a data file.
@@ -161,6 +167,6 @@ const int INFANTRY_DEATH_DOWN_END = 133;
 const int INFANTRY_DEATH_LEFT_START = 134;
 const int INFANTRY_DEATH_LEFT_END = 139;
 
-const float SELECTION_BOX_SCALE = 0.5;
+const float SELECTION_BOX_SCALE = 1;
 #pragma endregion
 #endif

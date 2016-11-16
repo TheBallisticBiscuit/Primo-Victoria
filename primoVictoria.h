@@ -29,7 +29,7 @@ private:
 	TextureManager backgroundTexture;
 	Image background;
 
-	TileManager* tileManager;
+	TileManager tileManager;
 
 	TextDX *output;
 	int currentMenu;

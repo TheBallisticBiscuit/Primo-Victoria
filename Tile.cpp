@@ -6,12 +6,17 @@ Tile::Tile(void) {}
 //Tile::Tile(TileManager* T, int type) {}
 
 
-bool Tile::initialize(Graphics* graphics, TextureManager tileTexture, Game* game) {
+bool Tile::initialize(Graphics* graphics, TextureManager* tileTexture, int x, int y, Game* game) {
 	unit = nullptr;
 	occupied = false;
 	terrainType = Plains;
+	visible = true;
+	
+	setX(x * TERRAIN_WIDTH);
+	setY(y * TERRAIN_HEIGHT);
+	setScale(TERRAIN_SCALE);
 
-	return Entity::initialize(game, TERRAIN_WIDTH, TERRAIN_HEIGHT, 0, &tileTexture);
+	return Entity::initialize(game, TERRAIN_WIDTH, TERRAIN_HEIGHT, 0, tileTexture);
 }
 
 #pragma endregion
