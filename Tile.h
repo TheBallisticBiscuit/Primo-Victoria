@@ -15,8 +15,6 @@ public:
 	Tile(void);
 
 	bool initialize(Graphics*, TextureManager*, TerrainTypeEnum, int, int, Game*);
-
-	Entity* getUnit() { return unit; };
 	TerrainTypeEnum getTerrain() { return terrainType; };
 	bool isOccupied() { return occupied; };
 	
