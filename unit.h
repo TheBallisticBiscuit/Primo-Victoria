@@ -11,6 +11,8 @@ public:
 	int getRange(){return range;}
 	int getMovement(){return movementLeft;}
 	float getFrameCounter(){return frameCounter;}
+	enum LastDirection {up, down, left, right} getLastDirection(){return lastDirection;}
+	bool isAnimating(){return animating;}
 	void setDamage(int newDamage);
 	void setHP(int newHP);
 	void setMovementPerTurn(int newMovement);
@@ -18,6 +20,8 @@ public:
 	void setRange(int newRange);
 	void setTile(int x, int y);
 	void setFrameCounter(float newFrameCounter);
+	void setAnimating(bool newBool);
+	void setLastDirection(LastDirection newDirection);
 	virtual void fight(Unit& opponent, float frameTime){}
 	virtual bool kill(float frameTime){return true;}
 private:
@@ -30,6 +34,8 @@ private:
 	} tile;
 	int movementPerTurn;
 	int movementLeft;
+	LastDirection lastDirection;
 	float frameCounter;
+	bool animating;
 };
 #pragma endregion

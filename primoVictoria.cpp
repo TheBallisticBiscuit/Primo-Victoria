@@ -53,6 +53,9 @@ void PrimoVictoria::initialize(HWND hwnd)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
 	unitManager.initialize(this, graphics);
 	keyDownLastFrame = NULL;
+	animating = false;
+	fighting = false;
+	fightTarget = nullptr;
 #pragma endregion
     return;
 }
@@ -62,6 +65,15 @@ void PrimoVictoria::initialize(HWND hwnd)
 //=============================================================================
 void PrimoVictoria::update()
 {
+	if(fighting == true){
+		if(unitManager.fight(*fightTarget, frameTime)){
+			fighting = false;
+		}
+		mainMenu->update();
+		optionsMenu->update();
+		unitManager.update(frameTime);
+		return;
+	}
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
@@ -76,7 +88,9 @@ void PrimoVictoria::update()
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
+		//fightTarget = unitManager.getCurrentSelection();
 		unitManager.spawnInfantry();
+		//fighting = true;
 	}
 	mainMenu->update();
 	optionsMenu->update();

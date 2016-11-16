@@ -24,13 +24,20 @@ void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenKnight texture"));
 	}
 	if (!infantryTexture2.initialize(graphics,"pictures\\greenKnight.png")){
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenKnight texture"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redKnight texture"));
 	}
 	player1Infantry = new Infantry[10];
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].initialize(96, 96, 3, &infantryTexture, gamePtr);
 		player1Infantry[i].setActive(false);
 		player1Infantry[i].setVisible(false);
+		/*if(i == 0){
+			player1Infantry[i].setVisible(true);
+			player1Infantry[i].setActive(true);
+			player1Infantry[i].setX(200);
+			player1Infantry[i].setHP(10);
+			currentSelection = &player1Infantry[i];
+		}*/
 	}
 	player2Infantry = new Infantry[10];
 	for(int i = 0; i < 10; i++){
@@ -38,7 +45,6 @@ void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
 		player2Infantry[i].setActive(false);
 		player2Infantry[i].setVisible(false);
 	}
-	currentSelection = nullptr;
 }
 
 void UnitManager::draw(){
@@ -80,12 +86,23 @@ void UnitManager::spawnInfantry(){
 	}
 }
 
-void UnitManager::fight(Unit& opponent, float frameTime){
-	while(currentSelection->getHP() > 0 && opponent.getHP() > 0){
-		currentSelection->fight(opponent, frameTime); 
+bool UnitManager::fight(Unit& opponent, float frameTime){
+	currentSelection->fight(opponent, frameTime); 
+	if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
+		return opponent.kill(frameTime);
 	}
-	if(opponent.getHP() < 0){
-		while(!opponent.kill(frameTime)){}
+	else if(currentSelection->getHP() <= 0 && opponent.getHP() > 0){
+		return currentSelection->kill(frameTime);
 	}
+	else if(currentSelection->getHP() <= 0 && opponent.getHP() <= 0){
+		bool temp = currentSelection->kill(frameTime);
+		bool temp2 = opponent.kill(frameTime);
+		if(temp && temp2){
+			currentSelection->setAnimating(false);
+			opponent.setAnimating(false);
+			return true;
+		}
+	}
+	return false;
 }
 #pragma endregion

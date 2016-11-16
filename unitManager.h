@@ -14,7 +14,7 @@ public:
 	void onResetDevice();
 	void onLostDevice();
 	void spawnInfantry();
-	void fight(Unit& opponent, float frameTime);
+	bool fight(Unit& opponent, float frameTime);
 	Unit* getCurrentSelection(){return currentSelection;}
 private:
 	TextureManager infantryTexture;
