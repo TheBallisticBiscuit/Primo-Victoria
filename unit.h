@@ -26,10 +26,10 @@ public:
 	void setLastDirection(LastDirection newDirection);
 	virtual void fight(Unit& opponent, float frameTime){}
 	virtual bool kill(float frameTime){return true;}
-	virtual bool moveUp(){return true;}
-	virtual bool moveDown(){return true;}
-	virtual bool moveLeft(){return true;}
-	virtual bool moveRight(){return true;}
+	virtual bool moveUp(){return false;}
+	virtual bool moveDown(){return false;}
+	virtual bool moveLeft(){return false;}
+	virtual bool moveRight(){return false;}
 private:
 	int damage;
 	int HP;

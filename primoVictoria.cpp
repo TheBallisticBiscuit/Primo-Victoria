@@ -90,6 +90,9 @@ void PrimoVictoria::update()
 			}
 			break;
 		}
+		if(input->isKeyDown(VK_ESCAPE)){
+			exit(0);
+		}
 		mainMenu->update();
 		optionsMenu->update();
 		unitManager.update(frameTime);
@@ -98,7 +101,6 @@ void PrimoVictoria::update()
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
-
 	if(fighting == true){
 		if(unitManager.fight(*fightTarget, frameTime)){
 			fighting = false;
@@ -108,17 +110,7 @@ void PrimoVictoria::update()
 		unitManager.update(frameTime);
 		return;
 	}
-
-	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
-		currentMenu = 0;
-	}
-	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
-		currentMenu = 2;
-	}
-	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
-		currentMenu = 1;
-	}
-	if (currentMenu == 0) {
+	if(currentMenu == 0){
 		if(input->isKeyDown(VK_SPACE)){
 			keyDownLastFrame = VK_SPACE;
 		}
@@ -194,6 +186,20 @@ void PrimoVictoria::update()
 		mainMenu->update();
 		optionsMenu->update();
 	}
+	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
+		tileManager.setTileVisibility(true);
+		currentMenu = 0;
+	}
+	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
+		currentMenu = 2;
+	}
+	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
+		currentMenu = 1;
+	}
+
+	mainMenu->update();
+	optionsMenu->update();
+	unitManager.update(frameTime);
 #pragma region Newell
 }
 
@@ -265,11 +271,13 @@ void PrimoVictoria::spawnUnit(int unitType){
 		switch(unitType){
 		case 0:
 			unitManager.spawnInfantry(0, 2);
+			break;
 		case 1:
 			unitManager.spawnInfantry(0, 2);
+			break;
 		case 2:
 			unitManager.spawnInfantry(0, 2);
-
+			break;
 		}
 		tileManager.getTile(0, 2)->occupy(unitManager.getCurrentSelection());
 	}
@@ -277,9 +285,11 @@ void PrimoVictoria::spawnUnit(int unitType){
 		switch(unitType){
 		case 0:
 			unitManager.spawnInfantry(0, 1);
+			break;
 		case 1:
 			unitManager.spawnInfantry(0, 1);
 		case 2:
+			break;
 			unitManager.spawnInfantry(0, 1);
 		}
 		tileManager.getTile(0, 1)->occupy(unitManager.getCurrentSelection());
@@ -287,10 +297,13 @@ void PrimoVictoria::spawnUnit(int unitType){
 	else if(!(tileManager.getTile(0, 3)->isOccupied())){
 		switch(unitType){
 		case 0:
+			break;
 			unitManager.spawnInfantry(0, 3);
 		case 1:
+			break;
 			unitManager.spawnInfantry(0, 3);
 		case 2:
+			break;
 			unitManager.spawnInfantry(0, 3);
 		}
 		tileManager.getTile(0, 3)->occupy(unitManager.getCurrentSelection());
