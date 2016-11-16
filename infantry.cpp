@@ -73,7 +73,7 @@ bool Infantry::moveUp(){
 	setLastDirection(up);
 	setFrames(INFANTRY_RUN_UP_START, INFANTRY_RUN_UP_END);
 	setVelocity(VECTOR2(0, -1));
-	if(getY() < getTileY()-1*TERRAIN_HEIGHT){
+	if(getY() < (getTileY()-1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()-1);
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
@@ -85,7 +85,7 @@ bool Infantry::moveDown(){
 	setLastDirection(down);
 	setFrames(INFANTRY_RUN_DOWN_START, INFANTRY_RUN_DOWN_END);
 	setVelocity(VECTOR2(0, 1));
-	if(getY() < getTileY()+1*TERRAIN_HEIGHT){
+	if(getY() > (getTileY()+1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()+1);
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
@@ -94,9 +94,27 @@ bool Infantry::moveDown(){
 	return false;
 }
 bool Infantry::moveLeft(){
-	return true;
+	setLastDirection(left);
+	setFrames(INFANTRY_RUN_LEFT_START, INFANTRY_RUN_LEFT_END);
+	setVelocity(VECTOR2(-1, 0));
+	if(getX() < (getTileX()-1)*TERRAIN_WIDTH){
+		setTile(getTileX()-1, getTileY());
+		setVelocity(VECTOR2(0, 0));
+		setX(getTileX()*TERRAIN_HEIGHT);
+		return true;
+	}
+	return false;
 }
 bool Infantry::moveRight(){
-	return true;
+	setLastDirection(right);
+	setFrames(INFANTRY_RUN_RIGHT_START, INFANTRY_RUN_RIGHT_END);
+	setVelocity(VECTOR2(1, 0));
+	if(getX() > (getTileX()+1)*TERRAIN_WIDTH){
+		setTile(getTileX()+1, getTileY());
+		setVelocity(VECTOR2(0, 0));
+		setX(getTileX()*TERRAIN_HEIGHT);
+		return true;
+	}
+	return false;
 }
 #pragma endregion

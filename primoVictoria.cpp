@@ -89,6 +89,9 @@ void PrimoVictoria::update()
 			}
 			break;
 		}
+		if(input->isKeyDown(VK_ESCAPE)){
+			exit(0);
+		}
 		mainMenu->update();
 		optionsMenu->update();
 		unitManager.update(frameTime);
@@ -97,7 +100,6 @@ void PrimoVictoria::update()
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
-
 	if(fighting == true){
 		if(unitManager.fight(*fightTarget, frameTime)){
 			fighting = false;
@@ -107,7 +109,77 @@ void PrimoVictoria::update()
 		unitManager.update(frameTime);
 		return;
 	}
-
+	if(currentMenu == 0){
+		if(input->isKeyDown(VK_SPACE)){
+			keyDownLastFrame = VK_SPACE;
+		}
+		if(input->isKeyDown(VK_UP)){
+			keyDownLastFrame = VK_UP;
+		}
+		if(input->isKeyDown(VK_DOWN)){
+			keyDownLastFrame = VK_DOWN;
+		}
+		if(input->isKeyDown(VK_LEFT)){
+			keyDownLastFrame = VK_LEFT;
+		}
+		if(input->isKeyDown(VK_RIGHT)){
+			keyDownLastFrame = VK_RIGHT;
+		}
+		if(input->isKeyDown(VK_RETURN)){
+			keyDownLastFrame = VK_RETURN;
+		}
+		if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
+			keyDownLastFrame = NULL;
+			//fightTarget = unitManager.getCurrentSelection();
+			spawnUnit(0);
+			//fighting = true;
+		}
+		if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionUp();
+			}
+			else{
+				moving = 1;
+			}
+		}
+		if(!input->isKeyDown(VK_DOWN) && keyDownLastFrame == VK_DOWN){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionDown();
+			}
+			else{
+				moving = 2;
+			}
+		}
+		if(!input->isKeyDown(VK_LEFT) && keyDownLastFrame == VK_LEFT){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionLeft();
+			}
+			else{
+				moving = 3;
+			}
+		}
+		if(!input->isKeyDown(VK_RIGHT) && keyDownLastFrame == VK_RIGHT){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() == nullptr){
+				unitManager.selectionRight();
+			}
+			else{
+				moving = 4;
+			}
+		}
+		if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN){
+			keyDownLastFrame = NULL;
+			if(unitManager.getCurrentSelection() != nullptr){
+				unitManager.setCurrentSelection(nullptr);
+			}
+			else{
+				unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+			}
+		}
+	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
 		tileManager.setTileVisibility(true);
 		currentMenu = 0;
@@ -118,77 +190,9 @@ void PrimoVictoria::update()
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
 		currentMenu = 1;
 	}
-	if(input->isKeyDown(VK_SPACE)){
-		keyDownLastFrame = VK_SPACE;
-	}
-	if(input->isKeyDown(VK_UP)){
-		keyDownLastFrame = VK_UP;
-	}
-	if(input->isKeyDown(VK_DOWN)){
-		keyDownLastFrame = VK_DOWN;
-	}
-	if(input->isKeyDown(VK_LEFT)){
-		keyDownLastFrame = VK_LEFT;
-	}
-	if(input->isKeyDown(VK_RIGHT)){
-		keyDownLastFrame = VK_RIGHT;
-	}
-	if(input->isKeyDown(VK_RETURN)){
-		keyDownLastFrame = VK_RETURN;
-	}
-	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
-		keyDownLastFrame = NULL;
-		//fightTarget = unitManager.getCurrentSelection();
-		spawnUnit(0);
-		//fighting = true;
-	}
-	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionUp();
-		}
-		else{
-			moving = 1;
-		}
-	}
-	if(!input->isKeyDown(VK_DOWN) && keyDownLastFrame == VK_DOWN){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionDown();
-		}
-		else{
-			moving = 2;
-		}
-	}
-	if(!input->isKeyDown(VK_LEFT) && keyDownLastFrame == VK_LEFT){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionLeft();
-		}
-		else{
-			moving = 3;
-		}
-	}
-	if(!input->isKeyDown(VK_RIGHT) && keyDownLastFrame == VK_RIGHT){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() == nullptr){
-			unitManager.selectionRight();
-		}
-		else{
-			moving = 4;
-		}
-	}
-	if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN){
-		keyDownLastFrame = NULL;
-		if(unitManager.getCurrentSelection() != nullptr){
-			unitManager.setCurrentSelection(nullptr);
-		}
-		else{
-			unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
-		}
-	}
-	//mainMenu->update();
-	//optionsMenu->update();
+
+	mainMenu->update();
+	optionsMenu->update();
 	unitManager.update(frameTime);
 #pragma region Newell
 }
@@ -261,11 +265,13 @@ void PrimoVictoria::spawnUnit(int unitType){
 		switch(unitType){
 		case 0:
 			unitManager.spawnInfantry(0, 2);
+			break;
 		case 1:
 			unitManager.spawnInfantry(0, 2);
+			break;
 		case 2:
 			unitManager.spawnInfantry(0, 2);
-
+			break;
 		}
 		tileManager.getTile(0, 2)->occupy(unitManager.getCurrentSelection());
 	}
@@ -273,9 +279,11 @@ void PrimoVictoria::spawnUnit(int unitType){
 		switch(unitType){
 		case 0:
 			unitManager.spawnInfantry(0, 1);
+			break;
 		case 1:
 			unitManager.spawnInfantry(0, 1);
 		case 2:
+			break;
 			unitManager.spawnInfantry(0, 1);
 		}
 		tileManager.getTile(0, 1)->occupy(unitManager.getCurrentSelection());
@@ -283,10 +291,13 @@ void PrimoVictoria::spawnUnit(int unitType){
 	else if(!(tileManager.getTile(0, 3)->isOccupied())){
 		switch(unitType){
 		case 0:
+			break;
 			unitManager.spawnInfantry(0, 3);
 		case 1:
+			break;
 			unitManager.spawnInfantry(0, 3);
 		case 2:
+			break;
 			unitManager.spawnInfantry(0, 3);
 		}
 		tileManager.getTile(0, 3)->occupy(unitManager.getCurrentSelection());

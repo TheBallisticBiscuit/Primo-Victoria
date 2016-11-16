@@ -152,14 +152,14 @@ void UnitManager::selectionDown(){
 	}
 }
 bool UnitManager::unitUp(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
+	if(!(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied())){
 		if(currentSelection->moveUp()){
 			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->leave();
 			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->occupy(currentSelection);
 			return true;
 		}
 	}
-	return true;
+	return false;
 }
 bool UnitManager::unitDown(TileManager* tileManager){
 	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
@@ -169,7 +169,7 @@ bool UnitManager::unitDown(TileManager* tileManager){
 			return true;
 		}
 	}
-	return true;
+	return false;
 }
 bool UnitManager::unitLeft(TileManager* tileManager){
 	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
@@ -179,16 +179,16 @@ bool UnitManager::unitLeft(TileManager* tileManager){
 			return true;
 		}
 	}
-	return true;
+	return false;
 }
 bool UnitManager::unitRight(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
+	if(!(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied())){
 		if(currentSelection->moveRight()){
 			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY()+1)->occupy(currentSelection);
+			tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->occupy(currentSelection);
 			return true;
 		}
 	}
-	return true;
+	return false;
 } 
 #pragma endregion
