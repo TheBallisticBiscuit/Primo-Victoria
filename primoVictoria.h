@@ -34,7 +34,10 @@ private:
 	TextDX *output;
 	int currentMenu;
 	UnitManager unitManager;
+	Unit* fightTarget;
 	int keyDownLastFrame;
+	bool fighting;
+	bool animating;
 public:
     // Constructor
     PrimoVictoria();

@@ -11,8 +11,8 @@ Unit::~Unit(void)
 }
 
 bool Unit::initialize(int height, int width, int ncols, TextureManager* textureM, Game* game){
-	setX(200);
-	setY(200);
+	setLastDirection(right);
+	animating = false;
 	return Entity::initialize(game, 96, 96, 3, textureM);
 }
 
@@ -43,5 +43,13 @@ void Unit::setRange(int newRange){
 void Unit::setTile(int x, int y){
 	tile.x = x;
 	tile.y = y;
+}
+
+void Unit::setAnimating(bool newBool){
+	animating = newBool;
+}
+
+void Unit::setLastDirection(LastDirection newDirection){
+	lastDirection = newDirection;
 }
 #pragma endregion
