@@ -100,6 +100,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			player2Infantry[i].setTile(x, y);
 			player2Infantry[i].setX(x*TERRAIN_WIDTH);
 			player2Infantry[i].setY(y*TERRAIN_HEIGHT);
+			player2Infantry[i].setLastDirection(Unit::left);
 			selectUnit(&player2Infantry[i]);
 			break;
 		}

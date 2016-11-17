@@ -54,7 +54,7 @@ public:
     void releaseAll();
     void resetAll();
 	int getCurrentMenu(){return currentMenu;}
-	void spawnUnit(int unitType);
+	void spawnUnit(int unitType, int team);
 };
 
 #endif

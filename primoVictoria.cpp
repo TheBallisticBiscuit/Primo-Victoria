@@ -134,9 +134,7 @@ void PrimoVictoria::update()
 		}
 		if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 			keyDownLastFrame = NULL;
-			//fightTarget = unitManager.getCurrentSelection();
-			spawnUnit(0);
-			//fighting = true;
+			spawnUnit(0, 1);
 		}
 		if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
 			keyDownLastFrame = NULL;
@@ -272,21 +270,25 @@ void PrimoVictoria::resetAll()
 }
 
 #pragma region Newell/Higgs
-void PrimoVictoria::spawnUnit(int unitType){
+void PrimoVictoria::spawnUnit(int unitType, int team){
+	int spawnX = 0;
+	if(team == 2){
+		spawnX = tileManager.getWidth()-1;
+	}
 	for (int i = 0; i < tileManager.getHeight(); i++) {
-		if(!(tileManager.getTile(0, 3 + (std::pow((-1),i)) * ((i+1)/2))->isOccupied())){
+		if(!(tileManager.getTile(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2))->isOccupied())){
 			switch(unitType){
 			case 0:
-				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2), 2);
+				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
 				break;
 			case 1:
-				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2), 2);
+				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
 				break;
 			case 2:
-				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2), 2);
+				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
 				break;
 			}
-			tileManager.getTile(0, 3 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
+			tileManager.getTile(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
 			break;
 		}
 	}
