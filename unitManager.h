@@ -20,9 +20,9 @@ public:
 	void onLostDevice();
 	void spawnInfantry(int x, int y, int team);
 	bool fight(Unit& opponent, float frameTime);
-	Unit* getCurrentSelection(){return currentSelection;}
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
+	Unit* getCurrentSelection(){return currentSelection;}
 	void setCurrentSelection(Unit* newSelection);
 	void selectUnit(Unit* newSelection);
 	void selectionRight();

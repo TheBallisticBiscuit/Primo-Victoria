@@ -10,13 +10,14 @@ Infantry::~Infantry(void)
 {
 }
 
-bool Infantry::initialize(int width, int height, int ncols, TextureManager* textureM, Game* game){
+bool Infantry::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
 	setScale(INFANTRY_SCALING);
 	setMovementPerTurn(3);
 	setMovementLeft(0);
 	setRange(1);
 	setHP(10);
 	setDamage(2);
+	setTeam(team);
 	setFrameDelay(INFANTRY_ANIMATION_DELAY);
 	setFrameCounter(0);
 	setVelocity(VECTOR2(0, 0));
