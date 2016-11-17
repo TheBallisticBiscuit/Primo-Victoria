@@ -46,10 +46,32 @@ void Infantry::update(float frameTime){
 }
 
 void Infantry::fight(Unit& opponent, float frameTime){
-	setFrames(INFANTRY_ATTACK_RIGHT_START, INFANTRY_ATTACK_RIGHT_END);
-	setAnimating(true);
-	opponent.setFrames(INFANTRY_ATTACK_LEFT_START, INFANTRY_ATTACK_LEFT_END);
-	opponent.setAnimating(true);
+	switch(getLastDirection()){
+	case up:
+		setFrames(INFANTRY_ATTACK_UP_START, INFANTRY_ATTACK_UP_END);
+		setAnimating(true);
+		opponent.setFrames(INFANTRY_ATTACK_DOWN_START, INFANTRY_ATTACK_DOWN_END);
+		opponent.setAnimating(true);
+		break;
+	case left:
+		setFrames(INFANTRY_ATTACK_LEFT_START, INFANTRY_ATTACK_LEFT_END);
+		setAnimating(true);
+		opponent.setFrames(INFANTRY_ATTACK_RIGHT_START, INFANTRY_ATTACK_RIGHT_END);
+		opponent.setAnimating(true);
+		break;
+	case down:
+		setFrames(INFANTRY_ATTACK_DOWN_START, INFANTRY_ATTACK_DOWN_END);
+		setAnimating(true);
+		opponent.setFrames(INFANTRY_ATTACK_UP_START, INFANTRY_ATTACK_UP_END);
+		opponent.setAnimating(true);
+		break;
+	case right:
+		setFrames(INFANTRY_ATTACK_RIGHT_START, INFANTRY_ATTACK_RIGHT_END);
+		setAnimating(true);
+		opponent.setFrames(INFANTRY_ATTACK_LEFT_START, INFANTRY_ATTACK_LEFT_END);
+		opponent.setAnimating(true);
+		break;
+	}
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
 		setHP(getHP()-opponent.getDamage());

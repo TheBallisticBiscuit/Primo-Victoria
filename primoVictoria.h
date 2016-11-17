@@ -31,7 +31,7 @@ private:
 
 	TileManager tileManager;
 
-	TextDX *output;
+	TextDX *unitStats;
 	int currentMenu;
 	UnitManager unitManager;
 	Unit* fightTarget;

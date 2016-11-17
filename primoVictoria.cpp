@@ -52,9 +52,9 @@ void PrimoVictoria::initialize(HWND hwnd)
 
 #pragma endregion
 
-	output = new TextDX();
-	if(output->initialize(graphics, 15, true, false, "Arial") == false)
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing output font"));
+	unitStats = new TextDX();
+	if(unitStats->initialize(graphics, 15, true, false, "Arial") == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
 	unitManager.initialize(this, graphics);
 	keyDownLastFrame = NULL;
 	moving = NULL;
@@ -155,12 +155,9 @@ void PrimoVictoria::collisions()
 //=============================================================================
 void PrimoVictoria::render()
 {
-	std::stringstream ss;
-
+	//std::stringstream ss;
 	graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
-
-
 	if (currentMenu == 0){
 		tileManager.draw();
 		unitManager.draw();
@@ -171,7 +168,12 @@ void PrimoVictoria::render()
 	else if(currentMenu == 2){
 		optionsMenu -> displayMenu();
 	}
-	output->print(ss.str(), 0,0);
+	if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
+		unitStats->setFontColor(graphicsNS::LIME);
+		unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()->getHP()),
+			50, GAME_HEIGHT-50);
+	}
+	//unitStats->print(ss.str(), 0,0);
 
 	graphics->spriteEnd();                  // end drawing sprites
 }
