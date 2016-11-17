@@ -93,17 +93,19 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 		}
 	}
 	else if(team == 2){
-			for(int i = 0; i < 10; i++){
-		if(!player2Infantry[i].getActive()){
-			player2Infantry[i].setActive(true);
-			player2Infantry[i].setVisible(true);
-			player2Infantry[i].setTile(x, y);
-			player2Infantry[i].setX(x*TERRAIN_WIDTH);
-			player2Infantry[i].setY(y*TERRAIN_HEIGHT);
-			player2Infantry[i].setLastDirection(Unit::left);
-			selectUnit(&player2Infantry[i]);
-			break;
+		for(int i = 0; i < 10; i++){
+			if(!player2Infantry[i].getActive()){
+				player2Infantry[i].setActive(true);
+				player2Infantry[i].setVisible(true);
+				player2Infantry[i].setTile(x, y);
+				player2Infantry[i].setX(x*TERRAIN_WIDTH);
+				player2Infantry[i].setY(y*TERRAIN_HEIGHT);
+				player2Infantry[i].setLastDirection(Unit::left);
+				selectUnit(&player2Infantry[i]);
+				break;
+			}
 		}
+
 	}
 }
 
