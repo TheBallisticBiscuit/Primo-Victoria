@@ -19,6 +19,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	selectionBox.setX(0);
 	selectionBox.setY(0);
 	selectionBox.setScale(SELECTION_BOX_SCALE);
+	selectionBox.setFrames(0, 0);
 	selectionX = 0;
 	selectionY = 0;
 
@@ -59,7 +60,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 }
 
 void UnitManager::draw(){
-	selectionBox.draw();
+	selectionBox.draw(selectionBox.getColorFilter());
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].draw();
 		player2Infantry[i].draw();
@@ -70,10 +71,14 @@ void UnitManager::draw(){
 
 void UnitManager::update(float frameTime){
 	if(currentSelection != nullptr){
+		selectionBox.setColorFilter(graphicsNS::RED);
 		selectionBox.setX(currentSelection->getX());
 		selectionBox.setY(currentSelection->getY());
 		selectedTile.x = (currentSelection->getTileX());
 		selectedTile.y = (currentSelection->getTileY());
+	}
+	else{
+		selectionBox.setColorFilter(graphicsNS::BLUE);
 	}
 	selectionX = selectionBox.getX()/TERRAIN_WIDTH;
 	selectionY = selectionBox.getY()/TERRAIN_HEIGHT;
