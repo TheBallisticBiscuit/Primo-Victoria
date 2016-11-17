@@ -38,6 +38,7 @@ private:
 	int keyDownLastFrame;
 	bool fighting;
 	int moving;
+	int turn;
 public:
     // Constructor
     PrimoVictoria();
@@ -55,6 +56,8 @@ public:
     void resetAll();
 	int getCurrentMenu(){return currentMenu;}
 	void spawnUnit(int unitType, int team);
+	void spawnUnit(int unitType);
+	void playerInput();
 };
 
 #endif

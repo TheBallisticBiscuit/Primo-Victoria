@@ -80,17 +80,17 @@ void UnitManager::onLostDevice(){
 
 void UnitManager::spawnInfantry(int x, int y, int team){
 	if(team == 1){
-	for(int i = 0; i < 10; i++){
-		if(!player1Infantry[i].getActive()){
-			player1Infantry[i].setActive(true);
-			player1Infantry[i].setVisible(true);
-			player1Infantry[i].setTile(x, y);
-			player1Infantry[i].setX(x*TERRAIN_WIDTH);
-			player1Infantry[i].setY(y*TERRAIN_HEIGHT);
-			selectUnit(&player1Infantry[i]);
-			break;
+		for(int i = 0; i < 10; i++){
+			if(!player1Infantry[i].getActive()){
+				player1Infantry[i].setActive(true);
+				player1Infantry[i].setVisible(true);
+				player1Infantry[i].setTile(x, y);
+				player1Infantry[i].setX(x*TERRAIN_WIDTH);
+				player1Infantry[i].setY(y*TERRAIN_HEIGHT);
+				selectUnit(&player1Infantry[i]);
+				break;
+			}
 		}
-	}
 	}
 	else if(team == 2){
 			for(int i = 0; i < 10; i++){
@@ -104,7 +104,6 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			selectUnit(&player2Infantry[i]);
 			break;
 		}
-	}
 	}
 }
 

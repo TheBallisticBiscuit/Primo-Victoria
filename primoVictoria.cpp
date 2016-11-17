@@ -114,76 +114,7 @@ void PrimoVictoria::update()
 		return;
 	}
 	if(currentMenu == 0){
-		if(input->isKeyDown(VK_SPACE)){
-			keyDownLastFrame = VK_SPACE;
-		}
-		if(input->isKeyDown(VK_UP)){
-			keyDownLastFrame = VK_UP;
-		}
-		if(input->isKeyDown(VK_DOWN)){
-			keyDownLastFrame = VK_DOWN;
-		}
-		if(input->isKeyDown(VK_LEFT)){
-			keyDownLastFrame = VK_LEFT;
-		}
-		if(input->isKeyDown(VK_RIGHT)){
-			keyDownLastFrame = VK_RIGHT;
-		}
-		if(input->isKeyDown(VK_RETURN)){
-			keyDownLastFrame = VK_RETURN;
-		}
-		if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
-			keyDownLastFrame = NULL;
-			spawnUnit(0, 1);
-		}
-		if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
-			keyDownLastFrame = NULL;
-			if(unitManager.getCurrentSelection() == nullptr){
-				unitManager.selectionUp();
-			}
-			else{
-				moving = 1;
-			}
-		}
-		if(!input->isKeyDown(VK_DOWN) && keyDownLastFrame == VK_DOWN){
-			keyDownLastFrame = NULL;
-			if(unitManager.getCurrentSelection() == nullptr){
-				unitManager.selectionDown();
-			}
-			else{
-				moving = 2;
-			}
-		}
-		if(!input->isKeyDown(VK_LEFT) && keyDownLastFrame == VK_LEFT){
-			keyDownLastFrame = NULL;
-			if(unitManager.getCurrentSelection() == nullptr){
-				unitManager.selectionLeft();
-			}
-			else{
-				moving = 3;
-			}
-		}
-		if(!input->isKeyDown(VK_RIGHT) && keyDownLastFrame == VK_RIGHT){
-			keyDownLastFrame = NULL;
-			if(unitManager.getCurrentSelection() == nullptr){
-				unitManager.selectionRight();
-			}
-			else{
-				moving = 4;
-			}
-		}
-		if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN){
-			keyDownLastFrame = NULL;
-			if(unitManager.getCurrentSelection() != nullptr){
-				unitManager.setCurrentSelection(nullptr);
-			}
-			else{
-				if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
-					unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
-				}
-			}
-		}
-		unitManager.update(frameTime);
+		playerInput();
 	}
 	else {
 		mainMenu->update();
@@ -268,6 +199,82 @@ void PrimoVictoria::resetAll()
 	Game::resetAll();
 	return;
 }
+
+void PrimoVictoria::playerInput() {
+	if(input->isKeyDown(VK_SPACE)){
+		keyDownLastFrame = VK_SPACE;
+	}
+	if(input->isKeyDown(VK_UP)){
+		keyDownLastFrame = VK_UP;
+	}
+	if(input->isKeyDown(VK_DOWN)){
+		keyDownLastFrame = VK_DOWN;
+	}
+	if(input->isKeyDown(VK_LEFT)){
+		keyDownLastFrame = VK_LEFT;
+	}
+	if(input->isKeyDown(VK_RIGHT)){
+		keyDownLastFrame = VK_RIGHT;
+	}
+	if(input->isKeyDown(VK_RETURN)){
+		keyDownLastFrame = VK_RETURN;
+	}
+	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
+		keyDownLastFrame = NULL;
+		//fightTarget = unitManager.getCurrentSelection();
+		spawnUnit(0);
+		//fighting = true;
+	}
+	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
+		keyDownLastFrame = NULL;
+		if(unitManager.getCurrentSelection() == nullptr){
+			unitManager.selectionUp();
+		}
+		else{
+			moving = 1;
+		}
+	}
+	if(!input->isKeyDown(VK_DOWN) && keyDownLastFrame == VK_DOWN){
+		keyDownLastFrame = NULL;
+		if(unitManager.getCurrentSelection() == nullptr){
+			unitManager.selectionDown();
+		}
+		else{
+			moving = 2;
+		}
+	}
+	if(!input->isKeyDown(VK_LEFT) && keyDownLastFrame == VK_LEFT){
+		keyDownLastFrame = NULL;
+		if(unitManager.getCurrentSelection() == nullptr){
+			unitManager.selectionLeft();
+		}
+		else{
+			moving = 3;
+		}
+	}
+	if(!input->isKeyDown(VK_RIGHT) && keyDownLastFrame == VK_RIGHT){
+		keyDownLastFrame = NULL;
+		if(unitManager.getCurrentSelection() == nullptr){
+			unitManager.selectionRight();
+		}
+		else{
+			moving = 4;
+		}
+	}
+	if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN){
+		keyDownLastFrame = NULL;
+		if(unitManager.getCurrentSelection() != nullptr){
+			unitManager.setCurrentSelection(nullptr);
+		}
+		else{
+			if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
+				unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+			}
+		}
+	}
+	unitManager.update(frameTime);
+}
+
 
 #pragma region Newell/Higgs
 void PrimoVictoria::spawnUnit(int unitType, int team){
