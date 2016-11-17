@@ -22,6 +22,8 @@ public:
 	bool fight(Unit& opponent, float frameTime);
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
+	int getSelectedTileX(){return selectedTile.x;}
+	int getSelectedTileY(){return selectedTile.y;}
 	Unit* getCurrentSelection(){return currentSelection;}
 	void setCurrentSelection(Unit* newSelection);
 	void selectUnit(Unit* newSelection);

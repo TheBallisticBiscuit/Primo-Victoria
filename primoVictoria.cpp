@@ -55,7 +55,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 #pragma endregion
 
 	unitStats = new TextDX();
-	if(unitStats->initialize(graphics, 15, true, false, "Arial") == false)
+	if(unitStats->initialize(graphics, 30, true, false, "Arial") == false)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
 	unitManager.initialize(this, graphics);
 	keyDownLastFrame = NULL;
@@ -75,28 +75,16 @@ void PrimoVictoria::update()
 	if(moving != NULL){
 		switch(moving){
 		case 1:
-			if(unitManager.unitUp(&tileManager)){
-				moving = NULL;
-				isPlayerTurn = !isPlayerTurn;
-			}
+			moveUp();
 			break;
 		case 2:
-			if(unitManager.unitDown(&tileManager)){
-				moving = NULL;
-				isPlayerTurn = !isPlayerTurn;
-			}
+			moveDown();
 			break;
 		case 3:
-			if(unitManager.unitLeft(&tileManager)){
-				moving = NULL;
-				isPlayerTurn = !isPlayerTurn;
-			}
+			moveLeft();
 			break;
 		case 4:
-			if(unitManager.unitRight(&tileManager)){
-				moving = NULL;
-				isPlayerTurn = !isPlayerTurn;
-			}
+			moveRight();
 			break;
 		}
 		if(input->isKeyDown(VK_ESCAPE)){
@@ -113,6 +101,11 @@ void PrimoVictoria::update()
 	if(fighting == true){
 		if(unitManager.fight(*fightTarget, frameTime)){
 			fighting = false;
+			tileManager.getTile(fightTarget->getTileX(), fightTarget->getTileY())->leave();
+			tileManager.getTile(unitManager.getCurrentSelection()->getTileX(), 
+				unitManager.getCurrentSelection()->getTileY())->leave();
+			unitManager.setCurrentSelection(nullptr);
+			fightTarget = nullptr;
 			isPlayerTurn = !isPlayerTurn;
 		}
 		mainMenu->update();
@@ -317,4 +310,130 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 	if (isPlayerTurn)
 		unitManager.setCurrentSelection(nullptr);
 }
+
+#pragma region Newell
+void PrimoVictoria::moveUp(){
+	if (unitManager.getCurrentSelection()->getTileY() > 0) {
+		if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+			->isOccupied())){
+				if(unitManager.unitUp(&tileManager)){
+					moving = NULL;
+					isPlayerTurn = !isPlayerTurn;
+				}
+		}
+		else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+			->isOccupied()){
+				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+					->getUnit()->getTeam() == 2 && isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+							->getUnit();
+						fighting = true;
+				}
+				else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+					->getUnit()->getTeam() == 1 && !isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+							->getUnit();
+						fighting = true;
+				}
+				moving = NULL;
+		}
+	}
+	else{
+		moving = NULL;
+	}
+}
+
+void PrimoVictoria::moveDown(){
+	if (unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-1) {
+		if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+			->isOccupied())){
+				if(unitManager.unitDown(&tileManager)){
+					moving = NULL;
+					isPlayerTurn = !isPlayerTurn;
+				}
+		}
+		else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+			->isOccupied()){
+				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+					->getUnit()->getTeam() == 2 && isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+							->getUnit();
+						fighting = true;
+				}
+				else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+					->getUnit()->getTeam() == 1 && !isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+							->getUnit();
+						fighting = true;
+				}
+				moving = NULL;
+		}
+	}
+	else{
+		moving = NULL;
+	}
+}
+
+void PrimoVictoria::moveLeft(){
+	if (unitManager.getCurrentSelection()->getTileX() > 0) {
+		if(!(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+			->isOccupied())){
+				if(unitManager.unitLeft(&tileManager)){
+					moving = NULL;
+					isPlayerTurn = !isPlayerTurn;
+				}
+		}
+		else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+			->isOccupied()){
+				if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+					->getUnit()->getTeam() == 2 && isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+							->getUnit();
+						fighting = true;
+				}
+				else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+					->getUnit()->getTeam() == 1 && !isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+							->getUnit();
+						fighting = true;
+				}
+				moving = NULL;
+		}
+	}
+	else{
+		moving = NULL;
+	}
+}
+
+void PrimoVictoria::moveRight(){
+	if (unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-1) {
+		if(!(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+			->isOccupied())){
+				if(unitManager.unitRight(&tileManager)){
+					moving = NULL;
+					isPlayerTurn = !isPlayerTurn;
+				}
+		}
+		else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+			->isOccupied()){
+				if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+					->getUnit()->getTeam() == 2 && isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+							->getUnit();
+						fighting = true;
+				}
+				else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+					->getUnit()->getTeam() == 1 && !isPlayerTurn){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+							->getUnit();
+						fighting = true;
+				}
+				moving = NULL;
+		}
+	}
+	else{
+		moving = NULL;
+	}
+}
+#pragma endregion
 #pragma endregion
