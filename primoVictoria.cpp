@@ -197,8 +197,10 @@ void PrimoVictoria::render()
 	}
 	if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
 		unitStats->setFontColor(graphicsNS::LIME);
-		unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()->getHP()),
-			50, GAME_HEIGHT-50);
+		unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
+			unitManager.getSelectionY())->getUnit()->getHP())+ "          Movement Remaining: " +
+			std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
+			unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
 	}
 	//unitStats->print(ss.str(), 0,0);
 
@@ -322,7 +324,7 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 				endTurn();
 				break;
 			case 2:
-				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
+				unitManager.spawnArcher(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
 				endTurn();
 				break;
 			}

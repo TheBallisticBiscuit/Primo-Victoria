@@ -6,6 +6,7 @@ functions*/
 #include "entity.h"
 #include "infantry.h"
 #include "cavalry.h"
+#include "archer.h"
 #include "TileManager.h"
 
 #pragma region Newell
@@ -21,6 +22,7 @@ public:
 	void onLostDevice();
 	void spawnInfantry(int x, int y, int team);
 	void spawnCavalry(int x, int y, int team);
+	void spawnArcher(int x, int y, int team);
 	bool fight(Unit& opponent, float frameTime);
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
@@ -48,6 +50,8 @@ private:
 	TextureManager infantryTexture2;
 	TextureManager cavalryTexture;
 	TextureManager cavalryTexture2;
+	TextureManager archerTexture;
+	TextureManager archerTexture2;
 	TextureManager selectionBoxTexture;
 	Image selectionBox;
 	struct pair{
@@ -58,6 +62,8 @@ private:
 	Infantry* player2Infantry;
 	Cavalry* player1Cavalry;
 	Cavalry* player2Cavalry;
+	Archer* player1Archers;
+	Archer* player2Archers;
 	Unit* currentSelection;
 	int selectionX;
 	int selectionY;
