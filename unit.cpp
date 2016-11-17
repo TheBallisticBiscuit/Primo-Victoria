@@ -13,7 +13,7 @@ Unit::~Unit(void)
 bool Unit::initialize(int height, int width, int ncols, TextureManager* textureM, Game* game){
 	setLastDirection(right);
 	animating = false;
-	return Entity::initialize(game, 96, 96, 3, textureM);
+	return Entity::initialize(game, height, width, ncols, textureM);
 }
 
 void Unit::setFrameCounter(float newFrameCounter){

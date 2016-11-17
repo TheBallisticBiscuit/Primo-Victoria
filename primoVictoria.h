@@ -61,6 +61,7 @@ public:
 	void moveLeft();
 	void moveRight();
 	void playerInput();
+	void endTurn();
 };
 
 #endif

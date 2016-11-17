@@ -9,7 +9,8 @@ public:
 	int getDamage(){return damage;}
 	int getHP(){return HP;}
 	int getRange(){return range;}
-	int getMovement(){return movementLeft;}
+	int getMovementLeft(){return movementLeft;}
+	int getMovement(){return movementPerTurn;}
 	float getFrameCounter(){return frameCounter;}
 	enum LastDirection {up, down, left, right} getLastDirection(){return lastDirection;}
 	int getTileX(){return tile.x;}
@@ -32,6 +33,7 @@ public:
 	virtual bool moveDown(){return false;}
 	virtual bool moveLeft(){return false;}
 	virtual bool moveRight(){return false;}
+	virtual void setAttackFrames(LastDirection direction){}
 private:
 	int damage;
 	int HP;

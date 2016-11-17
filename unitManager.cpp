@@ -28,17 +28,32 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!infantryTexture2.initialize(graphics,"pictures\\redKnight.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redKnight texture"));
 	}
+	if (!cavalryTexture.initialize(graphics,"pictures\\greenCavalry.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+	}
+	if (!cavalryTexture2.initialize(graphics,"pictures\\greenCavalry.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+	}
 	player1Infantry = new Infantry[10];
+	player2Infantry = new Infantry[10];
+	player1Cavalry = new Cavalry[10];
+	player2Cavalry = new Cavalry[10];
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
 		player1Infantry[i].setActive(false);
 		player1Infantry[i].setVisible(false);
-	}
-	player2Infantry = new Infantry[10];
-	for(int i = 0; i < 10; i++){
+
 		player2Infantry[i].initialize(96, 96, 3, 2, &infantryTexture2, gamePtr);
 		player2Infantry[i].setActive(false);
 		player2Infantry[i].setVisible(false);
+
+		player1Cavalry[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+		player1Cavalry[i].setActive(false);
+		player1Cavalry[i].setVisible(false);
+
+		player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
+		player2Cavalry[i].setActive(false);
+		player2Cavalry[i].setVisible(false);
 	}
 	currentSelection = nullptr;
 }
@@ -48,6 +63,8 @@ void UnitManager::draw(){
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].draw();
 		player2Infantry[i].draw();
+		player1Cavalry[i].draw();
+		player2Cavalry[i].draw();
 	}
 }
 
@@ -64,6 +81,8 @@ void UnitManager::update(float frameTime){
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].update(frameTime);
 		player2Infantry[i].update(frameTime);
+		player1Cavalry[i].update(frameTime);
+		player2Cavalry[i].update(frameTime);
 	}
 
 }
@@ -71,11 +90,15 @@ void UnitManager::onResetDevice(){
 	selectionBoxTexture.onResetDevice();
 	infantryTexture.onResetDevice();
 	infantryTexture2.onResetDevice();
+	cavalryTexture.onResetDevice();
+	cavalryTexture2.onResetDevice();
 }
 void UnitManager::onLostDevice(){
 	selectionBoxTexture.onLostDevice();
 	infantryTexture.onLostDevice();
 	infantryTexture2.onLostDevice();
+	cavalryTexture.onLostDevice();
+	cavalryTexture2.onLostDevice();
 }
 
 void UnitManager::spawnInfantry(int x, int y, int team){
@@ -111,12 +134,47 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 	}
 }
 
+void UnitManager::spawnCavalry(int x, int y, int team){
+	if(team == 1){
+		for(int i = 0; i < 10; i++){
+			if(!player1Cavalry[i].getActive()){
+				player1Cavalry[i].setActive(true);
+				player1Cavalry[i].setVisible(true);
+				player1Cavalry[i].setHP(5);
+				player1Cavalry[i].setTile(x, y);
+				player1Cavalry[i].setX(x*TERRAIN_WIDTH);
+				player1Cavalry[i].setY(y*TERRAIN_HEIGHT);
+				selectUnit(&player1Cavalry[i]);
+				break;
+			}
+		}
+	}
+	else if(team == 2){
+		for(int i = 0; i < 10; i++){
+			if(!player2Cavalry[i].getActive()){
+				player2Cavalry[i].setActive(true);
+				player2Cavalry[i].setVisible(true);
+				player1Cavalry[i].setHP(5);
+				player2Cavalry[i].setTile(x, y);
+				player2Cavalry[i].setX(x*TERRAIN_WIDTH);
+				player2Cavalry[i].setY(y*TERRAIN_HEIGHT);
+				player2Cavalry[i].setLastDirection(Unit::left);
+				selectUnit(&player2Cavalry[i]);
+				break;
+			}
+		}
+
+	}
+}
+
 bool UnitManager::fight(Unit& opponent, float frameTime){
 	currentSelection->fight(opponent, frameTime); 
 	if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
+		currentSelection->setAnimating(false);
 		return opponent.kill(frameTime);
 	}
 	else if(currentSelection->getHP() <= 0 && opponent.getHP() > 0){
+		opponent.setAnimating(false);
 		return currentSelection->kill(frameTime);
 	}
 	else if(currentSelection->getHP() <= 0 && opponent.getHP() <= 0){
@@ -197,4 +255,13 @@ bool UnitManager::unitRight(TileManager* tileManager){
 	}
 	return false;
 } 
+
+void UnitManager::endTurn(){
+	for(int i = 0; i < 10; i++){
+		player1Infantry[i].setMovementLeft(player1Infantry[i].getMovement());
+		player2Infantry[i].setMovementLeft(player2Infantry[i].getMovement());
+		player1Cavalry[i].setMovementLeft(player1Cavalry[i].getMovement());
+		player2Cavalry[i].setMovementLeft(player2Cavalry[i].getMovement());
+	}
+}
 #pragma endregion
