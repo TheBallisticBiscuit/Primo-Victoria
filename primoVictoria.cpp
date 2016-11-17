@@ -177,10 +177,12 @@ void PrimoVictoria::update()
 				unitManager.setCurrentSelection(nullptr);
 			}
 			else{
-				unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+				if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
+					unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+				}
 			}
 		}
-	unitManager.update(frameTime);
+		unitManager.update(frameTime);
 	}
 	else {
 		mainMenu->update();
