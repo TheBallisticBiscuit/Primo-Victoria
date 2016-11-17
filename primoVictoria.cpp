@@ -269,68 +269,22 @@ void PrimoVictoria::resetAll()
 
 #pragma region Newell
 void PrimoVictoria::spawnUnit(int unitType){
-	if(!(tileManager.getTile(0, 2)->isOccupied())){
-		switch(unitType){
-		case 0:
-			unitManager.spawnInfantry(0, 2);
-			break;
-		case 1:
-			unitManager.spawnInfantry(0, 2);
-			break;
-		case 2:
-			unitManager.spawnInfantry(0, 2);
+	for (int i = 0; i < 5; i++) {
+		if(!(tileManager.getTile(0, 2 + (std::pow((-1),i)) * ((i+1)/2))->isOccupied())){
+			switch(unitType){
+			case 0:
+				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2));
+				break;
+			case 1:
+				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2));
+				break;
+			case 2:
+				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2));
+				break;
+			}
+			tileManager.getTile(0, 2 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
 			break;
 		}
-		tileManager.getTile(0, 2)->occupy(unitManager.getCurrentSelection());
-	}
-	else if(!(tileManager.getTile(0, 1)->isOccupied())){
-		switch(unitType){
-		case 0:
-			unitManager.spawnInfantry(0, 1);
-			break;
-		case 1:
-			unitManager.spawnInfantry(0, 1);
-		case 2:
-			break;
-			unitManager.spawnInfantry(0, 1);
-		}
-		tileManager.getTile(0, 1)->occupy(unitManager.getCurrentSelection());
-	}
-	else if(!(tileManager.getTile(0, 3)->isOccupied())){
-		switch(unitType){
-		case 0:
-			break;
-			unitManager.spawnInfantry(0, 3);
-		case 1:
-			break;
-			unitManager.spawnInfantry(0, 3);
-		case 2:
-			break;
-			unitManager.spawnInfantry(0, 3);
-		}
-		tileManager.getTile(0, 3)->occupy(unitManager.getCurrentSelection());
-	}
-	else if(!(tileManager.getTile(0, 0)->isOccupied())){
-		switch(unitType){
-		case 0:
-			unitManager.spawnInfantry(0, 0);
-		case 1:
-			unitManager.spawnInfantry(0, 0);
-		case 2:
-			unitManager.spawnInfantry(0, 0);
-		}
-		tileManager.getTile(0, 0)->occupy(unitManager.getCurrentSelection());
-	}
-	else if(!(tileManager.getTile(0, 4)->isOccupied())){
-		switch(unitType){
-		case 0:
-			unitManager.spawnInfantry(0, 4);
-		case 1:
-			unitManager.spawnInfantry(0, 4);
-		case 2:
-			unitManager.spawnInfantry(0, 4);
-		}
-		tileManager.getTile(0, 4)->occupy(unitManager.getCurrentSelection());
 	}
 }
 #pragma endregion

@@ -19,7 +19,7 @@ public:
 	Tile* getTile(int x, int y) {return &tiles[x][y]; };
 
 	void setTileVisibility(bool);
-	void draw(int x, int y);
+	void draw(int x, int y); 
 	int getWidth() { return width; };
 	int getHeight() { return height; };
 
