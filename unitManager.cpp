@@ -33,13 +33,6 @@ void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
 		player1Infantry[i].initialize(96, 96, 3, &infantryTexture, gamePtr);
 		player1Infantry[i].setActive(false);
 		player1Infantry[i].setVisible(false);
-		/*if(i == 0){
-		player1Infantry[i].setVisible(true);
-		player1Infantry[i].setActive(true);
-		player1Infantry[i].setX(200);
-		player1Infantry[i].setHP(10);
-		currentSelection = &player1Infantry[i];
-		}*/
 	}
 	player2Infantry = new Infantry[10];
 	for(int i = 0; i < 10; i++){
@@ -62,6 +55,8 @@ void UnitManager::update(float frameTime){
 	if(currentSelection != nullptr){
 		selectionBox.setX(currentSelection->getX());
 		selectionBox.setY(currentSelection->getY());
+		selectedTile.x = (currentSelection->getTileX());
+		selectedTile.y = (currentSelection->getTileY());
 	}
 	selectionX = selectionBox.getX()/TERRAIN_WIDTH;
 	selectionY = selectionBox.getY()/TERRAIN_HEIGHT;
@@ -154,40 +149,52 @@ void UnitManager::selectionDown(){
 bool UnitManager::unitUp(TileManager* tileManager){
 	if(!(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied())){
 		if(currentSelection->moveUp()){
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->occupy(currentSelection);
+			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
+			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 			return true;
 		}
+	}
+	else if(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied()){
+		return true;
 	}
 	return false;
 }
 bool UnitManager::unitDown(TileManager* tileManager){
 	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
 		if(currentSelection->moveDown()){
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->occupy(currentSelection);
+			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
+			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 			return true;
 		}
+	}
+		else if(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied()){
+		return true;
 	}
 	return false;
 }
 bool UnitManager::unitLeft(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
+	if(!(tileManager->getTile(selectedTile.x-1, selectedTile.y)->isOccupied())){
 		if(currentSelection->moveLeft()){
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->occupy(currentSelection);
+			tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
+			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 			return true;
 		}
+	}
+		else if(tileManager->getTile(selectedTile.x-1, selectedTile.y)->isOccupied()){
+		return true;
 	}
 	return false;
 }
 bool UnitManager::unitRight(TileManager* tileManager){
 	if(!(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied())){
 		if(currentSelection->moveRight()){
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->occupy(currentSelection);
+			tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
+			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 			return true;
 		}
+	}
+		else if(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied()){
+		return true;
 	}
 	return false;
 } 
