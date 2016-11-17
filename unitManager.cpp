@@ -89,8 +89,18 @@ void UnitManager::update(float frameTime){
 		player1Cavalry[i].update(frameTime);
 		player2Cavalry[i].update(frameTime);
 	}
-
 }
+
+int UnitManager::numActiveUnits() {
+	int activeUnits = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		activeUnits += player2Infantry[i].getActive();
+	}
+	return activeUnits;
+}
+
+
 void UnitManager::onResetDevice(){
 	selectionBoxTexture.onResetDevice();
 	infantryTexture.onResetDevice();
@@ -269,4 +279,37 @@ void UnitManager::endTurn(){
 		player2Cavalry[i].setMovementLeft(player2Cavalry[i].getMovement());
 	}
 }
+#pragma endregion
+
+#pragma region Higgs
+//Returns the closest enemy to the selected AI unit
+Unit* UnitManager::closestUnit(Unit* t2Unit) { 
+	VECTOR2 minDistance(1000,1000);
+	int closest;
+	for (int i = 0; i < 10; i++)	{
+		if (minDistance > D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY()))
+			minDistance = D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY());
+		closest = i;
+	}
+	return &player1Infantry[closest];
+}
+//Calculates direction of movement, calls moveAttempt for each movement step
+void UnitManager::aiAttack(VECTOR2 enemyXY, Unit* aiUnit, TileManager* tileManager) {
+	VECTOR2 dir = *(aiUnit->getCenter()) - enemyXY;
+	D3DXVec2Normalize(&dir, &dir);
+	if (dir.x < -0.707) { 
+		moveAttempt(tileManager, 1);
+	}
+
+}
+
+bool UnitManager::moveAttempt(TileManager* tileManager, int dir) { //1 = left, 2 = up, 3 = right, 4 = down
+	switch (dir)
+		case 1:
+			if (!tileManager->getTile(currentSelection->getTileX() - 1, currentSelection->getTileY())->isOccupied()) {
+				//unitLeft(tileManager);
+			}
+	return false;
+}
+
 #pragma endregion

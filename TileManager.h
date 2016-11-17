@@ -15,12 +15,14 @@ public:
 	~TileManager(void);
 	
 	bool initialize(Graphics* graphics, int x, int y, Game* game);
-
+	//x & y correspond to grid coordinates, not screen coordinates
 	Tile* getTile(int x, int y) {return &tiles[x][y]; };
 
 	void setTileVisibility(bool);
 	void draw(); 
+	//Width of grid, in tiles
 	int getWidth() { return width; };
+	//Height of grid, in tiles
 	int getHeight() { return height; };
 
 
