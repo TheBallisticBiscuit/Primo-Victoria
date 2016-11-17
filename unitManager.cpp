@@ -147,55 +147,71 @@ void UnitManager::selectionDown(){
 	}
 }
 bool UnitManager::unitUp(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied())){
-		if(currentSelection->moveUp()){
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+	if (currentSelection->getTileY() > 0) {
+		if(!(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied())){
+			if(currentSelection->moveUp()){
+				tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
+				tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+				return true;
+			}
+		}
+		else if(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied()){
 			return true;
 		}
 	}
-	else if(tileManager->getTile(selectedTile.x, selectedTile.y-1)->isOccupied()){
+	else if (currentSelection->getTileY() == 0)
 		return true;
-	}
 	return false;
 }
 bool UnitManager::unitDown(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
-		if(currentSelection->moveDown()){
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+	if (currentSelection->getTileY() < tileManager->getHeight()-1) {
+		if(!(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied())){
+			if(currentSelection->moveDown()){
+				tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
+				tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+				return true;
+			}
+		}
+		else if(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied()){
 			return true;
 		}
 	}
-		else if(tileManager->getTile(selectedTile.x, selectedTile.y+1)->isOccupied()){
+	else if (currentSelection->getTileY() == tileManager->getHeight()-1)
 		return true;
-	}
 	return false;
 }
 bool UnitManager::unitLeft(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x-1, selectedTile.y)->isOccupied())){
-		if(currentSelection->moveLeft()){
-			tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+	if (currentSelection->getTileX() > 0) {
+		if(!(tileManager->getTile(selectedTile.x-1, selectedTile.y)->isOccupied())){
+			if(currentSelection->moveLeft()){
+				tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
+				tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+				return true;
+			}
+		}
+		else if(tileManager->getTile(selectedTile.x-1, selectedTile.y)->isOccupied()){
 			return true;
 		}
 	}
-		else if(tileManager->getTile(selectedTile.x-1, selectedTile.y)->isOccupied()){
+	else if (currentSelection->getTileX() == 0)
 		return true;
-	}
 	return false;
 }
 bool UnitManager::unitRight(TileManager* tileManager){
-	if(!(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied())){
-		if(currentSelection->moveRight()){
-			tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
-			tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+	if (currentSelection->getTileX() < tileManager->getWidth()-1) {
+		if(!(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied())){
+			if(currentSelection->moveRight()){
+				tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
+				tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
+				return true;
+			}
+		}
+		else if(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied()){
 			return true;
 		}
 	}
-		else if(tileManager->getTile(selectedTile.x+1, selectedTile.y)->isOccupied()){
+	else if (currentSelection->getTileX() == tileManager->getWidth()-1)
 		return true;
-	}
 	return false;
 } 
 #pragma endregion

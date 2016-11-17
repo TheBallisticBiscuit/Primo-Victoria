@@ -77,8 +77,8 @@ inline void safeOnResetDevice(T& ptr)
 const char CLASS_NAME[] = "Collisions";
 const char GAME_TITLE[] = "Primo Victoria";
 const bool FULLSCREEN = false;              // windowed or fullscreen
-const UINT GAME_WIDTH =  640;               // width of game in pixels
-const UINT GAME_HEIGHT = 480;               // height of game in pixels
+const UINT GAME_WIDTH =  1152;               // width of game in pixels
+const UINT GAME_HEIGHT = 674;               // height of game in pixels
 
 // game
 const double PI = 3.14159265;
@@ -104,6 +104,7 @@ const char BACKGROUND_IMAGE[] = "pictures\\background.PNG";
 const int TERRAIN_WIDTH = 96;
 const int TERRAIN_HEIGHT = 96;
 const int TERRAIN_SCALE = 1;
+const float BACKGROUND_IMAGE_SCALE = 1.0f;
 
 #pragma endregion
 // key mappings

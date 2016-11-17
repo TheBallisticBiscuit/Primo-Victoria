@@ -41,9 +41,12 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
 	if (!background.initialize(graphics, 0,0,0,&backgroundTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
-	background.setScale(0.8f);
+	background.setScale(BACKGROUND_IMAGE_SCALE);
+	background.setX(140.f);
 
-	if (!tileManager.initialize(graphics, 7,5, this))
+	graphics->setBackColor(SETCOLOR_ARGB(0xFF, 0xAF, 0x3F, 0x2F));
+
+	if (!tileManager.initialize(graphics, 12,7, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
 
@@ -230,7 +233,8 @@ void PrimoVictoria::render()
 
 
 	if (currentMenu == 0){
-		tileManager.draw(7,5);
+		tileManager.draw();
+		unitManager.draw();
 	}
 	else if(currentMenu == 1){
 		mainMenu->displayMenu();
@@ -239,7 +243,7 @@ void PrimoVictoria::render()
 		optionsMenu -> displayMenu();
 	}
 	output->print(ss.str(), 0,0);
-	unitManager.draw();
+
 	graphics->spriteEnd();                  // end drawing sprites
 }
 
@@ -267,22 +271,22 @@ void PrimoVictoria::resetAll()
 	return;
 }
 
-#pragma region Newell
+#pragma region Newell/Higgs
 void PrimoVictoria::spawnUnit(int unitType){
-	for (int i = 0; i < 5; i++) {
-		if(!(tileManager.getTile(0, 2 + (std::pow((-1),i)) * ((i+1)/2))->isOccupied())){
+	for (int i = 0; i < tileManager.getHeight(); i++) {
+		if(!(tileManager.getTile(0, 3 + (std::pow((-1),i)) * ((i+1)/2))->isOccupied())){
 			switch(unitType){
 			case 0:
-				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2));
+				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2));
 				break;
 			case 1:
-				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2));
+				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2));
 				break;
 			case 2:
-				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2));
+				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2));
 				break;
 			}
-			tileManager.getTile(0, 2 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
+			tileManager.getTile(0, 3 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
 			break;
 		}
 	}

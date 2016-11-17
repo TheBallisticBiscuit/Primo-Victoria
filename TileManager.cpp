@@ -74,24 +74,24 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 
 void TileManager::setTileVisibility(bool isVisible) {
 	if (isVisible == true) {
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				tiles[i][j].setVisible();
 			}
 		}
 	}
 	else {
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 5; j++) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				tiles[i][j].setInvisible();
 			}
 		}
 	}
 }
 
-void TileManager::draw(int x, int y) {
-	for (int i = 0; i < x; i++) {
-		for (int j = 0; j < y; j++) {
+void TileManager::draw() {
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
 			tiles[i][j].draw();
 		}
 	}
