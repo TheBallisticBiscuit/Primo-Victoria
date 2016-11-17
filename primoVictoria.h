@@ -33,7 +33,7 @@ private:
 
 	TileManager tileManager;
 
-	TextDX *output;
+	TextDX *unitStats;
 	int currentMenu;
 	UnitManager unitManager;
 	Unit* fightTarget;
@@ -58,7 +58,12 @@ public:
     void resetAll();
 	int getCurrentMenu(){return currentMenu;}
 	void spawnUnit(int unitType, int team);
+	void moveUp();
+	void moveDown();
+	void moveLeft();
+	void moveRight();
 	void playerInput();
+	void endTurn();
 };
 
 #endif

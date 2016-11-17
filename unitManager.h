@@ -5,6 +5,7 @@ functions*/
 #pragma once
 #include "entity.h"
 #include "infantry.h"
+#include "cavalry.h"
 #include "TileManager.h"
 
 #pragma region Newell
@@ -19,10 +20,13 @@ public:
 	void onResetDevice();
 	void onLostDevice();
 	void spawnInfantry(int x, int y, int team);
+	void spawnCavalry(int x, int y, int team);
 	bool fight(Unit& opponent, float frameTime);
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
 	int numActiveUnits();
+	int getSelectedTileX(){return selectedTile.x;}
+	int getSelectedTileY(){return selectedTile.y;}
 	Unit* getCurrentSelection(){return currentSelection;}
 	Infantry* getInfantry(int i) { return &player2Infantry[i]; }
 	Unit*closestUnit(Unit* t2Unit);
@@ -38,9 +42,12 @@ public:
 	bool unitDown(TileManager* tileManager);
 	bool unitLeft(TileManager* tileManager);
 	bool unitRight(TileManager* tileManager);
+	void endTurn();
 private:
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;
+	TextureManager cavalryTexture;
+	TextureManager cavalryTexture2;
 	TextureManager selectionBoxTexture;
 	Image selectionBox;
 	struct pair{
@@ -49,6 +56,8 @@ private:
 	} selectedTile;
 	Infantry* player1Infantry;
 	Infantry* player2Infantry;
+	Cavalry* player1Cavalry;
+	Cavalry* player2Cavalry;
 	Unit* currentSelection;
 	int selectionX;
 	int selectionY;
