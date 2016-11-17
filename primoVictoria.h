@@ -17,6 +17,8 @@ class PrimoVictoria;
 #include "TileManager.h"
 #include <sstream>
 #include <string>
+#include <random>
+#include <ctime>
 
 //=============================================================================
 // This class is the core of the game

@@ -22,7 +22,12 @@ public:
 	bool fight(Unit& opponent, float frameTime);
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
+	int numActiveUnits();
 	Unit* getCurrentSelection(){return currentSelection;}
+	Infantry* getInfantry(int i) { return &player2Infantry[i]; }
+	Unit*closestUnit(Unit* t2Unit);
+	bool moveAttempt(TileManager*, int);
+	void aiAttack(VECTOR2 enemyXY, Unit* aiUnit, TileManager*);
 	void setCurrentSelection(Unit* newSelection);
 	void selectUnit(Unit* newSelection);
 	void selectionRight();

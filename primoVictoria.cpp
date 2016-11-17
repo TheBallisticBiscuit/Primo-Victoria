@@ -38,6 +38,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 
 #pragma region Higgs
 	isPlayerTurn = true;
+	srand(time(0));
 
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
@@ -150,8 +151,26 @@ void PrimoVictoria::update()
 //=============================================================================
 void PrimoVictoria::ai()
 {
-	if (!isPlayerTurn)
-		spawnUnit(1,2);
+	if (!isPlayerTurn) {
+		int r = 2; //rand()%(#)
+		if (unitManager.numActiveUnits() < r)
+			spawnUnit(1,2);
+		else {
+			for (int i = 0; i < 90; i++)
+			{
+				r = rand()%10;
+				if (unitManager.getInfantry(r)->getActive()) { //Returns a pointer to Player2's Infantry ???
+					unitManager.setCurrentSelection(unitManager.getInfantry(r));
+					break;
+				}
+			}
+			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection());
+			while (true) { //Will run till AI's turn ends
+
+			}
+		}
+
+	}
 }
 
 //=============================================================================
