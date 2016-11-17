@@ -277,13 +277,13 @@ void PrimoVictoria::spawnUnit(int unitType){
 		if(!(tileManager.getTile(0, 3 + (std::pow((-1),i)) * ((i+1)/2))->isOccupied())){
 			switch(unitType){
 			case 0:
-				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2), 2);
+				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2), 2);
 				break;
 			case 1:
-				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2), 2);
+				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2), 2);
 				break;
 			case 2:
-				unitManager.spawnInfantry(0, 2 + (std::pow((-1),i)) * ((i+1)/2), 2);
+				unitManager.spawnInfantry(0, 3 + (std::pow((-1),i)) * ((i+1)/2), 2);
 				break;
 			}
 			tileManager.getTile(0, 3 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
