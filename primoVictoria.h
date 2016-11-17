@@ -35,10 +35,10 @@ private:
 	int currentMenu;
 	UnitManager unitManager;
 	Unit* fightTarget;
-	int keyDownLastFrame;
 	bool fighting;
+	int keyDownLastFrame;
 	int moving;
-	int turn;
+	bool isPlayerTurn;
 public:
     // Constructor
     PrimoVictoria();

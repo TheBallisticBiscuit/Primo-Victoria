@@ -37,6 +37,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 	currentMenu = 1;
 
 #pragma region Higgs
+	isPlayerTurn = true;
+
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
 	if (!background.initialize(graphics, 0,0,0,&backgroundTexture))
@@ -75,21 +77,25 @@ void PrimoVictoria::update()
 		case 1:
 			if(unitManager.unitUp(&tileManager)){
 				moving = NULL;
+				isPlayerTurn = !isPlayerTurn;
 			}
 			break;
 		case 2:
 			if(unitManager.unitDown(&tileManager)){
 				moving = NULL;
+				isPlayerTurn = !isPlayerTurn;
 			}
 			break;
 		case 3:
 			if(unitManager.unitLeft(&tileManager)){
 				moving = NULL;
+				isPlayerTurn = !isPlayerTurn;
 			}
 			break;
 		case 4:
 			if(unitManager.unitRight(&tileManager)){
 				moving = NULL;
+				isPlayerTurn = !isPlayerTurn;
 			}
 			break;
 		}
@@ -107,6 +113,7 @@ void PrimoVictoria::update()
 	if(fighting == true){
 		if(unitManager.fight(*fightTarget, frameTime)){
 			fighting = false;
+			isPlayerTurn = !isPlayerTurn;
 		}
 		mainMenu->update();
 		optionsMenu->update();
@@ -114,7 +121,8 @@ void PrimoVictoria::update()
 		return;
 	}
 	if(currentMenu == 0){
-		playerInput();
+		if (isPlayerTurn == true)
+			playerInput();			
 	}
 	else {
 		mainMenu->update();
@@ -141,7 +149,10 @@ void PrimoVictoria::update()
 // Artificial Intelligence
 //=============================================================================
 void PrimoVictoria::ai()
-{}
+{
+	if (!isPlayerTurn)
+		spawnUnit(1,2);
+}
 
 //=============================================================================
 // Handle collisions
@@ -268,7 +279,8 @@ void PrimoVictoria::playerInput() {
 		}
 		else{
 			if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
-				unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
+				if (tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()->getTeam() == 1)
+					unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
 			}
 		}
 	}
@@ -287,17 +299,22 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 			switch(unitType){
 			case 0:
 				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
+				isPlayerTurn = !isPlayerTurn;
 				break;
 			case 1:
 				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
+				isPlayerTurn = !isPlayerTurn;
 				break;
 			case 2:
 				unitManager.spawnInfantry(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2), team);
+				isPlayerTurn = !isPlayerTurn;
 				break;
 			}
 			tileManager.getTile(spawnX, 3 + (std::pow((-1),i)) * ((i+1)/2))->occupy(unitManager.getCurrentSelection());
 			break;
 		}
 	}
+	if (isPlayerTurn)
+		unitManager.setCurrentSelection(nullptr);
 }
 #pragma endregion

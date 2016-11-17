@@ -10,7 +10,7 @@ UnitManager::~UnitManager(void)
 {
 }
 #pragma region Newell
-void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
+void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 
 	if (!selectionBoxTexture.initialize(graphics,"pictures\\selectionBox.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing selectionBox texture"));
@@ -30,13 +30,13 @@ void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
 	}
 	player1Infantry = new Infantry[10];
 	for(int i = 0; i < 10; i++){
-		player1Infantry[i].initialize(96, 96, 3, &infantryTexture, gamePtr);
+		player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
 		player1Infantry[i].setActive(false);
 		player1Infantry[i].setVisible(false);
 	}
 	player2Infantry = new Infantry[10];
 	for(int i = 0; i < 10; i++){
-		player2Infantry[i].initialize(96, 96, 3, &infantryTexture2, gamePtr);
+		player2Infantry[i].initialize(96, 96, 3, 2, &infantryTexture2, gamePtr);
 		player2Infantry[i].setActive(false);
 		player2Infantry[i].setVisible(false);
 	}
