@@ -28,12 +28,16 @@ void Infantry::update(float frameTime){
 		switch(getLastDirection()){
 		case up:
 			setFrames(INFANTRY_IDLE_UP_START, INFANTRY_IDLE_UP_END);
+			break;
 		case left:
 			setFrames(INFANTRY_IDLE_LEFT_START, INFANTRY_IDLE_LEFT_END);
+			break;
 		case down:
 			setFrames(INFANTRY_IDLE_DOWN_START, INFANTRY_IDLE_DOWN_END);
+			break;
 		case right:
 			setFrames(INFANTRY_IDLE_RIGHT_START, INFANTRY_IDLE_RIGHT_END);
+			break;
 		}
 	}
 	setX(getX()+getVelocity().x*INFANTRY_SPEED*frameTime);

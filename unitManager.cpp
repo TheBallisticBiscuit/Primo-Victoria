@@ -25,7 +25,7 @@ void UnitManager::initialize(Game *gamePtr, Graphics* graphics){
 	if(!infantryTexture.initialize(graphics,"pictures\\greenKnight.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenKnight texture"));
 	}
-	if (!infantryTexture2.initialize(graphics,"pictures\\greenKnight.png")){
+	if (!infantryTexture2.initialize(graphics,"pictures\\redKnight.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redKnight texture"));
 	}
 	player1Infantry = new Infantry[10];
@@ -78,7 +78,8 @@ void UnitManager::onLostDevice(){
 	infantryTexture2.onLostDevice();
 }
 
-void UnitManager::spawnInfantry(int x, int y){
+void UnitManager::spawnInfantry(int x, int y, int team){
+	if(team == 1){
 	for(int i = 0; i < 10; i++){
 		if(!player1Infantry[i].getActive()){
 			player1Infantry[i].setActive(true);
@@ -89,6 +90,20 @@ void UnitManager::spawnInfantry(int x, int y){
 			selectUnit(&player1Infantry[i]);
 			break;
 		}
+	}
+	}
+	else if(team == 2){
+			for(int i = 0; i < 10; i++){
+		if(!player2Infantry[i].getActive()){
+			player2Infantry[i].setActive(true);
+			player2Infantry[i].setVisible(true);
+			player2Infantry[i].setTile(x, y);
+			player2Infantry[i].setX(x*TERRAIN_WIDTH);
+			player2Infantry[i].setY(y*TERRAIN_HEIGHT);
+			selectUnit(&player2Infantry[i]);
+			break;
+		}
+	}
 	}
 }
 
