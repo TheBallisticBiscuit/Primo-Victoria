@@ -6,6 +6,11 @@
 TileManager::TileManager(void) { tiles = nullptr; }
 
 TileManager::~TileManager(void){
+	for (int i = 0; i < 12; i++)
+	{
+		delete[] tiles[i];
+	}
+	delete[] tiles;
 }
 
 bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
