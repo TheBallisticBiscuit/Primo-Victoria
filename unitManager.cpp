@@ -384,7 +384,7 @@ int UnitManager::numEnemyUnits() {
 	{
 		activeUnits += player2Infantry[i].getActive();
 		activeUnits += player2Cavalry[i].getActive();
-		activeUnits =+ player2Archers[i].getActive();
+		activeUnits += player2Archers[i].getActive();
 	}
 	return activeUnits;
 }
