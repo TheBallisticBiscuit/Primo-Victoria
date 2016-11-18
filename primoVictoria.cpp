@@ -153,30 +153,44 @@ void PrimoVictoria::update()
 //=============================================================================
 void PrimoVictoria::ai()
 {
-	int dir, x, y = 0;
-	if (!isPlayerTurn) {
-		int r = 2; //rand()%(#)
-		if (unitManager.numActiveUnits() < r)
-			spawnUnit(1,2);
-		else {
-			r = rand()%2;
-			for (int i = 0; i < 10; i++) //Find available unit
-			{
-				if (unitManager.getAICavalry(i)->getActive()) { //Returns a pointer to Player2's Infantry ???
-					unitManager.selectUnit(unitManager.getAICavalry(i));
-					break;
+	if (!moving) {
+		int dir, r, t, x, y = 0;
+		if (!isPlayerTurn) {
+			r = 2; //rand()%(#)
+			if (unitManager.numActiveUnits() < r) {
+				t = unitManager.numActiveUnits();
+				spawnUnit(t,2);
+			}
+			else {
+				r = rand()%2;
+				if (r == 0) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getInfantry(i)->getActive()) { 
+							unitManager.selectUnit(unitManager.getInfantry(i));
+							break;
+						}
+					}
 				}
+				else if (r == 1) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAICavalry(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAICavalry(i));
+							break;
+						}				
+					}			
+				}
+				Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
+
+				dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
+				if(!fighting){
+					moveAttempt(dir, x, y);
+				}
+
+
 			}
-			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
-
-			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
-			if(!fighting){
-				moveAttempt(dir, x, y);
-			}
-
-
 		}
-
 	}
 }
 
