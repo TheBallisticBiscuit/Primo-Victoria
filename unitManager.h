@@ -71,6 +71,6 @@ private:
 	Unit** player2Units;
 	int selectionX;
 	int selectionY;
-	bool archerShot;
+	int archerDamage;
 };
 #pragma endregion 
