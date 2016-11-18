@@ -46,7 +46,7 @@ void Infantry::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Infantry::fight(Unit& opponent, float frameTime){
+void Infantry::fight(Unit& opponent, float frameTime, Audio* audio){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
@@ -66,6 +66,7 @@ void Infantry::fight(Unit& opponent, float frameTime){
 		break;
 	}
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
+		audio->playCue(INFANTRY_ATTACK);
 		setFrameCounter(0);
 		setHP(getHP()-opponent.getDamage());
 		opponent.setHP(opponent.getHP()-getDamage());
@@ -105,8 +106,9 @@ bool Infantry::kill(float frameTime){
 	return false;
 }
 
-bool Infantry::moveUp(){
+bool Infantry::moveUp(Audio* audio){
 	setLastDirection(up);
+	audio->playCue(INFANTRY_MOVE);
 	setFrames(INFANTRY_RUN_UP_START, INFANTRY_RUN_UP_END);
 	setVelocity(VECTOR2(0, -1));
 	if(getY() < (getTileY()-1)*TERRAIN_HEIGHT){
@@ -114,12 +116,14 @@ bool Infantry::moveUp(){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
 }
-bool Infantry::moveDown(){
+bool Infantry::moveDown(Audio* audio){
 	setLastDirection(down);
+	audio->playCue(INFANTRY_MOVE);
 	setFrames(INFANTRY_RUN_DOWN_START, INFANTRY_RUN_DOWN_END);
 	setVelocity(VECTOR2(0, 1));
 	if(getY() > (getTileY()+1)*TERRAIN_HEIGHT){
@@ -127,12 +131,14 @@ bool Infantry::moveDown(){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
 }
-bool Infantry::moveLeft(){
+bool Infantry::moveLeft(Audio* audio){
 	setLastDirection(left);
+	audio->playCue(INFANTRY_MOVE);
 	setFrames(INFANTRY_RUN_LEFT_START, INFANTRY_RUN_LEFT_END);
 	setVelocity(VECTOR2(-1, 0));
 	if(getX() < (getTileX()-1)*TERRAIN_WIDTH){
@@ -140,12 +146,14 @@ bool Infantry::moveLeft(){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
 }
-bool Infantry::moveRight(){
+bool Infantry::moveRight(Audio* audio){
 	setLastDirection(right);
+	audio->playCue(INFANTRY_MOVE);
 	setFrames(INFANTRY_RUN_RIGHT_START, INFANTRY_RUN_RIGHT_END);
 	setVelocity(VECTOR2(1, 0));
 	if(getX() > (getTileX()+1)*TERRAIN_WIDTH){
@@ -153,6 +161,7 @@ bool Infantry::moveRight(){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;

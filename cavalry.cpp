@@ -46,7 +46,7 @@ void Cavalry::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Cavalry::fight(Unit& opponent, float frameTime){
+void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
@@ -68,6 +68,7 @@ void Cavalry::fight(Unit& opponent, float frameTime){
 	setFrameCounter(getFrameCounter()+frameTime);
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
+		audio->playCue(CAVALRY_ATTACK);
 		setHP(getHP()-opponent.getDamage());
 		opponent.setHP(opponent.getHP()-getDamage());
 		setAnimating(false);
@@ -106,7 +107,8 @@ bool Cavalry::kill(float frameTime){
 	return false;
 }
 
-bool Cavalry::moveUp(){
+bool Cavalry::moveUp(Audio* audio){
+	audio->playCue(CAVALRY_MOVE);
 	setLastDirection(up);
 	setFrames(CAVALRY_RUN_UP_START, CAVALRY_RUN_UP_END);
 	setVelocity(VECTOR2(0, -1));
@@ -115,12 +117,14 @@ bool Cavalry::moveUp(){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
 }
 
-bool Cavalry::moveDown(){
+bool Cavalry::moveDown(Audio* audio){
+	audio->playCue(CAVALRY_MOVE);
 	setLastDirection(down);
 	setFrames(CAVALRY_RUN_DOWN_START, CAVALRY_RUN_DOWN_END);
 	setVelocity(VECTOR2(0, 1));
@@ -129,12 +133,14 @@ bool Cavalry::moveDown(){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
 }
 
-bool Cavalry::moveLeft(){
+bool Cavalry::moveLeft(Audio* audio){
+	audio->playCue(CAVALRY_MOVE);
 	setLastDirection(left);
 	setFrames(CAVALRY_RUN_LEFT_START, CAVALRY_RUN_LEFT_END);
 	setVelocity(VECTOR2(-1, 0));
@@ -143,12 +149,14 @@ bool Cavalry::moveLeft(){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
 }
 
-bool Cavalry::moveRight(){
+bool Cavalry::moveRight(Audio* audio){
+	audio->playCue(CAVALRY_MOVE);
 	setLastDirection(right);
 	setFrames(CAVALRY_RUN_RIGHT_START, CAVALRY_RUN_RIGHT_END);
 	setVelocity(VECTOR2(1, 0));
@@ -157,6 +165,7 @@ bool Cavalry::moveRight(){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;

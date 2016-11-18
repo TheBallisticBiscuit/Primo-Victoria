@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Programming 2D Games\Object Version\Chapter 7 Sound\SoundExample1\audio\SoundExample1.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3391998279;
-    Last Modified High = 30556504;
+    Last Modified Low = 3851766125;
+    Last Modified High = 30556521;
 
     Category
     {
@@ -227,10 +227,12 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3392078348;
-    PC Bank Last Modified High = 30556504;
-    Bank Last Revised Low = 2765954168;
-    Bank Last Revised High = 30556504;
+    PC Bank Last Modified Low = 2086114285;
+    PC Bank Last Modified High = 30556520;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 341761591;
+    Bank Last Revised High = 30556515;
 
     Wave
     {
@@ -369,6 +371,121 @@ Wave Bank
             Last Modified High = 30556504;
         }
     }
+
+    Wave
+    {
+        Name = arrowShot;
+        File = arrowShot.wav;
+        Build Settings Last Modified Low = 3532561228;
+        Build Settings Last Modified High = 30556514;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 143360;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1154732636;
+            Last Modified High = 30556514;
+        }
+    }
+
+    Wave
+    {
+        Name = horseGalloping;
+        File = horseGalloping.wav;
+        Build Settings Last Modified Low = 3763857128;
+        Build Settings Last Modified High = 30556514;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 362770;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1002569759;
+            Last Modified High = 30556513;
+        }
+    }
+
+    Wave
+    {
+        Name = running;
+        File = running.wav;
+        Build Settings Last Modified Low = 4193033962;
+        Build Settings Last Modified High = 30556514;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 604080;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 556916817;
+            Last Modified High = 30556514;
+        }
+    }
+
+    Wave
+    {
+        Name = swordSlash;
+        File = swordSlash.wav;
+        Build Settings Last Modified Low = 119852289;
+        Build Settings Last Modified High = 30556515;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 303176;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2679416951;
+            Last Modified High = 30556514;
+        }
+    }
+
+    Wave
+    {
+        Name = swordSlice;
+        File = swordSlice.wav;
+        Build Settings Last Modified Low = 298210340;
+        Build Settings Last Modified High = 30556515;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 16000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 26880;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2071453238;
+            Last Modified High = 30556514;
+        }
+    }
 }
 
 Sound Bank
@@ -378,8 +495,8 @@ Sound Bank
     Windows File = Win\SoundsExample1.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 3392598714;
-    Bank Last Modified High = 30556504;
+    Bank Last Modified Low = 3851866196;
+    Bank Last Modified High = 30556521;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -666,6 +783,241 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = arrowShot;
+        Volume = -300;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WavesExample1;
+                    Bank Index = 0;
+                    Entry Name = arrowShot;
+                    Entry Index = 6;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = horseGalloping;
+        Volume = -180;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WavesExample1;
+                    Bank Index = 0;
+                    Entry Name = horseGalloping;
+                    Entry Index = 7;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = running;
+        Volume = -10;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WavesExample1;
+                    Bank Index = 0;
+                    Entry Name = running;
+                    Entry Index = 8;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = swordSlash;
+        Volume = -340;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WavesExample1;
+                    Bank Index = 0;
+                    Entry Name = swordSlash;
+                    Entry Index = 9;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = swordSlice;
+        Volume = -320;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = WavesExample1;
+                    Bank Index = 0;
+                    Entry Name = swordSlice;
+                    Entry Index = 10;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = beep1;
@@ -781,6 +1133,132 @@ Sound Bank
         {
             Name = backGroundMusic;
             Index = 5;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = arrowShot;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = arrowShot;
+            Index = 6;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = horseGalloping;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = horseGalloping;
+            Index = 7;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 1;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = running;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = running;
+            Index = 8;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 1;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
+    }
+
+    Cue
+    {
+        Name = swordSlash;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = swordSlash;
+            Index = 9;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = swordSlice;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = swordSlice;
+            Index = 10;
             Weight Min = 0;
             Weight Max = 255;
         }

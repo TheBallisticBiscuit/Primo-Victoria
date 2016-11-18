@@ -64,16 +64,17 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 		player2Cavalry[i].setActive(false);
 		player2Cavalry[i].setVisible(false);
 
-		player1Archers[i].initialize(96, 96, 8, 1, &archerTexture, gamePtr);
+		player1Archers[i].initialize(96, 96, 6, 1, &archerTexture, gamePtr);
 		player1Archers[i].setActive(false);
 		player1Archers[i].setVisible(false);
 
-		player2Archers[i].initialize(96, 96, 8, 2, &archerTexture2, gamePtr);
+		player2Archers[i].initialize(96, 96, 6, 2, &archerTexture2, gamePtr);
 		player2Archers[i].setActive(false);
 		player2Archers[i].setVisible(false);
 	}
 
 	currentSelection = nullptr;
+	archerShot = false;
 }
 
 void UnitManager::draw(){
@@ -231,20 +232,22 @@ void UnitManager::spawnArcher(int x, int y, int team){
 	}
 }
 
-bool UnitManager::fight(Unit& opponent, float frameTime){
+bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(currentSelection != nullptr){
-		if(currentSelection->getRange() > opponent.getRange()){
-			int currentHP = opponent.getHP();
-			currentSelection->fight(opponent, frameTime);
-			if(currentHP > opponent.getHP()){
-				currentSelection->setAnimating(false);
+		if(currentSelection->getRange() > opponent.getRange() &&
+			(abs(currentSelection->getTileX()-opponent.getTileX()) > opponent.getRange() || 
+			abs(currentSelection->getTileY()-opponent.getTileY() > opponent.getRange()))){
+				if(!archerShot){
+					currentSelection->fight(opponent, frameTime, audio);
+					archerShot = true;
+				}
 				if(opponent.getHP() <= 0){
 					return opponent.kill(frameTime);
 				}
 				else{
+					archerShot = false;
 					return true;
 				}
-			}
 		}
 		else{
 			if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
@@ -265,7 +268,7 @@ bool UnitManager::fight(Unit& opponent, float frameTime){
 				}
 			}
 			else{
-				currentSelection->fight(opponent, frameTime); 
+				currentSelection->fight(opponent, frameTime, audio); 
 			}
 		}
 		return false;
@@ -307,32 +310,32 @@ void UnitManager::selectionDown(){
 		selectionY++;
 	}
 }
-bool UnitManager::unitUp(TileManager* tileManager){
-	if(currentSelection->moveUp()){
+bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveUp(audio)){
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
 	}
 	return false;
 }
-bool UnitManager::unitDown(TileManager* tileManager){
-	if(currentSelection->moveDown()){
+bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveDown(audio)){
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
 	}
 	return false;
 }
-bool UnitManager::unitLeft(TileManager* tileManager){
-	if(currentSelection->moveLeft()){
+bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveLeft(audio)){
 		tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
 	}
 	return false;
 }
-bool UnitManager::unitRight(TileManager* tileManager){
-	if(currentSelection->moveRight()){
+bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveRight(audio)){
 		tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -389,10 +392,22 @@ Unit* UnitManager::closestUnit(Unit* t2Unit) {
 			}
 		}
 	}
+	for (int i = 0; i < 10; i++)
+	{
+		if (player1Archers[i].getActive()) {
+			if (D3DXVec2LengthSq(&minDistance) > D3DXVec2LengthSq(&D3DXVECTOR2(t2Unit->getX() - player1Archers[i].getX(), t2Unit->getY() - player1Archers[i].getY()))) {
+				minDistance = D3DXVECTOR2(t2Unit->getX() - player1Archers[i].getX(), t2Unit->getY() - player1Archers[i].getY());
+				closest = i;
+				type = 2;
+			}
+		}
+	}
 	if (type == 0)
 		return &player1Infantry[closest];
 	else if (type == 1)
 		return &player1Cavalry[closest];
+	else if (type == 2)
+		return &player1Archers[closest];
 }
 
 //Calculates direction of movement
