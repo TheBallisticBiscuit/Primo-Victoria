@@ -163,7 +163,8 @@ void PrimoVictoria::ai()
 				spawnUnit(t,2);
 			}
 			else {
-				if (unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2) {
+				if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
+					|| unitManager.getCurrentSelection() == nullptr) {
 					r = rand()%2;
 					if (r == 0) {
 						for (int i = 0; i < 10; i++) //Find available unit
@@ -184,14 +185,14 @@ void PrimoVictoria::ai()
 						}			
 					}
 				}
-				Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
+				if (unitManager.getCurrentSelection() != nullptr) {
+					Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
 
-				dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
-				if(!fighting){
-					moveAttempt(dir, x, y);
+
+					dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
+					if(!fighting)
+						moveAttempt(dir, x, y);				
 				}
-
-
 			}
 		}
 	}
