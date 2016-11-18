@@ -19,6 +19,10 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture1 init failure"));
 	if (!forestTexture2.initialize(graphics, FOREST_2_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture2 init failure"));
+	if (!cPoint1Texture.initialize(graphics, CAPTURE_POINT_1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "CapturePoint1 init failure"));
+	if (!cPoint2Texture.initialize(graphics, CAPTURE_POINT_2))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "CapturePoint2 init failure"));
 	
 	width = x;
 	height = y;
@@ -64,13 +68,26 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
 				}
 			}
-
-			//else { //Hills
-			//}
 		}
 	}	
 	return 1;
 }
+
+void TileManager::levelTwoSetup(Graphics* graphics, int x1, int y1, int x2, int y2, Game* game) {
+	//if (!tiles[x1][y1].initialize(graphics, &cPoint1Texture, CapturePoint, x1, y1, game))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(x1) + "][" + std::to_string(y1) + "] init fail"));
+	//if (!tiles[x2][y2].initialize(graphics, &cPoint2Texture, CapturePoint, x2, y2, game))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(x2) + "][" + std::to_string(y2) + "] init fail"));
+	if (!cPoint1Image.initialize(graphics, 0,0,0,&cPoint1Texture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "CapturePoint1 init failure"));
+	cPoint1Image.setX(x1*TERRAIN_WIDTH);
+	cPoint1Image.setY(y1*TERRAIN_HEIGHT);
+	if (!cPoint2Image.initialize(graphics, 0,0,0,&cPoint2Texture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "CapturePoint2 init failure"));
+	cPoint2Image.setX(x2*TERRAIN_WIDTH);
+	cPoint2Image.setY(y2*TERRAIN_HEIGHT);
+}
+
 
 void TileManager::tilesReset(){
 	for (int i = 0; i < height; i++)
@@ -107,6 +124,19 @@ void TileManager::draw() {
 		}
 	}
 }
+
+void TileManager::draw(int level) {
+	//for (int i = 0; i < width; i++)
+	//{
+	//	for (int j = 0; j < height; j++)
+	//	{
+	//		tiles[i][j].draw();
+	//	}
+	//}
+	cPoint1Image.draw();
+	cPoint2Image.draw();
+}
+
 
 void TileManager::onLostDevice() {
 	grassTexture1.onLostDevice();

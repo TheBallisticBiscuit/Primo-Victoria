@@ -51,6 +51,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	isPlayerTurn = true;
 	isLevelInitialized = false;
 	level = 0;
+	x1,y1,x2,y2 = 0;
 	srand(time(0));
 
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
@@ -156,12 +157,24 @@ void PrimoVictoria::update()
 	}
 
 
-	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() != 0){
+	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0){ //Level 1 Win con
 		//currentMenu = 3; //Defeat screen
 		gameReset();
 		currentMenu = 1;
+	}
+	if (level == 1 && unitManager.numEnemyUnits() > 0 && unitManager.numAlliedUnits() == 0)	{
 
 	}
+	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
+		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1) {
+			gameReset();
+			currentMenu = 1;
+		}
+
+	}
+
+
+
 
 	mainMenu->update();
 	optionsMenu->update();
@@ -181,7 +194,7 @@ void PrimoVictoria::ai()
 		if (level == 1) {
 
 		}
-		if (level == 2) { 
+		if (level == 2 && false) { 
 			if (unitManager.numEnemyUnits() < rand() & 0x5) {
 				spawnUnit(rand()%3,2);
 			}
@@ -251,9 +264,10 @@ void PrimoVictoria::levelOne() { //Initialize level one
 	for (int i = 0; i < 2; i++)
 	{
 		spawnUnit(rand()%3,1);
+		spawnUnit(rand()%3,1);
 		spawnUnit(rand()%3,2);
-		//spawnUnit(rand()%3,2);
-		//spawnUnit(rand()%3,2);
+		spawnUnit(rand()%3,2);
+		spawnUnit(rand()%3,2);
 	}
 
 	isLevelInitialized = true;
@@ -265,8 +279,19 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,1);
-		spawnUnit(rand()%3,2);
+		
 	}
+	spawnUnit(rand()%3,2);
+	//x1 = rand()%10 + 2;
+	//y1 = rand()%7;
+	//x2 = rand()%8 + 4;
+	//y2 = rand()%7;
+	x1 = 1;
+	y1 = 3;
+	x2 = 1;
+	y2 = 4;
+	tileManager.levelTwoSetup(graphics,x1,y1,x2,y2,this);
+
 	isLevelInitialized = true;
 	isPlayerTurn = true;
 	level = 2;
@@ -296,6 +321,9 @@ void PrimoVictoria::render()
 	background.draw();
 	if (currentMenu == 0){
 		tileManager.draw();
+		if (level == 2) {
+			tileManager.draw(2);
+		}
 		unitManager.draw();
 	}
 	else if(currentMenu == 1){
@@ -336,7 +364,8 @@ void PrimoVictoria::playerInput() {
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
-		spawnUnit(1, 1);
+		if (level == 2)
+			spawnUnit(1, 1);
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
 		keyDownLastFrame = NULL;

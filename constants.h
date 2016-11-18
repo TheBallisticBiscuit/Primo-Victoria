@@ -99,6 +99,8 @@ const char GRASS_2_IMAGE[] = "pictures\\Grass2.png";
 const char GRASS_3_IMAGE[] = "pictures\\Grass3.png";
 const char FOREST_1_IMAGE[] = "pictures\\Forest1.png";
 const char FOREST_2_IMAGE[] = "pictures\\Forest2.png";
+const char CAPTURE_POINT_1[] = "pictures\\capturePoint1.png";
+const char CAPTURE_POINT_2[] = "pictures\\capturePoint2.png";
 const char BACKGROUND_IMAGE[] = "pictures\\background.PNG";
 
 const int TERRAIN_WIDTH = 96;
@@ -137,7 +139,7 @@ const char INFANTRY_ATTACK[] = "swordSlash";
 const char CAVALRY_MOVE[] = "horseGalloping";
 const char INFANTRY_MOVE[] = "running";
 
-enum TerrainTypeEnum {Plains, Hills, Forest};
+enum TerrainTypeEnum {Plains, Hills, Forest, CapturePoint};
 
 
 #pragma region Newell

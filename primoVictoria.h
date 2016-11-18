@@ -43,6 +43,7 @@ private:
 	bool isPlayerTurn;
 	bool isLevelInitialized;
 	int level;
+	int x1,y1,x2,y2;
 public:
     // Constructor
     PrimoVictoria();

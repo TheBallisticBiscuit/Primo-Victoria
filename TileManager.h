@@ -23,22 +23,29 @@ public:
 	//Height of grid, in tiles
 	int getHeight() { return height; };
 
+	void levelTwoSetup(Graphics* graphics, int x1, int y1, int x2, int y2, Game* game);
 	void tilesReset();
 	void setTileVisibility(bool);
 	void draw(); 
+	void draw(int);
 	void onLostDevice();
 	void onResetDevice();
-	//void battle(Tile* t1, Tile* t2);
+	
 
 private:
 	int width;
 	int height;
+
+	Image cPoint1Image;
+	Image cPoint2Image;
 
 	TextureManager grassTexture1;
 	TextureManager grassTexture2;
 	TextureManager grassTexture3;
 	TextureManager forestTexture1;
 	TextureManager forestTexture2;
+	TextureManager cPoint1Texture;
+	TextureManager cPoint2Texture;
 	TextureManager hillsTexture;
 
 	TerrainTypeEnum tileTerrain;
