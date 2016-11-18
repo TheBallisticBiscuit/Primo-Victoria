@@ -12,7 +12,7 @@ Archer::~Archer(void)
 
 bool Archer::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
 	setScale(ARCHER_SCALING);
-	setMovementPerTurn(8);
+	setMovementPerTurn(2);
 	setMovementLeft(0);
 	setRange(2);
 	setHP(5);

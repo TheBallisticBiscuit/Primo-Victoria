@@ -235,7 +235,7 @@ void UnitManager::spawnArcher(int x, int y, int team){
 bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(currentSelection->getRange() > opponent.getRange() &&
 		(abs(currentSelection->getTileX()-opponent.getTileX()) > opponent.getRange() || 
-		abs(currentSelection->getTileY()-opponent.getTileY() > opponent.getRange()))){
+		abs(currentSelection->getTileY()-opponent.getTileY()) > opponent.getRange())){
 			archerDamage = opponent.getHP();
 			currentSelection->fight(opponent, frameTime, audio);
 			if(opponent.getHP() <= 0){
