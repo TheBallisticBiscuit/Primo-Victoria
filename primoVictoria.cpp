@@ -46,6 +46,9 @@ void PrimoVictoria::initialize(HWND hwnd)
 	unitStats = new TextDX();
 	if(unitStats->initialize(graphics, 30, true, false, "Arial") == false)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
+	spawnCooldown = new TextDX();
+	if(spawnCooldown->initialize(graphics, 30, true, false, "Arial") == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
 	unitManager.initialize(this, graphics);
 	keyDownLastFrame = NULL;
 	moving = NULL;
@@ -79,7 +82,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	if (!tileManager.initialize(graphics, 12,7, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
-
+	spawnUnitCooldown = 0;
 #pragma endregion
 	return;
 }
@@ -367,6 +370,10 @@ void PrimoVictoria::render()
 			std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
 			unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
 	}
+	if(level == 2){
+		spawnCooldown->setFontColor(graphicsNS::RED);
+		spawnCooldown->print("Unit Spawn Cooldown: " + std::to_string(spawnUnitCooldown), 50, 20);
+	}
 
 	graphics->spriteEnd();                  // end drawing sprites
 }
@@ -390,9 +397,28 @@ void PrimoVictoria::playerInput() {
 	if(input->isKeyDown(VK_RETURN)){
 		keyDownLastFrame = VK_RETURN;
 	}
-	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
-		keyDownLastFrame = NULL;
+	if(input->isKeyDown(0x31)){
+		keyDownLastFrame = 0x31;
+	}
+	if(input->isKeyDown(0x32)){
+		keyDownLastFrame = 0x32;
+	}
+	if(input->isKeyDown(0x33)){
+		keyDownLastFrame = 0x33;
+	}
+	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0){
+		spawnUnit(0, 1);
+		spawnUnitCooldown++;
+	}
+	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0){
 		spawnUnit(1, 1);
+		spawnUnitCooldown++;
+	}
+	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0){
+		spawnUnit(2, 1);
+		spawnUnitCooldown++;
+	}
+	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
 		keyDownLastFrame = NULL;
@@ -631,6 +657,9 @@ void PrimoVictoria::moveRight(){
 void PrimoVictoria::endTurn(){
 	unitManager.endTurn();
 	isPlayerTurn = !isPlayerTurn;
+	if(isPlayerTurn && spawnUnitCooldown > 0){
+		spawnUnitCooldown--;
+	}
 	moving = NULL;
 }
 

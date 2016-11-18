@@ -36,10 +36,10 @@ private:
 	Image defeatScreenImage;
 	TextureManager victoryScreenTexture;
 	Image victoryScreenImage;
-
 	TileManager tileManager;
 
 	TextDX *unitStats;
+	TextDX *spawnCooldown;
 	int currentMenu;
 	UnitManager unitManager;
 	Unit* fightTarget;
@@ -49,6 +49,7 @@ private:
 	bool isPlayerTurn;
 	bool isLevelInitialized;
 	int level;
+	int spawnUnitCooldown;
 public:
     // Constructor
     PrimoVictoria();
