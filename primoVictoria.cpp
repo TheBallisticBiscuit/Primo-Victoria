@@ -30,14 +30,24 @@ void PrimoVictoria::initialize(HWND hwnd)
 #pragma region Newell
 	Game::initialize(hwnd); // throws GameError
 	std::string s;
+	int x;
+	float y;
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
 	optionsMenu = new Menu(s);
 	optionsMenu->initialize(graphics, input);
+	defeatScreen = new Menu(x);
+	defeatScreen->initialize(graphics, input);
+	victoryScreen = new Menu(y);
+	victoryScreen->initialize(graphics, input);
+
 	currentMenu = 1;
 
 	unitStats = new TextDX();
 	if(unitStats->initialize(graphics, 30, true, false, "Arial") == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
+	spawnCooldown = new TextDX();
+	if(spawnCooldown->initialize(graphics, 30, true, false, "Arial") == false)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
 	unitManager.initialize(this, graphics);
 	keyDownLastFrame = NULL;
@@ -60,13 +70,20 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
 	background.setScale(BACKGROUND_IMAGE_SCALE);
 	background.setX(140.f);
-
+	if (!defeatScreenTexture.initialize(graphics, "pictures\\defeatScreen.PNG"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
+	if (!defeatScreenImage.initialize(graphics, 0,0,0, &defeatScreenTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
+	if (!victoryScreenTexture.initialize(graphics, "pictures\\victoryScreen.PNG"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
+	if (!victoryScreenImage.initialize(graphics, 0,0,0, &victoryScreenTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
 	graphics->setBackColor(SETCOLOR_ARGB(0xFF, 0xAF, 0x3F, 0x2F));
 
 	if (!tileManager.initialize(graphics, 12,7, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
-
+	spawnUnitCooldown = 0;
 #pragma endregion
 	return;
 }
@@ -101,6 +118,7 @@ void PrimoVictoria::update()
 		}
 		mainMenu->update();
 		optionsMenu->update();
+		defeatScreen->update();
 		unitManager.update(frameTime);
 		return;
 	}
@@ -123,6 +141,7 @@ void PrimoVictoria::update()
 		}
 		mainMenu->update();
 		optionsMenu->update();
+		defeatScreen->update();
 		unitManager.update(frameTime);
 		return;
 	}
@@ -133,6 +152,7 @@ void PrimoVictoria::update()
 	else {
 		mainMenu->update();
 		optionsMenu->update();
+		defeatScreen->update();
 	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
 		tileManager.setTileVisibility(true);
@@ -154,6 +174,38 @@ void PrimoVictoria::update()
 		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelTwo();
+	}
+	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
+		currentMenu = 1;
+	}
+	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 1){ //selecting main menu
+		currentMenu = 2;
+	}
+	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 2){ //selecting main menu
+		if(level == 1){
+			gameReset();
+			levelOne();
+		}
+		else if(level == 2){
+			gameReset();
+			levelTwo();
+		}
+	}
+	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
+		currentMenu = 1;
+	}
+	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 1){ //selecting main menu
+		currentMenu = 2;
+	}
+	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 2){ //selecting main menu
+		if(level == 1){
+			gameReset();
+			levelTwo();
+		}
+		else if(level == 2){
+			gameReset();
+			levelOne();
+		}
 	}
 
 
@@ -269,7 +321,6 @@ void PrimoVictoria::levelOne() { //Initialize level one
 		spawnUnit(rand()%3,2);
 		spawnUnit(rand()%3,2);
 	}
-
 	isLevelInitialized = true;
 	isPlayerTurn = true;
 	level = 1;
@@ -332,12 +383,24 @@ void PrimoVictoria::render()
 	else if(currentMenu == 2){
 		optionsMenu -> displayMenu();
 	}
+	else if(currentMenu == 3){
+		defeatScreenImage.draw();
+		defeatScreen -> displayMenu();
+	}
+	else if(currentMenu == 4){
+		victoryScreenImage.draw();
+		victoryScreen -> displayMenu();
+	}
 	if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
 		unitStats->setFontColor(graphicsNS::LIME);
 		unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
 			unitManager.getSelectionY())->getUnit()->getHP())+ "          Movement Remaining: " +
 			std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
 			unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
+	}
+	if(level == 2){
+		spawnCooldown->setFontColor(graphicsNS::RED);
+		spawnCooldown->print("Unit Spawn Cooldown: " + std::to_string(spawnUnitCooldown), 50, 20);
 	}
 
 	graphics->spriteEnd();                  // end drawing sprites
@@ -362,10 +425,28 @@ void PrimoVictoria::playerInput() {
 	if(input->isKeyDown(VK_RETURN)){
 		keyDownLastFrame = VK_RETURN;
 	}
+	if(input->isKeyDown(0x31)){
+		keyDownLastFrame = 0x31;
+	}
+	if(input->isKeyDown(0x32)){
+		keyDownLastFrame = 0x32;
+	}
+	if(input->isKeyDown(0x33)){
+		keyDownLastFrame = 0x33;
+	}
+	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0){
+		spawnUnit(0, 1);
+		spawnUnitCooldown++;
+	}
+	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0){
+		spawnUnit(1, 1);
+		spawnUnitCooldown++;
+	}
+	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0){
+		spawnUnit(2, 1);
+		spawnUnitCooldown++;
+	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
-		keyDownLastFrame = NULL;
-		if (level == 2)
-			spawnUnit(1, 1);
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
 		keyDownLastFrame = NULL;
@@ -604,6 +685,9 @@ void PrimoVictoria::moveRight(){
 void PrimoVictoria::endTurn(){
 	unitManager.endTurn();
 	isPlayerTurn = !isPlayerTurn;
+	if(isPlayerTurn && spawnUnitCooldown > 0){
+		spawnUnitCooldown--;
+	}
 	moving = NULL;
 }
 

@@ -28,12 +28,18 @@ class PrimoVictoria : public Game
 private:
 	Menu *mainMenu;
 	Menu* optionsMenu;
+	Menu* defeatScreen;
+	Menu* victoryScreen;
 	TextureManager backgroundTexture;
 	Image background;
-
+	TextureManager defeatScreenTexture;
+	Image defeatScreenImage;
+	TextureManager victoryScreenTexture;
+	Image victoryScreenImage;
 	TileManager tileManager;
 
 	TextDX *unitStats;
+	TextDX *spawnCooldown;
 	int currentMenu;
 	UnitManager unitManager;
 	Unit* fightTarget;
@@ -44,6 +50,7 @@ private:
 	bool isLevelInitialized;
 	int level;
 	int x1,y1,x2,y2;
+	int spawnUnitCooldown;
 public:
     // Constructor
     PrimoVictoria();
