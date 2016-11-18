@@ -64,11 +64,11 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 		player2Cavalry[i].setActive(false);
 		player2Cavalry[i].setVisible(false);
 
-		player1Archers[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+		player1Archers[i].initialize(96, 96, 8, 1, &archerTexture, gamePtr);
 		player1Archers[i].setActive(false);
 		player1Archers[i].setVisible(false);
 
-		player2Archers[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
+		player2Archers[i].initialize(96, 96, 8, 2, &archerTexture2, gamePtr);
 		player2Archers[i].setActive(false);
 		player2Archers[i].setVisible(false);
 	}
@@ -232,6 +232,19 @@ void UnitManager::spawnArcher(int x, int y, int team){
 }
 
 bool UnitManager::fight(Unit& opponent, float frameTime){
+	if(currentSelection->getRange() > opponent.getRange()){
+		int currentHP = opponent.getHP();
+		currentSelection->fight(opponent, frameTime);
+		if(currentHP > opponent.getHP()){
+			currentSelection->setAnimating(false);
+			if(opponent.getHP() <= 0){
+				return opponent.kill(frameTime);
+			}
+			else{
+				return true;
+			}
+		}
+	}
 	currentSelection->fight(opponent, frameTime); 
 	if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
 		currentSelection->setAnimating(false);
@@ -326,6 +339,8 @@ void UnitManager::endTurn(){
 		player2Infantry[i].setMovementLeft(player2Infantry[i].getMovement());
 		player1Cavalry[i].setMovementLeft(player1Cavalry[i].getMovement());
 		player2Cavalry[i].setMovementLeft(player2Cavalry[i].getMovement());
+		player1Archers[i].setMovementLeft(player1Archers[i].getMovement());
+		player2Archers[i].setMovementLeft(player2Archers[i].getMovement());
 	}
 }
 #pragma endregion
@@ -397,7 +412,7 @@ bool UnitManager::moveAttempt(TileManager* tileManager, int dir) {
 			if (!tileManager->getTile(currentSelection->getTileX() - 1, currentSelection->getTileY())->isOccupied()) {
 				//unitLeft(tileManager);
 			}
-	return false;
+			return false;
 }
 
 #pragma endregion

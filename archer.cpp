@@ -12,7 +12,7 @@ Archer::~Archer(void)
 
 bool Archer::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
 	setScale(ARCHER_SCALING);
-	setMovementPerTurn(2);
+	setMovementPerTurn(8);
 	setMovementLeft(0);
 	setRange(2);
 	setHP(5);
@@ -47,27 +47,38 @@ void Archer::update(float frameTime){
 }
 
 void Archer::fight(Unit& opponent, float frameTime){
+
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
-		opponent.setAttackFrames(down);
+		if(getRange() <= opponent.getRange()){
+			opponent.setAttackFrames(down);
+		}
 		break;
 	case left:
 		setAttackFrames(left);
-		opponent.setAttackFrames(right);
+		if(getRange() <= opponent.getRange()){
+			opponent.setAttackFrames(right);
+		}
 		break;
 	case down:
 		setAttackFrames(down);
-		opponent.setAttackFrames(up);
+		if(getRange() <= opponent.getRange()){
+			opponent.setAttackFrames(up);
+		}
 		break;
 	case right:
 		setAttackFrames(right);
-		opponent.setAttackFrames(left);
+		if(getRange() <= opponent.getRange()){
+			opponent.setAttackFrames(left);
+		}
 		break;
 	}
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
-		setHP(getHP()-opponent.getDamage());
+		if(getRange() <= opponent.getRange()){
+			setHP(getHP()-opponent.getDamage());
+		}
 		opponent.setHP(opponent.getHP()-getDamage());
 		setAnimating(false);
 		opponent.setAnimating(false);

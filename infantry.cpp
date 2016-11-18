@@ -76,7 +76,21 @@ void Infantry::fight(Unit& opponent, float frameTime){
 }
 
 bool Infantry::kill(float frameTime){
-	setFrames(INFANTRY_DEATH_DOWN_START, INFANTRY_DEATH_DOWN_END);
+	switch(getLastDirection()){
+	case up:
+		setFrames(INFANTRY_DEATH_UP_START, INFANTRY_DEATH_UP_END);
+		break;
+	case left:
+		setFrames(INFANTRY_DEATH_LEFT_START, INFANTRY_DEATH_LEFT_END);
+		break;
+	case down:
+		setFrames(INFANTRY_DEATH_DOWN_START, INFANTRY_DEATH_DOWN_END);
+		break;
+	case right:
+		setFrames(INFANTRY_DEATH_RIGHT_START, INFANTRY_DEATH_RIGHT_END);
+		break;
+	}
+	setAnimating(true);
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*6){
 		setFrameCounter(0);
 		setVisible(false);
@@ -157,9 +171,9 @@ void Infantry::setAttackFrames(LastDirection direction){
 		setLastDirection(left);
 		setAnimating(true);
 	}
-	if(direction == down){
-		setFrames(INFANTRY_ATTACK_DOWN_START, INFANTRY_ATTACK_DOWN_END);
-		setLastDirection(up);
+	if(direction == right){
+		setFrames(INFANTRY_ATTACK_RIGHT_START, INFANTRY_ATTACK_RIGHT_END);
+		setLastDirection(right);
 		setAnimating(true);
 	}
 }
