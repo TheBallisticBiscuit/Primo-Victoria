@@ -25,6 +25,12 @@ Menu::Menu(int x){
 
 }
 
+Menu::Menu(float y){
+	menuHeading = " ";
+	menuItem1 = "Return to Main Menu";
+	menuItem2 = "Return to Level Select";
+	menuItem3 = "Next Level";
+}
 
 void Menu::initialize(Graphics *g, Input *i)
 {

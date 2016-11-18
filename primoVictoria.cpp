@@ -30,12 +30,17 @@ void PrimoVictoria::initialize(HWND hwnd)
 #pragma region Newell
 	Game::initialize(hwnd); // throws GameError
 	std::string s;
+	int x;
+	float y;
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
 	optionsMenu = new Menu(s);
 	optionsMenu->initialize(graphics, input);
-	defeatScreen = new Menu();
+	defeatScreen = new Menu(x);
 	defeatScreen->initialize(graphics, input);
+	victoryScreen = new Menu(y);
+	victoryScreen->initialize(graphics, input);
+
 	currentMenu = 1;
 
 	unitStats = new TextDX();
@@ -180,6 +185,22 @@ void PrimoVictoria::update()
 		else if(level == 2){
 			gameReset();
 			levelTwo();
+		}
+	}
+	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
+		currentMenu = 1;
+	}
+	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 1){ //selecting main menu
+		currentMenu = 2;
+	}
+	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 2){ //selecting main menu
+		if(level == 1){
+			gameReset();
+			levelTwo();
+		}
+		else if(level == 2){
+			gameReset();
+			levelOne();
 		}
 	}
 
@@ -334,6 +355,10 @@ void PrimoVictoria::render()
 	else if(currentMenu == 3){
 		defeatScreenImage.draw();
 		defeatScreen -> displayMenu();
+	}
+	else if(currentMenu == 4){
+		victoryScreenImage.draw();
+		victoryScreen -> displayMenu();
 	}
 	if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
 		unitStats->setFontColor(graphicsNS::LIME);

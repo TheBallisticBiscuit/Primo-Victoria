@@ -48,6 +48,7 @@ public:
 	Menu();
 	Menu(std::string);
 	Menu(int);
+	Menu(float);
 	void initialize(Graphics *g, Input *i);
 	void update();
 	int getSelectedItem() {return selectedItem;}
