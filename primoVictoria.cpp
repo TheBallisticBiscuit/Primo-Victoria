@@ -208,8 +208,18 @@ void PrimoVictoria::ai()
 							unitManager.selectUnit(unitManager.getAICavalry(i));
 							break;
 						}				
-					}			
+					}
 				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAIArcher(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAIArcher(i));
+							break;
+						}				
+					}
+				}
+
 		}
 		if (unitManager.getCurrentSelection() != nullptr) {
 			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit

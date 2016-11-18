@@ -32,8 +32,9 @@ public:
 	int getSelectedTileX(){return selectedTile.x;}
 	int getSelectedTileY(){return selectedTile.y;}
 	Unit* getCurrentSelection(){return currentSelection;}
-	Infantry* getInfantry(int i) { return &player2Infantry[i]; }
+	Unit* getInfantry(int i) { return &player2Infantry[i]; }
 	Unit* getAICavalry(int i) { return &player2Cavalry[i]; }
+	Unit* getAIArcher(int i) { return &player2Archers[i]; }
 	Unit*closestUnit(Unit* t2Unit);
 	int aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y);
 	void setCurrentSelection(Unit* newSelection);
