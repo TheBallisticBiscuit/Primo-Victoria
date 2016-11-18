@@ -142,6 +142,7 @@ void PrimoVictoria::update()
 		mainMenu->update();
 		optionsMenu->update();
 		defeatScreen->update();
+		victoryScreen->update();
 		unitManager.update(frameTime);
 		return;
 	}
@@ -153,9 +154,9 @@ void PrimoVictoria::update()
 		mainMenu->update();
 		optionsMenu->update();
 		defeatScreen->update();
+		victoryScreen->update();
 	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
-		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelOne();
 	}
@@ -166,12 +167,10 @@ void PrimoVictoria::update()
 		currentMenu = 1;
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 0) { //Selecting Level One
-		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelOne();
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) { //Selecting Level Two
-		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelTwo();
 	}
@@ -191,13 +190,13 @@ void PrimoVictoria::update()
 			levelTwo();
 		}
 	}
-	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 0){ //selecting main menu
 		currentMenu = 1;
 	}
-	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 1){ //selecting main menu
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 1){ //selecting main menu
 		currentMenu = 2;
 	}
-	else if(currentMenu == 4 && defeatScreen->getSelectedItem() == 2){ //selecting main menu
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //selecting main menu
 		if(level == 1){
 			gameReset();
 			levelTwo();
@@ -210,24 +209,22 @@ void PrimoVictoria::update()
 
 
 	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0){ //Level 1 Win con
-		//currentMenu = 3; //Defeat screen
-		gameReset();
-		currentMenu = 1;
+		currentMenu = 4;
 	}
 	if (level == 1 && unitManager.numEnemyUnits() > 0 && unitManager.numAlliedUnits() == 0)	{
-
+		currentMenu = 3;
 	}
 	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
 		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1) {
-			gameReset();
-			currentMenu = 1;
+			currentMenu = 4;
 		}
 
 	}
 
 
 
-
+	victoryScreen->update();
+	defeatScreen->update();
 	mainMenu->update();
 	optionsMenu->update();
 	unitManager.update(frameTime);
@@ -321,6 +318,8 @@ void PrimoVictoria::levelOne() { //Initialize level one
 		//spawnUnit(rand()%3,2);
 		//spawnUnit(rand()%3,2);
 	}
+	//spawnUnit(1,2);
+	tileManager.setTileVisibility(true);
 	isLevelInitialized = true;
 	isPlayerTurn = true;
 	level = 1;
@@ -330,9 +329,10 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,1);
+		spawnUnit(rand()%3,2);
 		
 	}
-	spawnUnit(rand()%3,2);
+	tileManager.setTileVisibility(true);
 	x1 = rand()%10 + 2;
 	y1 = rand()%7;
 	x2 = rand()%8 + 4;
@@ -388,16 +388,18 @@ void PrimoVictoria::render()
 		victoryScreenImage.draw();
 		victoryScreen -> displayMenu();
 	}
-	if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
-		unitStats->setFontColor(graphicsNS::LIME);
-		unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
-			unitManager.getSelectionY())->getUnit()->getHP())+ "          Movement Remaining: " +
-			std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
-			unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
-	}
-	if(level == 2){
-		spawnCooldown->setFontColor(graphicsNS::RED);
-		spawnCooldown->print("Unit Spawn Cooldown: " + std::to_string(spawnUnitCooldown), 50, 20);
+	if (currentMenu == 0) {
+		if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
+			unitStats->setFontColor(graphicsNS::LIME);
+			unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
+				unitManager.getSelectionY())->getUnit()->getHP())+ "          Movement Remaining: " +
+				std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
+				unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
+		}
+		if(level == 2){
+			spawnCooldown->setFontColor(graphicsNS::RED);
+			spawnCooldown->print("Unit Spawn Cooldown: " + std::to_string(spawnUnitCooldown), 50, 20);
+		}
 	}
 
 	graphics->spriteEnd();                  // end drawing sprites
