@@ -33,7 +33,6 @@ public:
 	Infantry* getInfantry(int i) { return &player2Infantry[i]; }
 	Unit* getAICavalry(int i) { return &player2Cavalry[i]; }
 	Unit*closestUnit(Unit* t2Unit);
-	bool moveAttempt(TileManager*, int);
 	int aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y);
 	void setCurrentSelection(Unit* newSelection);
 	void selectUnit(Unit* newSelection);

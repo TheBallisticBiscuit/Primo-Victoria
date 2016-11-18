@@ -6,7 +6,7 @@ Menu::Menu()
 	menuHeading ="";
 	menuItem1 = "Play Game";
 	menuItem2 = "Level Select";
-	menuItem3 = "Options";
+	menuItem3 = "Instructions";
 }
 
 Menu::Menu(std::string s)
@@ -23,7 +23,7 @@ void Menu::initialize(Graphics *g, Input *i)
 
 	highlightColor = graphicsNS::CYAN;
 	normalColor = graphicsNS::WHITE;
-	menuAnchor = D3DXVECTOR2(270,140);
+	menuAnchor = D3DXVECTOR2(240,180);
 	input = i;
 	verticalOffset = 50;
 	linePtr = 0;
@@ -32,11 +32,11 @@ void Menu::initialize(Graphics *g, Input *i)
 	menuItemFont = new TextDX();
 	menuHeadingFont = new TextDX();
 	menuItemFontHighlight = new TextDX();
-	if(menuItemFont->initialize(graphics, 36, true, false, "Calibri") == false)
+	if(menuItemFont->initialize(graphics, 36, true, false, "Poor Richard") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menuItem font"));
-	if(menuItemFontHighlight->initialize(graphics, 42, true, false, "Calibri") == false)
+	if(menuItemFontHighlight->initialize(graphics, 42, true, false, "Poor Richard") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menuItem font"));
-	if(menuHeadingFont->initialize(graphics, 54, true, false, "Calibri") == false)
+	if(menuHeadingFont->initialize(graphics, 54, true, false, "Poor Richard") == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing menuHeading font"));
 	menuHeadingFont->setFontColor(graphicsNS::LIME);
 	menuItemFont->setFontColor(normalColor);

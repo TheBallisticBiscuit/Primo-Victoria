@@ -370,7 +370,7 @@ Unit* UnitManager::closestUnit(Unit* t2Unit) {
 	int type;
 	for (int i = 0; i < 10; i++)	{
 		if (player1Infantry[i].getActive()) {
-			if (D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&minDistance)) > D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY())))) {
+			if (D3DXVec2LengthSq(&minDistance) > D3DXVec2LengthSq(&D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY()))) {
 				minDistance = D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY());
 				closest = i;
 				type = 0;
@@ -381,7 +381,7 @@ Unit* UnitManager::closestUnit(Unit* t2Unit) {
 	for (int i = 0; i < 10; i++)
 	{
 		if (player1Cavalry[i].getActive()) {
-			if (D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&minDistance)) > D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&D3DXVECTOR2(t2Unit->getX() - player1Cavalry[i].getX(), t2Unit->getY() - player1Cavalry[i].getY())))) {
+			if (D3DXVec2LengthSq(&minDistance) > D3DXVec2LengthSq(&D3DXVECTOR2(t2Unit->getX() - player1Cavalry[i].getX(), t2Unit->getY() - player1Cavalry[i].getY()))) {
 				minDistance = D3DXVECTOR2(t2Unit->getX() - player1Cavalry[i].getX(), t2Unit->getY() - player1Cavalry[i].getY());
 				closest = i;
 				type = 1;
@@ -411,15 +411,6 @@ int UnitManager::aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y) {
 		return 4;
 	if (dir.y >= 0.707)
 		return 2;
-}
-
-bool UnitManager::moveAttempt(TileManager* tileManager, int dir) { 
-	switch (dir)
-		case 1:
-			if (!tileManager->getTile(currentSelection->getTileX() - 1, currentSelection->getTileY())->isOccupied()) {
-				//unitLeft(tileManager);
-			}
-			return false;
 }
 
 #pragma endregion
