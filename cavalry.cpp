@@ -65,6 +65,7 @@ void Cavalry::fight(Unit& opponent, float frameTime){
 		opponent.setAttackFrames(left);
 		break;
 	}
+	setFrameCounter(getFrameCounter()+frameTime);
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
 		setHP(getHP()-opponent.getDamage());
@@ -72,7 +73,7 @@ void Cavalry::fight(Unit& opponent, float frameTime){
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}
-	setFrameCounter(getFrameCounter()+frameTime);
+
 }
 
 bool Cavalry::kill(float frameTime){
@@ -89,6 +90,9 @@ bool Cavalry::kill(float frameTime){
 	case right:
 		setFrames(CAVALRY_DEATH_RIGHT_START, CAVALRY_DEATH_RIGHT_END);
 		break;
+	}
+	if(!getActive()){
+		return true;
 	}
 	setAnimating(true);
 	if(getFrameCounter() > CAVALRY_ANIMATION_DELAY*6){

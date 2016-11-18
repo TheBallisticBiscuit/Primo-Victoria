@@ -73,7 +73,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 void PrimoVictoria::update()
 {
 #pragma region Newell
-	if(unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getMovementLeft() == 0){
+	if(unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getMovementLeft() == 0 && !fighting){
 		unitManager.setCurrentSelection(nullptr);
 		endTurn();
 	}
@@ -271,7 +271,7 @@ void PrimoVictoria::playerInput() {
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
-		spawnUnit(0, 1);
+		spawnUnit(1, 1);
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
 		keyDownLastFrame = NULL;

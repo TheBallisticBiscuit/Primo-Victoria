@@ -90,6 +90,9 @@ bool Infantry::kill(float frameTime){
 		setFrames(INFANTRY_DEATH_RIGHT_START, INFANTRY_DEATH_RIGHT_END);
 		break;
 	}
+	if(!getActive()){
+		return true;
+	}
 	setAnimating(true);
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*6){
 		setFrameCounter(0);

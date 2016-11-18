@@ -87,7 +87,23 @@ void Archer::fight(Unit& opponent, float frameTime){
 }
 
 bool Archer::kill(float frameTime){
-	setFrames(INFANTRY_DEATH_DOWN_START, INFANTRY_DEATH_DOWN_END);
+	switch(getLastDirection()){
+	case up:
+		setFrames(ARCHER_DEATH_UP_START, ARCHER_DEATH_UP_END);
+		break;
+	case left:
+		setFrames(ARCHER_DEATH_LEFT_START, ARCHER_DEATH_LEFT_END);
+		break;
+	case down:
+		setFrames(ARCHER_DEATH_DOWN_START, ARCHER_DEATH_DOWN_END);
+		break;
+	case right:
+		setFrames(ARCHER_DEATH_RIGHT_START, ARCHER_DEATH_RIGHT_END);
+		break;
+	}
+	if(!getActive()){
+		return true;
+	}
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*6){
 		setFrameCounter(0);
 		setVisible(false);

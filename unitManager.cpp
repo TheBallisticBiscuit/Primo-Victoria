@@ -232,38 +232,45 @@ void UnitManager::spawnArcher(int x, int y, int team){
 }
 
 bool UnitManager::fight(Unit& opponent, float frameTime){
-	if(currentSelection->getRange() > opponent.getRange()){
-		int currentHP = opponent.getHP();
-		currentSelection->fight(opponent, frameTime);
-		if(currentHP > opponent.getHP()){
-			currentSelection->setAnimating(false);
-			if(opponent.getHP() <= 0){
+	if(currentSelection != nullptr){
+		if(currentSelection->getRange() > opponent.getRange()){
+			int currentHP = opponent.getHP();
+			currentSelection->fight(opponent, frameTime);
+			if(currentHP > opponent.getHP()){
+				currentSelection->setAnimating(false);
+				if(opponent.getHP() <= 0){
+					return opponent.kill(frameTime);
+				}
+				else{
+					return true;
+				}
+			}
+		}
+		else{
+			if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
+				currentSelection->setAnimating(false);
 				return opponent.kill(frameTime);
 			}
+			else if(currentSelection->getHP() <= 0 && opponent.getHP() > 0){
+				opponent.setAnimating(false);
+				return currentSelection->kill(frameTime);
+			}
+			else if(currentSelection->getHP() <= 0 && opponent.getHP() <= 0){
+				bool temp = currentSelection->kill(frameTime);
+				bool temp2 = opponent.kill(frameTime);
+				if(temp && temp2){
+					currentSelection->setAnimating(false);
+					opponent.setAnimating(false);
+					return true;
+				}
+			}
 			else{
-				return true;
+				currentSelection->fight(opponent, frameTime); 
 			}
 		}
+		return false;
 	}
-	currentSelection->fight(opponent, frameTime); 
-	if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
-		currentSelection->setAnimating(false);
-		return opponent.kill(frameTime);
-	}
-	else if(currentSelection->getHP() <= 0 && opponent.getHP() > 0){
-		opponent.setAnimating(false);
-		return currentSelection->kill(frameTime);
-	}
-	else if(currentSelection->getHP() <= 0 && opponent.getHP() <= 0){
-		bool temp = currentSelection->kill(frameTime);
-		bool temp2 = opponent.kill(frameTime);
-		if(temp && temp2){
-			currentSelection->setAnimating(false);
-			opponent.setAnimating(false);
-			return true;
-		}
-	}
-	return false;
+	return true;
 }
 
 void UnitManager::setCurrentSelection(Unit* newSelection){
@@ -367,7 +374,7 @@ Unit* UnitManager::closestUnit(Unit* t2Unit) {
 				minDistance = D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY());
 				closest = i;
 				type = 0;
-				
+
 			}
 		}
 	}
