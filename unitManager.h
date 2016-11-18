@@ -27,7 +27,8 @@ public:
 	bool fight(Unit& opponent, float frameTime, Audio* audio);
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
-	int numActiveUnits();
+	int numEnemyUnits();
+	int numAlliedUnits();
 	int getSelectedTileX(){return selectedTile.x;}
 	int getSelectedTileY(){return selectedTile.y;}
 	Unit* getCurrentSelection(){return currentSelection;}
@@ -46,6 +47,7 @@ public:
 	bool unitLeft(TileManager* tileManager, Audio* audio);
 	bool unitRight(TileManager* tileManager, Audio* audio);
 	void endTurn();
+	void resetUnits();
 private:
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;

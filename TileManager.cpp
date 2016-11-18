@@ -80,6 +80,7 @@ void TileManager::tilesReset(){
 			tiles[i][j].leave();
 		}
 	}
+	setTileVisibility(false);
 }
 
 void TileManager::setTileVisibility(bool isVisible) {
