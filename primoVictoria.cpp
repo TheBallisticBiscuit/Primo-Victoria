@@ -36,8 +36,21 @@ void PrimoVictoria::initialize(HWND hwnd)
 	optionsMenu->initialize(graphics, input);
 	currentMenu = 1;
 
+	unitStats = new TextDX();
+	if(unitStats->initialize(graphics, 30, true, false, "Arial") == false)
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
+	unitManager.initialize(this, graphics);
+	keyDownLastFrame = NULL;
+	moving = NULL;
+	fighting = false;
+	fightTarget = nullptr;
+	audio->playCue(BACKGROUND_MUSIC);
+#pragma endregion
+
 #pragma region Higgs
 	isPlayerTurn = true;
+	isLevelInitialized = false;
+	level = 1;
 	srand(time(0));
 
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
@@ -53,17 +66,9 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
 
-#pragma endregion
+	spawnUnit(rand()%2,1);
+	spawnUnit(rand()%2,2);
 
-	unitStats = new TextDX();
-	if(unitStats->initialize(graphics, 30, true, false, "Arial") == false)
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing unit stats font"));
-	unitManager.initialize(this, graphics);
-	keyDownLastFrame = NULL;
-	moving = NULL;
-	fighting = false;
-	fightTarget = nullptr;
-	audio->playCue(BACKGROUND_MUSIC);
 #pragma endregion
 	return;
 }
@@ -134,6 +139,7 @@ void PrimoVictoria::update()
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
 		tileManager.setTileVisibility(true);
 		currentMenu = 0;
+		levelOne();
 	}
 	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
 		currentMenu = 2;
@@ -141,11 +147,29 @@ void PrimoVictoria::update()
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
 		currentMenu = 1;
 	}
+	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 0) {
+		tileManager.setTileVisibility(true);
+		currentMenu = 0;
+		levelOne();
+	}
+	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) {
+		tileManager.setTileVisibility(true);
+		currentMenu = 0;
+		levelTwo();
+	}
+
+
+	if (level == 1 && unitManager.numActiveUnits() == 0){
+		//currentMenu = 3; //Defeat screen
+		
+
+	}
 
 	mainMenu->update();
 	optionsMenu->update();
 	unitManager.update(frameTime);
-#pragma region Newell
+
+#pragma endregion
 }
 
 #pragma region Higgs
@@ -154,49 +178,49 @@ void PrimoVictoria::update()
 //=============================================================================
 void PrimoVictoria::ai()
 {
-	if (!moving) {
-		int dir, r, t, x, y = 0;
-		if (!isPlayerTurn) {
-			r = 2; //rand()%(#)
-			if (unitManager.numActiveUnits() < r) {
-				t = unitManager.numActiveUnits();
-				spawnUnit(t,2);
-			}
-			else {
-				if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
-					|| unitManager.getCurrentSelection() == nullptr) {
-					r = rand()%2;
-					if (r == 0) {
-						for (int i = 0; i < 10; i++) //Find available unit
-						{
-							if (unitManager.getInfantry(i)->getActive()) { 
-								unitManager.selectUnit(unitManager.getInfantry(i));
-								break;
-							}
-						}
-					}
-					else if (r == 1) {
-						for (int i = 0; i < 10; i++) //Find available unit
-						{
-							if (unitManager.getAICavalry(i)->getActive()) {
-								unitManager.selectUnit(unitManager.getAICavalry(i));
-								break;
-							}				
-						}			
-					}
-				}
-				if (unitManager.getCurrentSelection() != nullptr) {
-					Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
+	if (!moving && !isPlayerTurn) {
+		int dir, r, x, y = 0;
+		if (level == 1) {
 
-
-					dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
-					if(!fighting)
-						moveAttempt(dir, x, y);				
-				}
+		}
+		if (level == 2) { 
+			if (unitManager.numActiveUnits() < 2) {
+				spawnUnit(unitManager.numActiveUnits(),2);
 			}
 		}
-	}
-}
+		if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
+			|| unitManager.getCurrentSelection() == nullptr) {
+				r = rand()%2;
+				if (r == 0) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getInfantry(i)->getActive()) { 
+							unitManager.selectUnit(unitManager.getInfantry(i));
+							break;
+						}
+					}
+				}
+				else if (r == 1) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAICavalry(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAICavalry(i));
+							break;
+						}				
+					}			
+				}
+		}
+		if (unitManager.getCurrentSelection() != nullptr) {
+			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
+
+
+			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
+			if(!fighting)
+				moveAttempt(dir, x, y);				
+
+		}
+	}	
+}	
 
 void PrimoVictoria::moveAttempt(int dir, int x, int y) {
 	switch (dir) {//1 = Up, 2 = Down, 3 = Left, 4 = Right
@@ -215,6 +239,32 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) {
 	}
 }
 
+void PrimoVictoria::levelOne() {
+	for (int i = 0; i < 2; i++)
+	{
+		spawnUnit(rand()%2,1);
+		spawnUnit(rand()%2,2);
+		spawnUnit(rand()%2,2);
+	}
+
+	isLevelInitialized = true;
+	isPlayerTurn = true;
+}
+
+void PrimoVictoria::levelTwo() {
+	for (int i = 0; i < 3; i++)
+	{
+		spawnUnit(rand()%2,1);
+		spawnUnit(rand()%2,2);
+	}
+	isLevelInitialized = true;
+	isPlayerTurn = true;
+}
+
+void PrimoVictoria::gameReset() {
+	tileManager.tilesReset();
+
+}
 #pragma endregion
 
 //=============================================================================

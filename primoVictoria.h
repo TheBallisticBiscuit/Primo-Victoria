@@ -41,6 +41,8 @@ private:
 	int keyDownLastFrame;
 	int moving;
 	bool isPlayerTurn;
+	bool isLevelInitialized;
+	int level;
 public:
     // Constructor
     PrimoVictoria();
@@ -59,6 +61,9 @@ public:
     void resetAll();
 	int getCurrentMenu(){return currentMenu;}
 	void spawnUnit(int unitType, int team);
+	void levelOne();
+	void levelTwo();
+	void gameReset();
 	void moveUp();
 	void moveDown();
 	void moveLeft();

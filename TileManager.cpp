@@ -72,6 +72,16 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 	return 1;
 }
 
+void TileManager::tilesReset(){
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			tiles[i][j].leave();
+		}
+	}
+}
+
 void TileManager::setTileVisibility(bool isVisible) {
 	if (isVisible == true) {
 		for (int i = 0; i < width; i++) {

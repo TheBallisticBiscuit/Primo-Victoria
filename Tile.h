@@ -23,6 +23,7 @@ public:
 	void leave();
 	void setVisible() { visible = true; };
 	void setInvisible() { visible = false; };
+	void setOccupied(bool);
 
 
 private:

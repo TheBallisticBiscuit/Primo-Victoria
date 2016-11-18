@@ -18,14 +18,14 @@ public:
 	//x & y correspond to grid coordinates, not screen coordinates
 	Tile* getTile(int x, int y) {return &tiles[x][y]; };
 
-	void setTileVisibility(bool);
-	void draw(); 
 	//Width of grid, in tiles
 	int getWidth() { return width; };
 	//Height of grid, in tiles
 	int getHeight() { return height; };
 
-
+	void tilesReset();
+	void setTileVisibility(bool);
+	void draw(); 
 	void onLostDevice();
 	void onResetDevice();
 	//void battle(Tile* t1, Tile* t2);

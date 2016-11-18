@@ -364,10 +364,11 @@ int UnitManager::numActiveUnits() {
 }
 
 //Returns the closest enemy to the selected AI unit
+//TODO: Add archer functionality
 Unit* UnitManager::closestUnit(Unit* t2Unit) { 
 	VECTOR2 minDistance(1000,1000);
-	int closest;
-	int type;
+	int closest = 0;
+	int type = -1;
 	for (int i = 0; i < 10; i++)	{
 		if (player1Infantry[i].getActive()) {
 			if (D3DXVec2LengthSq(&minDistance) > D3DXVec2LengthSq(&D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY()))) {

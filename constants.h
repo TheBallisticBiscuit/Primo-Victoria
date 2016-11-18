@@ -78,7 +78,7 @@ const char CLASS_NAME[] = "Collisions";
 const char GAME_TITLE[] = "Primo Victoria";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  1152;               // width of game in pixels
-const UINT GAME_HEIGHT = 674;               // height of game in pixels
+const UINT GAME_HEIGHT = 672;               // height of game in pixels
 
 // game
 const double PI = 3.14159265;
