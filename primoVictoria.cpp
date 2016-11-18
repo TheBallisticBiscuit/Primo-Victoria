@@ -63,6 +63,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	moving = NULL;
 	fighting = false;
 	fightTarget = nullptr;
+	audio->playCue(BACKGROUND_MUSIC);
 #pragma endregion
 	return;
 }
