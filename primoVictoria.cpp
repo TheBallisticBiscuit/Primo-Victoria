@@ -162,24 +162,26 @@ void PrimoVictoria::ai()
 				spawnUnit(t,2);
 			}
 			else {
-				r = rand()%2;
-				if (r == 0) {
-					for (int i = 0; i < 10; i++) //Find available unit
-					{
-						if (unitManager.getInfantry(i)->getActive()) { 
-							unitManager.selectUnit(unitManager.getInfantry(i));
-							break;
+				if (unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2) {
+					r = rand()%2;
+					if (r == 0) {
+						for (int i = 0; i < 10; i++) //Find available unit
+						{
+							if (unitManager.getInfantry(i)->getActive()) { 
+								unitManager.selectUnit(unitManager.getInfantry(i));
+								break;
+							}
 						}
 					}
-				}
-				else if (r == 1) {
-					for (int i = 0; i < 10; i++) //Find available unit
-					{
-						if (unitManager.getAICavalry(i)->getActive()) {
-							unitManager.selectUnit(unitManager.getAICavalry(i));
-							break;
-						}				
-					}			
+					else if (r == 1) {
+						for (int i = 0; i < 10; i++) //Find available unit
+						{
+							if (unitManager.getAICavalry(i)->getActive()) {
+								unitManager.selectUnit(unitManager.getAICavalry(i));
+								break;
+							}				
+						}			
+					}
 				}
 				Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
 
