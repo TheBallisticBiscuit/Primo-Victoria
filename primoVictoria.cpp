@@ -338,7 +338,6 @@ void PrimoVictoria::levelOne() { //Initialize level one
 		spawnUnit(rand()%3,1);
 		spawnUnit(rand()%3,1);
 	}
-	//spawnUnit(1,2);
 	tileManager.setTileVisibility(true);
 	isLevelInitialized = true;
 	isPlayerTurn = true;

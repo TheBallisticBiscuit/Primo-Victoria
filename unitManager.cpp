@@ -153,7 +153,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			if(!player2Infantry[i].getActive()){
 				player2Infantry[i].setActive(true);
 				player2Infantry[i].setVisible(true);
-				player2Infantry[i].setHP(10);
+				player2Infantry[i].setHP(15);
 				player2Infantry[i].setTile(x, y);
 				player2Infantry[i].setX(x*TERRAIN_WIDTH);
 				player2Infantry[i].setY(y*TERRAIN_HEIGHT);
