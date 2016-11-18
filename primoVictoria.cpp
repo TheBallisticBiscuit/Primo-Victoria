@@ -342,6 +342,7 @@ void PrimoVictoria::levelOne() { //Initialize level one
 	tileManager.setTileVisibility(true);
 	isLevelInitialized = true;
 	isPlayerTurn = true;
+	unitManager.setCurrentSelection(nullptr);
 	level = 1;
 }
 
@@ -363,6 +364,7 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 
 	isLevelInitialized = true;
 	isPlayerTurn = true;
+	unitManager.setCurrentSelection(nullptr);
 	level = 2;
 }
 
@@ -474,6 +476,7 @@ void PrimoVictoria::playerInput() {
 		spawnUnitCooldown++;
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
+		keyDownLastFrame = NULL;
 		endTurn();
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
