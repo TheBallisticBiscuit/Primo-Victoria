@@ -66,6 +66,9 @@
     <ClCompile Include="cavalry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="archer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -120,6 +123,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cavalry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="archer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

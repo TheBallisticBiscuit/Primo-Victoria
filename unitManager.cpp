@@ -35,13 +35,18 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!cavalryTexture2.initialize(graphics,"pictures\\greenCavalry.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
+	if (!archerTexture.initialize(graphics,"pictures\\greenArcher.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+	}
+	if (!archerTexture2.initialize(graphics,"pictures\\greenArcher.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+	}
 	player1Infantry = new Infantry[10];
 	player2Infantry = new Infantry[10];
 	player1Cavalry = new Cavalry[10];
 	player2Cavalry = new Cavalry[10];
-	player2Units = new Unit*[2];
-	player2Units[0] = player2Infantry;
-	player2Units[1] = player2Cavalry;
+	player1Archers = new Archer[10];
+	player2Archers = new Archer[10];
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
 		player1Infantry[i].setActive(false);
@@ -58,6 +63,14 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 		player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
 		player2Cavalry[i].setActive(false);
 		player2Cavalry[i].setVisible(false);
+
+		player1Archers[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+		player1Archers[i].setActive(false);
+		player1Archers[i].setVisible(false);
+
+		player2Archers[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
+		player2Archers[i].setActive(false);
+		player2Archers[i].setVisible(false);
 	}
 
 	currentSelection = nullptr;
@@ -70,6 +83,8 @@ void UnitManager::draw(){
 		player2Infantry[i].draw();
 		player1Cavalry[i].draw();
 		player2Cavalry[i].draw();
+		player1Archers[i].draw();
+		player2Archers[i].draw();
 	}
 }
 
@@ -92,6 +107,8 @@ void UnitManager::update(float frameTime){
 		player2Infantry[i].update(frameTime);
 		player1Cavalry[i].update(frameTime);
 		player2Cavalry[i].update(frameTime);
+		player1Archers[i].update(frameTime);
+		player2Archers[i].update(frameTime);
 	}
 }
 
@@ -102,6 +119,8 @@ void UnitManager::onResetDevice(){
 	infantryTexture2.onResetDevice();
 	cavalryTexture.onResetDevice();
 	cavalryTexture2.onResetDevice();
+	archerTexture.onResetDevice();
+	archerTexture2.onResetDevice();
 }
 void UnitManager::onLostDevice(){
 	selectionBoxTexture.onLostDevice();
@@ -109,6 +128,8 @@ void UnitManager::onLostDevice(){
 	infantryTexture2.onLostDevice();
 	cavalryTexture.onLostDevice();
 	cavalryTexture2.onLostDevice();
+	archerTexture.onLostDevice();
+	archerTexture2.onLostDevice();
 }
 
 void UnitManager::spawnInfantry(int x, int y, int team){
@@ -131,7 +152,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			if(!player2Infantry[i].getActive()){
 				player2Infantry[i].setActive(true);
 				player2Infantry[i].setVisible(true);
-				player1Infantry[i].setHP(10);
+				player2Infantry[i].setHP(10);
 				player2Infantry[i].setTile(x, y);
 				player2Infantry[i].setX(x*TERRAIN_WIDTH);
 				player2Infantry[i].setY(y*TERRAIN_HEIGHT);
@@ -164,12 +185,45 @@ void UnitManager::spawnCavalry(int x, int y, int team){
 			if(!player2Cavalry[i].getActive()){
 				player2Cavalry[i].setActive(true);
 				player2Cavalry[i].setVisible(true);
-				player1Cavalry[i].setHP(5);
+				player2Cavalry[i].setHP(5);
 				player2Cavalry[i].setTile(x, y);
 				player2Cavalry[i].setX(x*TERRAIN_WIDTH);
 				player2Cavalry[i].setY(y*TERRAIN_HEIGHT);
 				player2Cavalry[i].setLastDirection(Unit::left);
 				selectUnit(&player2Cavalry[i]);
+				break;
+			}
+		}
+
+	}
+}
+
+void UnitManager::spawnArcher(int x, int y, int team){
+	if(team == 1){
+		for(int i = 0; i < 10; i++){
+			if(!player1Archers[i].getActive()){
+				player1Archers[i].setActive(true);
+				player1Archers[i].setVisible(true);
+				player1Archers[i].setHP(5);
+				player1Archers[i].setTile(x, y);
+				player1Archers[i].setX(x*TERRAIN_WIDTH);
+				player1Archers[i].setY(y*TERRAIN_HEIGHT);
+				selectUnit(&player1Archers[i]);
+				break;
+			}
+		}
+	}
+	else if(team == 2){
+		for(int i = 0; i < 10; i++){
+			if(!player2Archers[i].getActive()){
+				player2Archers[i].setActive(true);
+				player2Archers[i].setVisible(true);
+				player2Archers[i].setHP(5);
+				player2Archers[i].setTile(x, y);
+				player2Archers[i].setX(x*TERRAIN_WIDTH);
+				player2Archers[i].setY(y*TERRAIN_HEIGHT);
+				player2Archers[i].setLastDirection(Unit::left);
+				selectUnit(&player2Archers[i]);
 				break;
 			}
 		}

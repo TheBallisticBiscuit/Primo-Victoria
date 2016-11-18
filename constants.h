@@ -211,4 +211,42 @@ const int CAVALRY_DEATH_DOWN_END = 145;
 const int CAVALRY_DEATH_LEFT_START = 146;
 const int CAVALRY_DEATH_LEFT_END = 151;
 #pragma endregion
+
+#pragma region Newell
+const float ARCHER_SCALING = 1;
+const float ARCHER_ANIMATION_DELAY = 0.1;
+const float ARCHER_SPEED = 70;
+const int ARCHER_ATTACK_RIGHT_START = 0;
+const int ARCHER_ATTACK_RIGHT_END = 11;
+const int ARCHER_ATTACK_UP_START = 12;
+const int ARCHER_ATTACK_UP_END  = 23;
+const int ARCHER_ATTACK_DOWN_START = 24;
+const int ARCHER_ATTACK_DOWN_END = 35;
+const int ARCHER_ATTACK_LEFT_START = 36;
+const int ARCHER_ATTACK_LEFT_END = 47;
+const int ARCHER_RUN_RIGHT_START = 48;
+const int ARCHER_RUN_RIGHT_END = 55;
+const int ARCHER_RUN_UP_START = 56;
+const int ARCHER_RUN_UP_END = 63;
+const int ARCHER_RUN_DOWN_START = 64;
+const int ARCHER_RUN_DOWN_END = 71;
+const int ARCHER_RUN_LEFT_START = 72;
+const int ARCHER_RUN_LEFT_END = 79;
+const int ARCHER_IDLE_RIGHT_START = 80;
+const int ARCHER_IDLE_RIGHT_END = 88;
+const int ARCHER_IDLE_UP_START = 89;
+const int ARCHER_IDLE_UP_END = 97;
+const int ARCHER_IDLE_DOWN_START = 98;
+const int ARCHER_IDLE_DOWN_END = 106;
+const int ARCHER_IDLE_LEFT_START = 107;
+const int ARCHER_IDLE_LEFT_END = 115;
+const int ARCHER_DEATH_RIGHT_START = 116;
+const int ARCHER_DEATH_RIGHT_END = 121;
+const int ARCHER_DEATH_UP_START = 122;
+const int ARCHER_DEATH_UP_END = 131;
+const int ARCHER_DEATH_DOWN_START = 132;
+const int ARCHER_DEATH_DOWN_END = 141;
+const int ARCHER_DEATH_LEFT_START = 142;
+const int ARCHER_DEATH_LEFT_END = 151;
+#pragma endregion
 #endif
