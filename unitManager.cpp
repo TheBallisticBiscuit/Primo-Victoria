@@ -231,11 +231,11 @@ void UnitManager::spawnArcher(int x, int y, int team){
 	}
 }
 
-bool UnitManager::fight(Unit& opponent, float frameTime){
+bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(currentSelection != nullptr){
 		if(currentSelection->getRange() > opponent.getRange()){
 			int currentHP = opponent.getHP();
-			currentSelection->fight(opponent, frameTime);
+			currentSelection->fight(opponent, frameTime, audio);
 			if(currentHP > opponent.getHP()){
 				currentSelection->setAnimating(false);
 				if(opponent.getHP() <= 0){
@@ -265,7 +265,7 @@ bool UnitManager::fight(Unit& opponent, float frameTime){
 				}
 			}
 			else{
-				currentSelection->fight(opponent, frameTime); 
+				currentSelection->fight(opponent, frameTime, audio); 
 			}
 		}
 		return false;
@@ -307,32 +307,32 @@ void UnitManager::selectionDown(){
 		selectionY++;
 	}
 }
-bool UnitManager::unitUp(TileManager* tileManager){
-	if(currentSelection->moveUp()){
+bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveUp(audio)){
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
 	}
 	return false;
 }
-bool UnitManager::unitDown(TileManager* tileManager){
-	if(currentSelection->moveDown()){
+bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveDown(audio)){
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
 	}
 	return false;
 }
-bool UnitManager::unitLeft(TileManager* tileManager){
-	if(currentSelection->moveLeft()){
+bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveLeft(audio)){
 		tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
 	}
 	return false;
 }
-bool UnitManager::unitRight(TileManager* tileManager){
-	if(currentSelection->moveRight()){
+bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
+	if(currentSelection->moveRight(audio)){
 		tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;

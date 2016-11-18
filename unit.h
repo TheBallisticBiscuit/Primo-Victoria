@@ -27,12 +27,12 @@ public:
 	void setFrameCounter(float newFrameCounter);
 	void setAnimating(bool newBool);
 	void setLastDirection(LastDirection newDirection);
-	virtual void fight(Unit& opponent, float frameTime){}
+	virtual void fight(Unit& opponent, float frameTime, Audio* audio){}
 	virtual bool kill(float frameTime){return true;}
-	virtual bool moveUp(){return false;}
-	virtual bool moveDown(){return false;}
-	virtual bool moveLeft(){return false;}
-	virtual bool moveRight(){return false;}
+	virtual bool moveUp(Audio* audio){return false;}
+	virtual bool moveDown(Audio* audio){return false;}
+	virtual bool moveLeft(Audio* audio){return false;}
+	virtual bool moveRight(Audio* audio){return false;}
 	virtual void setAttackFrames(LastDirection direction){}
 private:
 	int damage;

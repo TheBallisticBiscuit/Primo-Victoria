@@ -46,7 +46,7 @@ void Archer::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Archer::fight(Unit& opponent, float frameTime){
+void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
 
 	switch(getLastDirection()){
 	case up:
@@ -75,6 +75,7 @@ void Archer::fight(Unit& opponent, float frameTime){
 		break;
 	}
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
+		audio->playCue(ARCHER_ATTACK);
 		setFrameCounter(0);
 		if(getRange() <= opponent.getRange()){
 			setHP(getHP()-opponent.getDamage());
@@ -115,7 +116,8 @@ bool Archer::kill(float frameTime){
 	return false;
 }
 
-bool Archer::moveUp(){
+bool Archer::moveUp(Audio* audio){
+	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(up);
 	setFrames(ARCHER_RUN_UP_START, ARCHER_RUN_UP_END);
 	setVelocity(VECTOR2(0, -1));
@@ -128,7 +130,8 @@ bool Archer::moveUp(){
 	}
 	return false;
 }
-bool Archer::moveDown(){
+bool Archer::moveDown(Audio* audio){
+	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(down);
 	setFrames(ARCHER_RUN_DOWN_START, ARCHER_RUN_DOWN_END);
 	setVelocity(VECTOR2(0, 1));
@@ -141,7 +144,8 @@ bool Archer::moveDown(){
 	}
 	return false;
 }
-bool Archer::moveLeft(){
+bool Archer::moveLeft(Audio* audio){
+	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(left);
 	setFrames(ARCHER_RUN_LEFT_START, ARCHER_RUN_LEFT_END);
 	setVelocity(VECTOR2(-1, 0));
@@ -154,7 +158,8 @@ bool Archer::moveLeft(){
 	}
 	return false;
 }
-bool Archer::moveRight(){
+bool Archer::moveRight(Audio* audio){
+	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(right);
 	setFrames(ARCHER_RUN_RIGHT_START, ARCHER_RUN_RIGHT_END);
 	setVelocity(VECTOR2(1, 0));

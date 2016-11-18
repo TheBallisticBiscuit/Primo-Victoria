@@ -105,7 +105,7 @@ void PrimoVictoria::update()
 		exit(0);
 	}
 	if(fighting == true){
-		if(unitManager.fight(*fightTarget, frameTime)){
+		if(unitManager.fight(*fightTarget, frameTime, audio)){
 			fighting = false;
 			if(fightTarget->getHP() <= 0){
 				tileManager.getTile(fightTarget->getTileX(), fightTarget->getTileY())->leave();
@@ -381,7 +381,7 @@ void PrimoVictoria::moveUp(){
 
 		/*else*/if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
 			->isOccupied())){
-				if(unitManager.unitUp(&tileManager)){
+				if(unitManager.unitUp(&tileManager, audio)){
 					moving = NULL;
 					//if(unitManager.getCurrentSelection()->getMovementLeft() <= 0){
 					//	endTurn();
@@ -430,7 +430,7 @@ void PrimoVictoria::moveDown(){
 		}*/
 		/*else*/ if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
 			->isOccupied())){
-				if(unitManager.unitDown(&tileManager)){
+				if(unitManager.unitDown(&tileManager, audio)){
 					moving = NULL;
 					//if(unitManager.getCurrentSelection()->getMovementLeft() <= 0){
 					//	endTurn();
@@ -479,7 +479,7 @@ void PrimoVictoria::moveLeft(){
 		}
 		else*/if(!(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
 			->isOccupied())){
-				if(unitManager.unitLeft(&tileManager)){
+				if(unitManager.unitLeft(&tileManager, audio)){
 					moving = NULL;
 					//if(unitManager.getCurrentSelection()->getMovementLeft() <= 0){
 					//	endTurn();
@@ -528,7 +528,7 @@ void PrimoVictoria::moveRight(){
 		}*/
 		/*else*/if(!(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
 			->isOccupied())){
-				if(unitManager.unitRight(&tileManager)){
+				if(unitManager.unitRight(&tileManager, audio)){
 					moving = NULL;
 					//if(unitManager.getCurrentSelection()->getMovementLeft() <= 0){
 					//	endTurn();
