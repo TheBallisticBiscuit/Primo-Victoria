@@ -318,8 +318,8 @@ void PrimoVictoria::levelOne() { //Initialize level one
 		spawnUnit(rand()%3,1);
 		spawnUnit(rand()%3,1);
 		spawnUnit(rand()%3,2);
-		spawnUnit(rand()%3,2);
-		spawnUnit(rand()%3,2);
+		//spawnUnit(rand()%3,2);
+		//spawnUnit(rand()%3,2);
 	}
 	isLevelInitialized = true;
 	isPlayerTurn = true;
@@ -333,14 +333,11 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 		
 	}
 	spawnUnit(rand()%3,2);
-	//x1 = rand()%10 + 2;
-	//y1 = rand()%7;
-	//x2 = rand()%8 + 4;
-	//y2 = rand()%7;
-	x1 = 1;
-	y1 = 3;
-	x2 = 1;
-	y2 = 4;
+	x1 = rand()%10 + 2;
+	y1 = rand()%7;
+	x2 = rand()%8 + 4;
+	y2 = rand()%7;
+	
 	tileManager.levelTwoSetup(graphics,x1,y1,x2,y2,this);
 
 	isLevelInitialized = true;
