@@ -217,7 +217,7 @@ void PrimoVictoria::update()
 		currentMenu = 3;
 	}
 	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
-		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1) {
+		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1 && currentMenu == 0) {
 			currentMenu = 4;
 			gameReset();
 		}

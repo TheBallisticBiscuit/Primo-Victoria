@@ -32,14 +32,14 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!cavalryTexture.initialize(graphics,"pictures\\greenCavalry.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
-	if (!cavalryTexture2.initialize(graphics,"pictures\\greenCavalry.png")){
+	if (!cavalryTexture2.initialize(graphics,"pictures\\redCavalry.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
 	if (!archerTexture.initialize(graphics,"pictures\\greenArcher.png")){
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenArcher texture"));
 	}
 	if (!archerTexture2.initialize(graphics,"pictures\\redArcher.png")){
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redArcher texture"));
 	}
 	player1Infantry = new Infantry[10];
 	player2Infantry = new Infantry[10];
@@ -60,7 +60,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 		player1Cavalry[i].setActive(false);
 		player1Cavalry[i].setVisible(false);
 
-		player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
+		player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture2, gamePtr);
 		player2Cavalry[i].setActive(false);
 		player2Cavalry[i].setVisible(false);
 
