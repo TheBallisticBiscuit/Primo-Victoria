@@ -29,9 +29,10 @@ public:
 	int getSelectedTileY(){return selectedTile.y;}
 	Unit* getCurrentSelection(){return currentSelection;}
 	Infantry* getInfantry(int i) { return &player2Infantry[i]; }
+	Unit* getAICavalry(int i) { return &player2Cavalry[i]; }
 	Unit*closestUnit(Unit* t2Unit);
 	bool moveAttempt(TileManager*, int);
-	void aiAttack(VECTOR2 enemyXY, Unit* aiUnit, TileManager*);
+	int aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y);
 	void setCurrentSelection(Unit* newSelection);
 	void selectUnit(Unit* newSelection);
 	void selectionRight();
@@ -59,6 +60,7 @@ private:
 	Cavalry* player1Cavalry;
 	Cavalry* player2Cavalry;
 	Unit* currentSelection;
+	Unit** player2Units;
 	int selectionX;
 	int selectionY;
 };

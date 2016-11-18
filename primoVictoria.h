@@ -52,6 +52,7 @@ public:
     void initialize(HWND hwnd);
     void update();      // must override pure virtual from Game
     void ai();          // "
+	void moveAttempt(int dir, int x, int y);
     void collisions();  // "
     void render();      // "
     void releaseAll();

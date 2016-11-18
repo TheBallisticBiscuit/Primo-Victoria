@@ -39,6 +39,9 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	player2Infantry = new Infantry[10];
 	player1Cavalry = new Cavalry[10];
 	player2Cavalry = new Cavalry[10];
+	player2Units = new Unit*[2];
+	player2Units[0] = player2Infantry;
+	player2Units[1] = player2Cavalry;
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
 		player1Infantry[i].setActive(false);
@@ -56,6 +59,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 		player2Cavalry[i].setActive(false);
 		player2Cavalry[i].setVisible(false);
 	}
+
 	currentSelection = nullptr;
 }
 
@@ -89,15 +93,6 @@ void UnitManager::update(float frameTime){
 		player1Cavalry[i].update(frameTime);
 		player2Cavalry[i].update(frameTime);
 	}
-}
-
-int UnitManager::numActiveUnits() {
-	int activeUnits = 0;
-	for (int i = 0; i < 9; i++)
-	{
-		activeUnits += player2Infantry[i].getActive();
-	}
-	return activeUnits;
 }
 
 
@@ -282,28 +277,67 @@ void UnitManager::endTurn(){
 #pragma endregion
 
 #pragma region Higgs
+int UnitManager::numActiveUnits() {
+	int activeUnits = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		activeUnits += player2Infantry[i].getActive();
+		activeUnits += player2Cavalry[i].getActive();
+	}
+	return activeUnits;
+}
+
 //Returns the closest enemy to the selected AI unit
 Unit* UnitManager::closestUnit(Unit* t2Unit) { 
 	VECTOR2 minDistance(1000,1000);
 	int closest;
+	int type;
 	for (int i = 0; i < 10; i++)	{
-		if (minDistance > D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY()))
-			minDistance = D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY());
-		closest = i;
+		if (player1Infantry[i].getActive()) {
+			if (D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&minDistance)) > D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY())))) {
+				minDistance = D3DXVECTOR2(t2Unit->getX() - player1Infantry[i].getX(), t2Unit->getY() - player1Infantry[i].getY());
+				closest = i;
+				type = 0;
+				
+			}
+		}
 	}
-	return &player1Infantry[closest];
+	for (int i = 0; i < 10; i++)
+	{
+		if (player1Cavalry[i].getActive()) {
+			if (D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&minDistance)) > D3DXVec2LengthSq(const_cast<D3DXVECTOR2*>(&D3DXVECTOR2(t2Unit->getX() - player1Cavalry[i].getX(), t2Unit->getY() - player1Cavalry[i].getY())))) {
+				minDistance = D3DXVECTOR2(t2Unit->getX() - player1Cavalry[i].getX(), t2Unit->getY() - player1Cavalry[i].getY());
+				closest = i;
+				type = 1;
+			}
+		}
+	}
+	if (type == 0)
+		return &player1Infantry[closest];
+	else if (type == 1)
+		return &player1Cavalry[closest];
 }
-//Calculates direction of movement, calls moveAttempt for each movement step
-void UnitManager::aiAttack(VECTOR2 enemyXY, Unit* aiUnit, TileManager* tileManager) {
-	VECTOR2 dir = *(aiUnit->getCenter()) - enemyXY;
+
+//Calculates direction of movement
+int UnitManager::aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y) {
+	x = aiUnit->getTileX();
+	y = aiUnit->getTileY();
+
+	VECTOR2 dir = D3DXVECTOR2(target->getTileX() - x, target->getTileY() - y);//*aiUnit->getCenter() - *target->getCenter();
 	D3DXVec2Normalize(&dir, &dir);
-	if (dir.x < -0.707) { 
-		moveAttempt(tileManager, 1);
-	}
 
+
+	if (dir.x <= -0.707) 
+		return 3;
+	if (dir.y <= -0.707)
+		return 1;
+	if (dir.x >= 0.707)
+		return 4;
+	if (dir.y >= 0.707)
+		return 2;
 }
 
-bool UnitManager::moveAttempt(TileManager* tileManager, int dir) { //1 = left, 2 = up, 3 = right, 4 = down
+bool UnitManager::moveAttempt(TileManager* tileManager, int dir) { 
 	switch (dir)
 		case 1:
 			if (!tileManager->getTile(currentSelection->getTileX() - 1, currentSelection->getTileY())->isOccupied()) {
