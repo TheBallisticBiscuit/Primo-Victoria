@@ -208,14 +208,14 @@ void PrimoVictoria::update()
 	}
 
 
-	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0){ //Level 1 Win con
+	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
 		currentMenu = 4;
 	}
-	if (level == 1 && unitManager.numEnemyUnits() > 0 && unitManager.numAlliedUnits() == 0)	{
+	if (level == 1 && unitManager.numEnemyUnits() > 0 && unitManager.numAlliedUnits() == 0 && currentMenu == 0)	{
 		currentMenu = 3;
 	}
 	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
-		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1) {
+		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1 && currentMenu == 0) {
 			currentMenu = 4;
 		}
 
@@ -310,6 +310,7 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) {
 }
 
 void PrimoVictoria::levelOne() { //Initialize level one
+	gameReset();
 	for (int i = 0; i < 2; i++)
 	{
 		spawnUnit(rand()%3,1);
@@ -326,6 +327,7 @@ void PrimoVictoria::levelOne() { //Initialize level one
 }
 
 void PrimoVictoria::levelTwo() { //Initialize level two
+	gameReset();
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,1);
