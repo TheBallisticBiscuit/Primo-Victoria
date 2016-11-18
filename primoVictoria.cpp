@@ -50,7 +50,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 #pragma region Higgs
 	isPlayerTurn = true;
 	isLevelInitialized = false;
-	level = 1;
+	level = 0;
 	srand(time(0));
 
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
@@ -66,8 +66,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
 
-	spawnUnit(rand()%2,1);
-	spawnUnit(rand()%2,2);
+	spawnUnit(rand()%3,1);
+	spawnUnit(rand()%3,2);
 
 #pragma endregion
 	return;
@@ -136,7 +136,7 @@ void PrimoVictoria::update()
 		mainMenu->update();
 		optionsMenu->update();
 	}
-	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) {
+	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
 		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelOne();
@@ -144,24 +144,25 @@ void PrimoVictoria::update()
 	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
 		currentMenu = 2;
 	}
-	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){
+	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){ //Back button
 		currentMenu = 1;
 	}
-	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 0) {
+	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 0) { //Selecting Level One
 		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelOne();
 	}
-	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) {
+	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) { //Selecting Level Two
 		tileManager.setTileVisibility(true);
 		currentMenu = 0;
 		levelTwo();
 	}
 
 
-	if (level == 1 && unitManager.numActiveUnits() == 0){
+	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() != 0){
 		//currentMenu = 3; //Defeat screen
-		
+		gameReset();
+		currentMenu = 1;
 
 	}
 
@@ -184,13 +185,13 @@ void PrimoVictoria::ai()
 
 		}
 		if (level == 2) { 
-			if (unitManager.numActiveUnits() < 2) {
-				spawnUnit(unitManager.numActiveUnits(),2);
+			if (unitManager.numEnemyUnits() < rand() & 0x5) {
+				spawnUnit(rand()%3,2);
 			}
 		}
 		if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
 			|| unitManager.getCurrentSelection() == nullptr) {
-				r = rand()%2;
+				r = rand()%3;
 				if (r == 0) {
 					for (int i = 0; i < 10; i++) //Find available unit
 					{
@@ -239,31 +240,36 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) {
 	}
 }
 
-void PrimoVictoria::levelOne() {
+void PrimoVictoria::levelOne() { //Initialize level one
 	for (int i = 0; i < 2; i++)
 	{
-		spawnUnit(rand()%2,1);
-		spawnUnit(rand()%2,2);
-		spawnUnit(rand()%2,2);
+		spawnUnit(rand()%3,1);
+		//spawnUnit(rand()%3,2);
+		//spawnUnit(rand()%3,2);
+		//spawnUnit(rand()%3,2);
 	}
 
 	isLevelInitialized = true;
 	isPlayerTurn = true;
+	level = 1;
 }
 
-void PrimoVictoria::levelTwo() {
+void PrimoVictoria::levelTwo() { //Initialize level two
 	for (int i = 0; i < 3; i++)
 	{
-		spawnUnit(rand()%2,1);
-		spawnUnit(rand()%2,2);
+		spawnUnit(rand()%3,1);
+		spawnUnit(rand()%3,2);
 	}
 	isLevelInitialized = true;
 	isPlayerTurn = true;
+	level = 2;
 }
 
 void PrimoVictoria::gameReset() {
 	tileManager.tilesReset();
-
+	unitManager.resetUnits();
+	isLevelInitialized = false;
+	
 }
 #pragma endregion
 

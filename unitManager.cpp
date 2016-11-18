@@ -38,7 +38,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!archerTexture.initialize(graphics,"pictures\\greenArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
-	if (!archerTexture2.initialize(graphics,"pictures\\greenArcher.png")){
+	if (!archerTexture2.initialize(graphics,"pictures\\redArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
 	player1Infantry = new Infantry[10];
@@ -356,18 +356,48 @@ void UnitManager::endTurn(){
 #pragma endregion
 
 #pragma region Higgs
-int UnitManager::numActiveUnits() {
+void UnitManager::resetUnits() {
+	for (int i = 0; i < 10; i++)
+	{
+		player1Archers[i].setActive(false);
+		player1Archers[i].setVisible(false);
+		player1Cavalry[i].setActive(false);
+		player1Cavalry[i].setVisible(false);
+		player1Infantry[i].setActive(false);
+		player1Infantry[i].setVisible(false);
+		player2Archers[i].setActive(false);
+		player2Archers[i].setVisible(false);
+		player2Cavalry[i].setActive(false);
+		player2Cavalry[i].setVisible(false);
+		player2Infantry[i].setActive(false);
+		player2Infantry[i].setVisible(false);
+	}
+}
+
+//Returns number of computer's units that are active
+int UnitManager::numEnemyUnits() {
 	int activeUnits = 0;
 	for (int i = 0; i < 10; i++)
 	{
 		activeUnits += player2Infantry[i].getActive();
 		activeUnits += player2Cavalry[i].getActive();
+		activeUnits =+ player2Archers[i].getActive();
+	}
+	return activeUnits;
+}
+int UnitManager::numAlliedUnits() {
+	int activeUnits = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		 activeUnits += player1Archers[i].getActive();
+		 activeUnits += player1Cavalry[i].getActive();
+		 activeUnits += player1Infantry[i].getActive();
 	}
 	return activeUnits;
 }
 
+
 //Returns the closest enemy to the selected AI unit
-//TODO: Add archer functionality
 Unit* UnitManager::closestUnit(Unit* t2Unit) { 
 	VECTOR2 minDistance(1000,1000);
 	int closest = 0;
