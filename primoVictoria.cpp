@@ -30,8 +30,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 #pragma region Newell
 	Game::initialize(hwnd); // throws GameError
 	std::string s;
-	int x;
-	float y;
+	int x = 0;
+	float y = 0;
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
 	optionsMenu = new Menu(s);
@@ -435,14 +435,17 @@ void PrimoVictoria::playerInput() {
 		keyDownLastFrame = 0x33;
 	}
 	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0){
+		keyDownLastFrame = NULL;
 		spawnUnit(0, 1);
 		spawnUnitCooldown++;
 	}
 	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0){
+		keyDownLastFrame = NULL;
 		spawnUnit(1, 1);
 		spawnUnitCooldown++;
 	}
 	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0){
+		keyDownLastFrame = NULL;
 		spawnUnit(2, 1);
 		spawnUnitCooldown++;
 	}
@@ -538,7 +541,9 @@ void PrimoVictoria::moveUp(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::up);
 	if (unitManager.getCurrentSelection()->getTileY() > 0) {
 		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() > 1
-			&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->isOccupied()){
+			&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->isOccupied() &&
+			tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit()->getTeam()
+			!= unitManager.getCurrentSelection()->getTeam()){
 				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit();
 				fighting = true;
 				moving = NULL;
@@ -575,7 +580,9 @@ void PrimoVictoria::moveDown(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::down);
 	if (unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-1) {
 		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-2
-			&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->isOccupied()){
+			&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->isOccupied() &&
+			tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit()->getTeam()
+			!= unitManager.getCurrentSelection()->getTeam()){
 				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit();
 				fighting = true;
 				moving = NULL;
@@ -612,7 +619,9 @@ void PrimoVictoria::moveLeft(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::left);
 	if (unitManager.getCurrentSelection()->getTileX() > 0) {
 		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() > 1
-			&& tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->isOccupied()){
+			&& tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->isOccupied() &&
+			tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->getUnit()->getTeam()
+			!= unitManager.getCurrentSelection()->getTeam()){
 				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->getUnit();
 				fighting = true;
 				moving = NULL;
@@ -649,7 +658,9 @@ void PrimoVictoria::moveRight(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::right);
 	if (unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-1) {
 		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-2
-			&& tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->isOccupied()){
+			&& tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->isOccupied() &&
+			tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit()->getTeam()
+			!= unitManager.getCurrentSelection()->getTeam()){
 				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit();
 				fighting = true;
 				moving = NULL;
