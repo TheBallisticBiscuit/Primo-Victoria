@@ -143,32 +143,55 @@ void PrimoVictoria::update()
 #pragma region Newell
 }
 
+#pragma region Higgs
 //=============================================================================
 // Artificial Intelligence
 //=============================================================================
 void PrimoVictoria::ai()
 {
+	int dir, x, y = 0;
 	if (!isPlayerTurn) {
 		int r = 2; //rand()%(#)
 		if (unitManager.numActiveUnits() < r)
 			spawnUnit(1,2);
 		else {
-			for (int i = 0; i < 90; i++)
+			r = rand()%2;
+			for (int i = 0; i < 10; i++) //Find available unit
 			{
-				r = rand()%10;
-				if (unitManager.getInfantry(r)->getActive()) { //Returns a pointer to Player2's Infantry ???
-					unitManager.setCurrentSelection(unitManager.getInfantry(r));
+				if (unitManager.getAICavalry(i)->getActive()) { //Returns a pointer to Player2's Infantry ???
+					unitManager.selectUnit(unitManager.getAICavalry(i));
 					break;
 				}
 			}
-			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection());
-			while (true) { //Will run till AI's turn ends
+			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
 
-			}
+			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
+			moveAttempt(dir, x, y);
+			
+			
 		}
 
 	}
 }
+
+void PrimoVictoria::moveAttempt(int dir, int x, int y) {
+	switch (dir) {//1 = Up, 2 = Down, 3 = Left, 4 = Right
+		case 1:
+			moving = 1;
+			break;
+		case 2:
+			moving = 2;
+			break;
+		case 3:
+			moving = 3;
+			break;
+		case 4:
+			moving = 4;
+			break;
+	}
+}
+
+#pragma endregion
 
 //=============================================================================
 // Handle collisions
@@ -205,30 +228,6 @@ void PrimoVictoria::render()
 	//unitStats->print(ss.str(), 0,0);
 
 	graphics->spriteEnd();                  // end drawing sprites
-}
-
-//=============================================================================
-// The graphics device was lost.
-// Release all reserved video memory so graphics device may be reset.
-//=============================================================================
-void PrimoVictoria::releaseAll()
-{
-	unitManager.onLostDevice();
-	tileManager.onLostDevice();
-	Game::releaseAll();
-	return;
-}
-
-//=============================================================================
-// The grahics device has been reset.
-// Recreate all surfaces.
-//=============================================================================
-void PrimoVictoria::resetAll()
-{
-	tileManager.onResetDevice();
-	unitManager.onResetDevice();
-	Game::resetAll();
-	return;
 }
 
 void PrimoVictoria::playerInput() {
@@ -335,6 +334,7 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 	if (isPlayerTurn)
 		unitManager.setCurrentSelection(nullptr);
 }
+#pragma endregion
 
 #pragma region Newell
 void PrimoVictoria::moveUp(){
@@ -534,5 +534,28 @@ void PrimoVictoria::endTurn(){
 	unitManager.endTurn();
 	isPlayerTurn = !isPlayerTurn;
 }
-#pragma endregion
+
+//=============================================================================
+// The graphics device was lost.
+// Release all reserved video memory so graphics device may be reset.
+//=============================================================================
+void PrimoVictoria::releaseAll()
+{
+	unitManager.onLostDevice();
+	tileManager.onLostDevice();
+	Game::releaseAll();
+	return;
+}
+
+//=============================================================================
+// The grahics device has been reset.
+// Recreate all surfaces.
+//=============================================================================
+void PrimoVictoria::resetAll()
+{
+	tileManager.onResetDevice();
+	unitManager.onResetDevice();
+	Game::resetAll();
+	return;
+}
 #pragma endregion
