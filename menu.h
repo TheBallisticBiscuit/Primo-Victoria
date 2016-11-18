@@ -47,6 +47,7 @@ public:
 	// constructor
 	Menu();
 	Menu(std::string);
+	Menu(int);
 	void initialize(Graphics *g, Input *i);
 	void update();
 	int getSelectedItem() {return selectedItem;}

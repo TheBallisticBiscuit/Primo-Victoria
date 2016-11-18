@@ -28,8 +28,14 @@ class PrimoVictoria : public Game
 private:
 	Menu *mainMenu;
 	Menu* optionsMenu;
+	Menu* defeatScreen;
+	Menu* victoryScreen;
 	TextureManager backgroundTexture;
 	Image background;
+	TextureManager defeatScreenTexture;
+	Image defeatScreenImage;
+	TextureManager victoryScreenTexture;
+	Image victoryScreenImage;
 
 	TileManager tileManager;
 
