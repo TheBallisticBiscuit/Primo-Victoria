@@ -126,6 +126,7 @@ bool Archer::moveUp(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
@@ -140,6 +141,7 @@ bool Archer::moveDown(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
@@ -154,6 +156,7 @@ bool Archer::moveLeft(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
@@ -168,6 +171,7 @@ bool Archer::moveRight(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;

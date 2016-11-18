@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Programming 2D Games\Object Version\Chapter 7 Sound\SoundExample1\audio\SoundExample1.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 30556504;
-    Last Modified High = 3391998279;
+    Last Modified Low = 3851766125;
+    Last Modified High = 30556521;
 
     Category
     {
@@ -225,6 +225,12 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 2086114285;
+    PC Bank Last Modified High = 30556520;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 341761591;
     Bank Last Revised High = 30556515;
 
@@ -489,6 +495,10 @@ Sound Bank
     Windows File = Win\SoundsExample1.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
+    Bank Last Modified Low = 3851866196;
+    Bank Last Modified High = 30556521;
+    Header Last Modified High = 0;
+    Header Last Modified Low = 0;
 
     Sound
     {
@@ -776,7 +786,7 @@ Sound Bank
     Sound
     {
         Name = arrowShot;
-        Volume = -1200;
+        Volume = -300;
         Pitch = 0;
         Priority = 0;
 
@@ -823,7 +833,7 @@ Sound Bank
     Sound
     {
         Name = horseGalloping;
-        Volume = -1200;
+        Volume = -180;
         Pitch = 0;
         Priority = 0;
 
@@ -870,7 +880,7 @@ Sound Bank
     Sound
     {
         Name = running;
-        Volume = -1200;
+        Volume = -10;
         Pitch = 0;
         Priority = 0;
 
@@ -917,7 +927,7 @@ Sound Bank
     Sound
     {
         Name = swordSlash;
-        Volume = -1200;
+        Volume = -340;
         Pitch = 0;
         Priority = 0;
 
@@ -964,7 +974,7 @@ Sound Bank
     Sound
     {
         Name = swordSlice;
-        Volume = -1200;
+        Volume = -320;
         Pitch = 0;
         Priority = 0;
 
@@ -1166,6 +1176,19 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
+
+        Instance Limit
+        {
+            Max Instances = 1;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
+        }
     }
 
     Cue
@@ -1185,6 +1208,19 @@ Sound Bank
             Index = 8;
             Weight Min = 0;
             Weight Max = 255;
+        }
+
+        Instance Limit
+        {
+            Max Instances = 1;
+            Behavior = 0;
+
+            Crossfade
+            {
+                Fade In = 0;
+                Fade Out = 0;
+                Crossfade Type = 0;
+            }
         }
     }
 

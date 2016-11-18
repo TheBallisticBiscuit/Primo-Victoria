@@ -116,6 +116,7 @@ bool Infantry::moveUp(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
@@ -130,6 +131,7 @@ bool Infantry::moveDown(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
@@ -144,6 +146,7 @@ bool Infantry::moveLeft(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;
@@ -158,6 +161,7 @@ bool Infantry::moveRight(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(INFANTRY_MOVE);
 		return true;
 	}
 	return false;

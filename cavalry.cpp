@@ -117,6 +117,7 @@ bool Cavalry::moveUp(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
@@ -132,6 +133,7 @@ bool Cavalry::moveDown(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
@@ -147,6 +149,7 @@ bool Cavalry::moveLeft(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
@@ -162,6 +165,7 @@ bool Cavalry::moveRight(Audio* audio){
 		setVelocity(VECTOR2(0, 0));
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		audio->stopCue(CAVALRY_MOVE);
 		return true;
 	}
 	return false;
