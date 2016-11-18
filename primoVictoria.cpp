@@ -92,7 +92,6 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
 	spawnUnitCooldown = 0;
-	aiSelected = false;
 #pragma endregion
 	return;
 }
@@ -183,8 +182,8 @@ void PrimoVictoria::update()
 		levelOne();
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) { //Selecting Level Two
-		currentMenu = 0;
-		levelTwo();
+		//currentMenu = 0;
+		//levelTwo();
 	}
 	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
 		currentMenu = 1;
@@ -199,8 +198,8 @@ void PrimoVictoria::update()
 			levelOne();
 		}
 		else if(level == 2){
-			gameReset();
-			levelTwo();
+			//gameReset();
+			//levelTwo();
 		}
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 0){ //selecting main menu
@@ -212,8 +211,8 @@ void PrimoVictoria::update()
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //selecting main menu
 		if(level == 1){
-			gameReset();
-			levelTwo();
+			//gameReset();
+			//levelTwo();
 		}
 		else if(level == 2){
 			gameReset();
@@ -334,8 +333,8 @@ void PrimoVictoria::levelOne() { //Initialize level one
 	for (int i = 0; i < 2; i++)
 	{
 		spawnUnit(rand()%3,2);
-		//spawnUnit(rand()%3,2);
-		//spawnUnit(rand()%3,2);
+		spawnUnit(rand()%3,2);
+		spawnUnit(rand()%3,2);
 		spawnUnit(rand()%3,1);
 		spawnUnit(rand()%3,1);
 	}
