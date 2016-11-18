@@ -74,7 +74,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	}
 
 	currentSelection = nullptr;
-	archerShot = false;
+	archerDamage = 0;
 }
 
 void UnitManager::draw(){
@@ -233,48 +233,51 @@ void UnitManager::spawnArcher(int x, int y, int team){
 }
 
 bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio){
-	if(currentSelection != nullptr){
-		if(currentSelection->getRange() > opponent.getRange() &&
-			(abs(currentSelection->getTileX()-opponent.getTileX()) > opponent.getRange() || 
-			abs(currentSelection->getTileY()-opponent.getTileY() > opponent.getRange()))){
-				if(!archerShot){
-					currentSelection->fight(opponent, frameTime, audio);
-					archerShot = true;
-				}
-				if(opponent.getHP() <= 0){
-					return opponent.kill(frameTime);
-				}
-				else{
-					archerShot = false;
-					return true;
-				}
-		}
-		else{
-			if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
+	if(currentSelection->getRange() > opponent.getRange() &&
+		(abs(currentSelection->getTileX()-opponent.getTileX()) > opponent.getRange() || 
+		abs(currentSelection->getTileY()-opponent.getTileY() > opponent.getRange()))){
+			archerDamage = opponent.getHP();
+			currentSelection->fight(opponent, frameTime, audio);
+			if(opponent.getHP() <= 0){
 				currentSelection->setAnimating(false);
 				return opponent.kill(frameTime);
 			}
-			else if(currentSelection->getHP() <= 0 && opponent.getHP() > 0){
-				opponent.setAnimating(false);
-				return currentSelection->kill(frameTime);
-			}
-			else if(currentSelection->getHP() <= 0 && opponent.getHP() <= 0){
-				bool temp = currentSelection->kill(frameTime);
-				bool temp2 = opponent.kill(frameTime);
-				if(temp && temp2){
+			else{
+				if(opponent.getHP() < archerDamage){
 					currentSelection->setAnimating(false);
-					opponent.setAnimating(false);
 					return true;
 				}
+				else{
+					return false;
+				}
 			}
-			else{
-				currentSelection->fight(opponent, frameTime, audio); 
+	}
+	else{
+		if(opponent.getHP() <= 0 && currentSelection->getHP() > 0){
+			currentSelection->setAnimating(false);
+			return opponent.kill(frameTime);
+		}
+		else if(currentSelection->getHP() <= 0 && opponent.getHP() > 0){
+			opponent.setAnimating(false);
+			return currentSelection->kill(frameTime);
+		}
+		else if(currentSelection->getHP() <= 0 && opponent.getHP() <= 0){
+			bool temp = currentSelection->kill(frameTime);
+			bool temp2 = opponent.kill(frameTime);
+			if(temp && temp2){
+				currentSelection->setAnimating(false);
+				opponent.setAnimating(false);
+				return true;
 			}
+		}
+		else{
+			currentSelection->fight(opponent, frameTime, audio); 
 		}
 		return false;
 	}
 	return true;
 }
+
 
 void UnitManager::setCurrentSelection(Unit* newSelection){
 	currentSelection = newSelection;
