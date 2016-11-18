@@ -85,12 +85,14 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "InstructionsTexture init fail"));
 	if (!instructionsImage.initialize(graphics, 0,0,0,&instructionsTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "InstructionsImage failed initialization"));
+	victoryScreenImage.setScale(1.1);
 	graphics->setBackColor(SETCOLOR_ARGB(0xFF, 0xAF, 0x3F, 0x2F));
 
 	if (!tileManager.initialize(graphics, 12,7, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
 	spawnUnitCooldown = 0;
+	aiSelected = false;
 #pragma endregion
 	return;
 }
@@ -226,7 +228,7 @@ void PrimoVictoria::update()
 	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
 		currentMenu = 4;
 	}
-	if (level == 1 && unitManager.numEnemyUnits() > 0 && unitManager.numAlliedUnits() == 0 && currentMenu == 0)	{
+	if (unitManager.numEnemyUnits() > 0 && unitManager.numAlliedUnits() == 0 && currentMenu == 0)	{
 		currentMenu = 3;
 	}
 	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
@@ -301,7 +303,6 @@ void PrimoVictoria::ai()
 		}
 		if (unitManager.getCurrentSelection() != nullptr) {
 			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
-
 
 			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
 			if(!fighting)
@@ -463,17 +464,17 @@ void PrimoVictoria::playerInput() {
 	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0){
 		keyDownLastFrame = NULL;
 		spawnUnit(0, 1);
-		spawnUnitCooldown++;
+		spawnUnitCooldown += 2;
 	}
 	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0){
 		keyDownLastFrame = NULL;
 		spawnUnit(1, 1);
-		spawnUnitCooldown++;
+		spawnUnitCooldown += 2;
 	}
 	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0){
 		keyDownLastFrame = NULL;
 		spawnUnit(2, 1);
-		spawnUnitCooldown++;
+		spawnUnitCooldown += 2;
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
