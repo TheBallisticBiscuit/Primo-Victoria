@@ -66,9 +66,6 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "TileManager initialization failure"));
 	tileManager.setTileVisibility(true);
 
-	spawnUnit(rand()%3,1);
-	spawnUnit(rand()%3,2);
-
 #pragma endregion
 	return;
 }
@@ -254,7 +251,7 @@ void PrimoVictoria::levelOne() { //Initialize level one
 	for (int i = 0; i < 2; i++)
 	{
 		spawnUnit(rand()%3,1);
-		//spawnUnit(rand()%3,2);
+		spawnUnit(rand()%3,2);
 		//spawnUnit(rand()%3,2);
 		//spawnUnit(rand()%3,2);
 	}
@@ -279,7 +276,7 @@ void PrimoVictoria::gameReset() {
 	tileManager.tilesReset();
 	unitManager.resetUnits();
 	isLevelInitialized = false;
-	
+	level = 0;
 }
 #pragma endregion
 
@@ -295,7 +292,6 @@ void PrimoVictoria::collisions()
 //=============================================================================
 void PrimoVictoria::render()
 {
-	//std::stringstream ss;
 	graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
 	if (currentMenu == 0){
@@ -315,7 +311,6 @@ void PrimoVictoria::render()
 			std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
 			unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
 	}
-	//unitStats->print(ss.str(), 0,0);
 
 	graphics->spriteEnd();                  // end drawing sprites
 }
@@ -341,7 +336,7 @@ void PrimoVictoria::playerInput() {
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
-		spawnUnit(2, 1);
+		spawnUnit(1, 1);
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){
 		keyDownLastFrame = NULL;
