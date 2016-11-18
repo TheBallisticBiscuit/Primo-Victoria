@@ -32,6 +32,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	std::string s;
 	int x = 0;
 	float y = 0;
+	char ch = 'c';
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
 	optionsMenu = new Menu(s);
@@ -40,6 +41,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 	defeatScreen->initialize(graphics, input);
 	victoryScreen = new Menu(y);
 	victoryScreen->initialize(graphics, input);
+	instructionsScreen = new Menu(ch);
+	instructionsScreen->initialize(graphics, input);
 
 	currentMenu = 1;
 
@@ -78,6 +81,10 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
 	if (!victoryScreenImage.initialize(graphics, 0,0,0, &victoryScreenTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
+	if (!instructionsTexture.initialize(graphics, "pictures\\instructions.png"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "InstructionsTexture init fail"));
+	if (!instructionsImage.initialize(graphics, 0,0,0,&instructionsTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "InstructionsImage failed initialization"));
 	graphics->setBackColor(SETCOLOR_ARGB(0xFF, 0xAF, 0x3F, 0x2F));
 
 	if (!tileManager.initialize(graphics, 12,7, this))
@@ -160,8 +167,11 @@ void PrimoVictoria::update()
 		currentMenu = 0;
 		levelOne();
 	}
-	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){
+	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){ //Level select
 		currentMenu = 2;
+	}
+	else if (currentMenu == 1 && mainMenu->getSelectedItem() == 2){
+		currentMenu = 5;
 	}
 	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){ //Back button
 		currentMenu = 1;
@@ -208,7 +218,10 @@ void PrimoVictoria::update()
 			levelOne();
 		}
 	}
-
+	else if(currentMenu == 5 && (instructionsScreen->getSelectedItem() == 0 || instructionsScreen->getSelectedItem() == 1 ||
+		instructionsScreen->getSelectedItem() == 2)) {
+			currentMenu = 1;
+	}
 
 	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
 		currentMenu = 4;
@@ -225,7 +238,7 @@ void PrimoVictoria::update()
 	}
 
 
-
+	instructionsScreen->update();
 	victoryScreen->update();
 	defeatScreen->update();
 	mainMenu->update();
@@ -246,13 +259,16 @@ void PrimoVictoria::ai()
 		if (level == 1) {
 
 		}
-		if (level == 2 && false) { 
-			if (unitManager.numEnemyUnits() < rand() & 0x5) {
-				spawnUnit(rand()%3,2);
+		if (level == 2) { 
+			if (unitManager.getCurrentSelection()->getTeam() != 2){
+				if (unitManager.numEnemyUnits() < rand() & 0x5) {
+					spawnUnit(rand()%3,2);
+				}
 			}
 		}
-		if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
+		else if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
 			|| unitManager.getCurrentSelection() == nullptr) {
+
 				r = rand()%3;
 				if (r == 0) {
 					for (int i = 0; i < 10; i++) //Find available unit
@@ -334,7 +350,7 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,2);
-		
+
 		spawnUnit(rand()%3,1);
 	}
 	tileManager.setTileVisibility(true);
@@ -342,7 +358,7 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 	y1 = rand()%7;
 	x2 = rand()%8 + 4;
 	y2 = rand()%7;
-	
+
 	tileManager.levelTwoSetup(graphics,x1,y1,x2,y2,this);
 
 	isLevelInitialized = true;
@@ -392,6 +408,10 @@ void PrimoVictoria::render()
 	else if(currentMenu == 4){
 		victoryScreenImage.draw();
 		victoryScreen -> displayMenu();
+	}
+	else if(currentMenu == 5){
+		instructionsImage.draw();
+		instructionsScreen->displayMenu();
 	}
 	if (currentMenu == 0) {
 		if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){

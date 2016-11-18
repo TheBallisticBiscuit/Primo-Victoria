@@ -32,6 +32,14 @@ Menu::Menu(float y){
 	menuItem3 = "Next Level";
 }
 
+Menu::Menu(char ch){
+	menuHeading = " ";
+	menuItem1 = " ";
+	menuItem2 = " ";
+	menuItem3 = " ";
+}
+
+
 void Menu::initialize(Graphics *g, Input *i)
 {
 

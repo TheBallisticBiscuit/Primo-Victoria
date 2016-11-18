@@ -30,12 +30,15 @@ private:
 	Menu* optionsMenu;
 	Menu* defeatScreen;
 	Menu* victoryScreen;
+	Menu* instructionsScreen;
 	TextureManager backgroundTexture;
 	Image background;
 	TextureManager defeatScreenTexture;
 	Image defeatScreenImage;
 	TextureManager victoryScreenTexture;
 	Image victoryScreenImage;
+	TextureManager instructionsTexture;
+	Image instructionsImage;
 	TileManager tileManager;
 
 	TextDX *unitStats;
