@@ -76,7 +76,21 @@ void Cavalry::fight(Unit& opponent, float frameTime){
 }
 
 bool Cavalry::kill(float frameTime){
-	setFrames(CAVALRY_DEATH_DOWN_START, CAVALRY_DEATH_DOWN_END);
+	switch(getLastDirection()){
+	case up:
+		setFrames(CAVALRY_DEATH_UP_START, CAVALRY_DEATH_UP_END);
+		break;
+	case left:
+		setFrames(CAVALRY_DEATH_LEFT_START, CAVALRY_DEATH_LEFT_END);
+		break;
+	case down:
+		setFrames(CAVALRY_DEATH_DOWN_START, CAVALRY_DEATH_DOWN_END);
+		break;
+	case right:
+		setFrames(CAVALRY_DEATH_RIGHT_START, CAVALRY_DEATH_RIGHT_END);
+		break;
+	}
+	setAnimating(true);
 	if(getFrameCounter() > CAVALRY_ANIMATION_DELAY*6){
 		setFrameCounter(0);
 		setVisible(false);
