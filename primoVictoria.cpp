@@ -301,7 +301,7 @@ void PrimoVictoria::ai()
 
 		}
 		if (unitManager.getCurrentSelection() != nullptr) {
-			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select unit
+			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
 
 			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
 			if(!fighting)
@@ -312,19 +312,53 @@ void PrimoVictoria::ai()
 }	
 
 void PrimoVictoria::moveAttempt(int dir, int x, int y) {
-	switch (dir) {//1 = Up, 2 = Down, 3 = Left, 4 = Right
-	case 1:
-		moving = 1;
-		break;
-	case 2:
-		moving = 2;
-		break;
-	case 3:
-		moving = 3;
-		break;
-	case 4:
-		moving = 4;
-		break;
+	while (true) {
+		switch (dir) {//1 = Up, 2 = Down, 3 = Left, 4 = Right
+		case 1:
+			if (y > 0) {
+				if (tileManager.getTile(x,y-1)->isOccupied() && tileManager.getTile(x,y-1)->getUnit()->getTeam() == 2) {
+					dir = rand()%2 + 3; //Left or right
+					break;
+				}
+				else {
+					moving = 1;
+					return;
+				}
+			}
+		case 2:
+			if (y < 6) {
+				if (tileManager.getTile(x,y+1)->isOccupied() && tileManager.getTile(x,y+1)->getUnit()->getTeam() == 2) {
+					dir = rand()%2 + 3; //Left or right
+					break;
+				}
+				else {
+					moving = 2;
+					return;
+				}
+			}
+		case 3:
+			if (x > 0){
+				if (tileManager.getTile(x-1,y)->isOccupied() && tileManager.getTile(x-1,y)->getUnit()->getTeam() == 2){
+					dir = rand()%2; //Up or down
+					break;
+				}
+				else {
+					moving = 3;
+					return;
+				}
+			}
+		case 4:
+			if (x < 11) {
+				if (tileManager.getTile(x+1,y)->isOccupied() && tileManager.getTile(x+1,y)->getUnit()->getTeam() == 2) {
+					dir = rand()%2; //Up or down
+					break;
+				}
+				else {
+					moving = 4;
+					return;
+				}
+			}
+		}
 	}
 }
 

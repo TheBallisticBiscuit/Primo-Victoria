@@ -388,6 +388,7 @@ int UnitManager::numEnemyUnits() {
 	}
 	return activeUnits;
 }
+//Returns number of player's units that are active
 int UnitManager::numAlliedUnits() {
 	int activeUnits = 0;
 	for (int i = 0; i < 10; i++)
