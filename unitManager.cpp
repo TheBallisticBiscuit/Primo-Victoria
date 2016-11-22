@@ -139,7 +139,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			if(!player1Infantry[i].getActive()){
 				player1Infantry[i].setActive(true);
 				player1Infantry[i].setVisible(true);
-				player1Infantry[i].setHP(15);
+				player1Infantry[i].setHP(12);
 				player1Infantry[i].setTile(x, y);
 				player1Infantry[i].setX(x*TERRAIN_WIDTH);
 				player1Infantry[i].setY(y*TERRAIN_HEIGHT);
@@ -153,7 +153,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			if(!player2Infantry[i].getActive()){
 				player2Infantry[i].setActive(true);
 				player2Infantry[i].setVisible(true);
-				player2Infantry[i].setHP(15);
+				player2Infantry[i].setHP(12);
 				player2Infantry[i].setTile(x, y);
 				player2Infantry[i].setX(x*TERRAIN_WIDTH);
 				player2Infantry[i].setY(y*TERRAIN_HEIGHT);
@@ -172,7 +172,7 @@ void UnitManager::spawnCavalry(int x, int y, int team){
 			if(!player1Cavalry[i].getActive()){
 				player1Cavalry[i].setActive(true);
 				player1Cavalry[i].setVisible(true);
-				player1Cavalry[i].setHP(5);
+				player1Cavalry[i].setHP(7);
 				player1Cavalry[i].setTile(x, y);
 				player1Cavalry[i].setX(x*TERRAIN_WIDTH);
 				player1Cavalry[i].setY(y*TERRAIN_HEIGHT);
@@ -186,7 +186,7 @@ void UnitManager::spawnCavalry(int x, int y, int team){
 			if(!player2Cavalry[i].getActive()){
 				player2Cavalry[i].setActive(true);
 				player2Cavalry[i].setVisible(true);
-				player2Cavalry[i].setHP(5);
+				player2Cavalry[i].setHP(7);
 				player2Cavalry[i].setTile(x, y);
 				player2Cavalry[i].setX(x*TERRAIN_WIDTH);
 				player2Cavalry[i].setY(y*TERRAIN_HEIGHT);
