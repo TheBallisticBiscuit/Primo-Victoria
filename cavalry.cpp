@@ -15,8 +15,8 @@ bool Cavalry::initialize(int width, int height, int ncols, int team, TextureMana
 	setMovementPerTurn(6);
 	setMovementLeft(0);
 	setRange(1);
-	setHP(5);
-	setDamage(4);
+	setHP(7);
+	setDamage(5);
 	setTeam(team);
 	setFrameDelay(CAVALRY_ANIMATION_DELAY);
 	setFrameCounter(0);

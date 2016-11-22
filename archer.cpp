@@ -16,7 +16,7 @@ bool Archer::initialize(int width, int height, int ncols, int team, TextureManag
 	setMovementLeft(0);
 	setRange(2);
 	setHP(5);
-	setDamage(3);
+	setDamage(6);
 	setTeam(team);
 	setFrameDelay(ARCHER_ANIMATION_DELAY);
 	setFrameCounter(0);
