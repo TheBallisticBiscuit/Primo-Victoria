@@ -13,7 +13,7 @@ Menu::Menu(std::string s)
 {
 	menuHeading = "Levels";
 	menuItem1 = "Level 1: Elimination";
-	menuItem2 = "Level 2 (LOCKED)";
+	menuItem2 = "Level 2: Domination";
 	menuItem3 = "Back";
 }
 
