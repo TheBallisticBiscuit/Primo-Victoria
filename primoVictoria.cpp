@@ -182,24 +182,24 @@ void PrimoVictoria::update()
 		levelOne();
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) { //Selecting Level Two
-		//currentMenu = 0;
-		//levelTwo();
+		currentMenu = 0;
+		levelTwo();
 	}
 	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
 		currentMenu = 1;
 		gameReset();
 	}
-	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 1){ //selecting main menu
+	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 1){ //selecting LEVEL SELECT
 		currentMenu = 2;
 	}
-	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 2){ //selecting main menu
+	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 2){ //selecting RETRY
 		if(level == 1){
 			gameReset();
 			levelOne();
 		}
 		else if(level == 2){
-			//gameReset();
-			//levelTwo();
+			gameReset();
+			levelTwo();
 		}
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 0){ //selecting main menu
@@ -255,21 +255,22 @@ void PrimoVictoria::update()
 //=============================================================================
 void PrimoVictoria::ai()
 {
+	int spawnOrMove = rand()%2;
 	if (!moving && !isPlayerTurn) {
 		int dir, r, x, y = 0;
-		if (level == 1) {
-
-		}
 		if (level == 2) { 
-			if (unitManager.getCurrentSelection()->getTeam() != 2){
-				if (unitManager.numEnemyUnits() < rand() & 0x5) {
+			if (spawnOrMove == 0 || unitManager.numEnemyUnits() <= 0){
+				if(unitManager.numEnemyUnits() >= 6 || unitManager.getCurrentSelection() != nullptr){
+					spawnOrMove = 1;
+				}
+				else{
 					spawnUnit(rand()%3,2);
+					spawnOrMove = 0;
 				}
 			}
 		}
-		else if ((unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getTeam() != 2)
-			|| unitManager.getCurrentSelection() == nullptr) {
-
+		if ((unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr
+			&& unitManager.getCurrentSelection()->getTeam() != 2)) && spawnOrMove == 1) {
 				r = rand()%3;
 				if (r == 0) {
 					for (int i = 0; i < 10; i++) //Find available unit
@@ -300,12 +301,12 @@ void PrimoVictoria::ai()
 				}
 
 		}
-		if (unitManager.getCurrentSelection() != nullptr) {
+		if (unitManager.getCurrentSelection() != nullptr && spawnOrMove == 1) {
 			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
 
 			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
 			if(!fighting)
-				moveAttempt(dir, x, y);				
+				moveAttempt(dir, x, y);			
 
 		}
 	}	
