@@ -171,10 +171,10 @@ void PrimoVictoria::update()
 	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){ //Level select
 		currentMenu = 2;
 	}
-	else if (currentMenu == 1 && mainMenu->getSelectedItem() == 2){
+	else if (currentMenu == 1 && mainMenu->getSelectedItem() == 2){ //Instructions
 		currentMenu = 5;
 	}
-	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){ //Back button
+	else if(currentMenu == 2 && optionsMenu->getSelectedItem() == 2){ //Back to Main Menu
 		currentMenu = 1;
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 0) { //Selecting Level One
@@ -185,12 +185,13 @@ void PrimoVictoria::update()
 		currentMenu = 0;
 		levelTwo();
 	}
-	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 0){ //selecting main menu
+	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 0){ //Return to Main Menu
 		currentMenu = 1;
 		gameReset();
 	}
 	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 1){ //selecting LEVEL SELECT
 		currentMenu = 2;
+		gameReset();
 	}
 	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 2){ //selecting RETRY
 		if(level == 1){
@@ -202,14 +203,14 @@ void PrimoVictoria::update()
 			levelTwo();
 		}
 	}
-	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 0){ //selecting main menu
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 0){ //Return to main menu
 		currentMenu = 1;
 		gameReset();
 	}
-	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 1){ //selecting main menu
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 1){ //Go to level select
 		currentMenu = 2;
 	}
-	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //selecting main menu
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //Restart level
 		if(level == 1){
 			//gameReset();
 			//levelTwo();
@@ -219,8 +220,10 @@ void PrimoVictoria::update()
 			levelOne();
 		}
 	}
-	else if(currentMenu == 5 && (instructionsScreen->getSelectedItem() == 0 || instructionsScreen->getSelectedItem() == 1 ||
-		instructionsScreen->getSelectedItem() == 2)) {
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//FIX THIS: User needs to press up or down before enter to return to main menu
+	else if(currentMenu == 5 && (instructionsScreen->getSelectedItem() == 0 || instructionsScreen->getSelectedItem() == 1)) { //Return to Main Menu
 			currentMenu = 1;
 	}
 
@@ -239,11 +242,11 @@ void PrimoVictoria::update()
 	}
 
 
-	instructionsScreen->update();
 	victoryScreen->update();
 	defeatScreen->update();
 	mainMenu->update();
 	optionsMenu->update();
+	instructionsScreen->update();
 	unitManager.update(frameTime);
 
 #pragma endregion
@@ -256,6 +259,7 @@ void PrimoVictoria::update()
 void PrimoVictoria::ai()
 {
 	int spawnOrMove = rand()%2;
+
 	if (!moving && !isPlayerTurn) {
 		int dir, r, x, y = 0;
 		if (level == 2) { 
@@ -304,15 +308,15 @@ void PrimoVictoria::ai()
 		if (unitManager.getCurrentSelection() != nullptr && spawnOrMove == 1) {
 			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
 
-			dir = unitManager.aiAttackDirection(target, unitManager.getCurrentSelection(), x, y);
+			dir = unitManager.aiAttackDirection(target, x, y);
 			if(!fighting)
 				moveAttempt(dir, x, y);			
 
 		}
 	}	
 }	
-
-void PrimoVictoria::moveAttempt(int dir, int x, int y) {
+//Changes unit direction if attempting to walk into an allied unit
+void PrimoVictoria::moveAttempt(int dir, int x, int y) { //New and Improved functionality!
 	while (true) {
 		switch (dir) {//1 = Up, 2 = Down, 3 = Left, 4 = Right
 		case 1:
@@ -340,7 +344,7 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) {
 		case 3:
 			if (x > 0){
 				if (tileManager.getTile(x-1,y)->isOccupied() && tileManager.getTile(x-1,y)->getUnit()->getTeam() == 2){
-					dir = rand()%2; //Up or down
+					dir = rand()%2 + 1; //Up or down
 					break;
 				}
 				else {
@@ -351,7 +355,7 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) {
 		case 4:
 			if (x < 11) {
 				if (tileManager.getTile(x+1,y)->isOccupied() && tileManager.getTile(x+1,y)->getUnit()->getTeam() == 2) {
-					dir = rand()%2; //Up or down
+					dir = rand()%2 + 1; //Up or down
 					break;
 				}
 				else {
@@ -369,10 +373,10 @@ void PrimoVictoria::levelOne() { //Initialize level one
 	{
 		spawnUnit(rand()%3,2);
 		spawnUnit(rand()%3,2);
-		spawnUnit(rand()%3,2);
 		spawnUnit(rand()%3,1);
 		spawnUnit(rand()%3,1);
 	}
+	spawnUnit(rand()%3,2);
 	tileManager.setTileVisibility(true);
 	isLevelInitialized = true;
 	isPlayerTurn = true;
@@ -593,8 +597,8 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 			break;
 		}
 	}
-	if (isPlayerTurn)
-		unitManager.setCurrentSelection(nullptr);
+	//if (isPlayerTurn)
+	unitManager.setCurrentSelection(nullptr);
 }
 #pragma endregion
 

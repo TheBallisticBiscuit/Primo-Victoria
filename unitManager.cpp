@@ -445,11 +445,11 @@ Unit* UnitManager::closestUnit(Unit* t2Unit) {
 }
 
 //Calculates direction of movement
-int UnitManager::aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y) {
-	x = aiUnit->getTileX();
-	y = aiUnit->getTileY();
+int UnitManager::aiAttackDirection(Unit* target, int& x, int& y) {
+	x = currentSelection->getTileX();
+	y = currentSelection->getTileY();
 
-	VECTOR2 dir = D3DXVECTOR2(target->getTileX() - x, target->getTileY() - y);//*aiUnit->getCenter() - *target->getCenter();
+	VECTOR2 dir = D3DXVECTOR2(target->getTileX() - x, target->getTileY() - y);
 	D3DXVec2Normalize(&dir, &dir);
 
 

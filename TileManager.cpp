@@ -131,15 +131,10 @@ void TileManager::draw() {
 }
 
 void TileManager::draw(int level) {
-	//for (int i = 0; i < width; i++)
-	//{
-	//	for (int j = 0; j < height; j++)
-	//	{
-	//		tiles[i][j].draw();
-	//	}
-	//}
-	cPoint1Image.draw();
-	cPoint2Image.draw();
+	if (level == 2) {
+		cPoint1Image.draw();
+		cPoint2Image.draw();
+	}
 }
 
 

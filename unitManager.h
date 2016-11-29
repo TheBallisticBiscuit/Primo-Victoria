@@ -36,7 +36,7 @@ public:
 	Unit* getAICavalry(int i) { return &player2Cavalry[i]; }
 	Unit* getAIArcher(int i) { return &player2Archers[i]; }
 	Unit*closestUnit(Unit* t2Unit);
-	int aiAttackDirection(Unit* target, Unit* aiUnit, int& x, int& y);
+	int aiAttackDirection(Unit* target, int& x, int& y);
 	void setCurrentSelection(Unit* newSelection);
 	void selectUnit(Unit* newSelection);
 	void selectionRight();
