@@ -91,7 +91,11 @@ void UnitManager::draw(){
 
 void UnitManager::update(float frameTime){
 	if(currentSelection != nullptr){
-		selectionBox.setColorFilter(graphicsNS::RED);
+		if (currentSelection->getTeam() == 1)
+			selectionBox.setColorFilter(graphicsNS::LIME);
+		else
+			selectionBox.setColorFilter(graphicsNS::RED);
+
 		selectionBox.setX(currentSelection->getX());
 		selectionBox.setY(currentSelection->getY());
 		selectedTile.x = (currentSelection->getTileX());
@@ -355,6 +359,8 @@ void UnitManager::endTurn(){
 		player1Archers[i].setMovementLeft(player1Archers[i].getMovement());
 		player2Archers[i].setMovementLeft(player2Archers[i].getMovement());
 	}
+	selectionBox.setX(5*TERRAIN_WIDTH);
+	selectionBox.setY(3*TERRAIN_HEIGHT);
 }
 #pragma endregion
 
