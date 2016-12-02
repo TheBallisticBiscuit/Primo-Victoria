@@ -224,7 +224,7 @@ void PrimoVictoria::update()
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//FIX THIS: User needs to press up or down before enter to return to main menu
 	else if(currentMenu == 5 && (instructionsScreen->getSelectedItem() == 0 || instructionsScreen->getSelectedItem() == 1)) { //Return to Main Menu
-			currentMenu = 1;
+		currentMenu = 1;
 	}
 
 	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
@@ -258,63 +258,119 @@ void PrimoVictoria::update()
 //=============================================================================
 void PrimoVictoria::ai()
 {
-	int spawnOrMove = rand()%2;
-
 	if (!moving && !isPlayerTurn) {
-		int dir, r, x, y = 0;
-		if (level == 2) { 
-			if (spawnOrMove == 0 || unitManager.numEnemyUnits() <= 0){
-				if(unitManager.numEnemyUnits() >= 6 || unitManager.getCurrentSelection() != nullptr){
-					spawnOrMove = 1;
-				}
-				else{
-					spawnUnit(rand()%3,2);
-					spawnOrMove = 0;
+		if (level == 1) {
+			levelOneAI();
+		}
+
+		if (level == 2) {
+			levelTwoAI();
+		}
+	}
+}	
+void PrimoVictoria::levelOneAI() {
+	int r = 0;
+
+	if (unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr //If no unit is selected,
+		&& unitManager.getCurrentSelection()->getTeam() != 2)) {				   //select one
+			r = rand()%3;
+			if (r == 0) {
+				for (int i = 0; i < 10; i++) //Find available unit
+				{
+					if (unitManager.getInfantry(i)->getActive()) { 
+						unitManager.selectUnit(unitManager.getInfantry(i));
+						break;
+					}
 				}
 			}
+			else if (r == 1) {
+				for (int i = 0; i < 10; i++) //Find available unit
+				{
+					if (unitManager.getAICavalry(i)->getActive()) {
+						unitManager.selectUnit(unitManager.getAICavalry(i));
+						break;
+					}				
+				}
+			}
+			else {
+				for (int i = 0; i < 10; i++) //Find available unit
+				{
+					if (unitManager.getAIArcher(i)->getActive()) {
+						unitManager.selectUnit(unitManager.getAIArcher(i));
+						break;
+					}				
+				}
+			}
+	}
+	int dir, x, y = 0;
+
+	if (unitManager.getCurrentSelection() != nullptr) {
+		Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
+
+		dir = unitManager.aiAttackDirection(target, x, y);
+		if(!fighting)
+			moveAttempt(dir, x, y);			
+
+	}
+}
+
+void PrimoVictoria::levelTwoAI() {
+	int spawnOrMove = rand()%2;
+	int r = 0;
+	
+	if (spawnOrMove == 0 || unitManager.numEnemyUnits() <= 0){
+		if(unitManager.numEnemyUnits() >= 6 || unitManager.getCurrentSelection() != nullptr){
+			spawnOrMove = 1;
 		}
-		if ((unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr
-			&& unitManager.getCurrentSelection()->getTeam() != 2)) && spawnOrMove == 1) {
-				r = rand()%3;
-				if (r == 0) {
-					for (int i = 0; i < 10; i++) //Find available unit
-					{
-						if (unitManager.getInfantry(i)->getActive()) { 
-							unitManager.selectUnit(unitManager.getInfantry(i));
-							break;
-						}
+		else{
+			spawnUnit(rand()%3,2);
+			spawnOrMove = 0;
+		}
+	}
+
+	if ((unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr //If no unit is selected,
+		&& unitManager.getCurrentSelection()->getTeam() != 2)) && spawnOrMove == 1) {				   //select one
+			r = rand()%3;
+			if (r == 0) {
+				for (int i = 0; i < 10; i++) //Find available unit
+				{
+					if (unitManager.getInfantry(i)->getActive()) { 
+						unitManager.selectUnit(unitManager.getInfantry(i));
+						break;
 					}
 				}
-				else if (r == 1) {
-					for (int i = 0; i < 10; i++) //Find available unit
-					{
-						if (unitManager.getAICavalry(i)->getActive()) {
-							unitManager.selectUnit(unitManager.getAICavalry(i));
-							break;
-						}				
-					}
+			}
+			else if (r == 1) {
+				for (int i = 0; i < 10; i++) //Find available unit
+				{
+					if (unitManager.getAICavalry(i)->getActive()) {
+						unitManager.selectUnit(unitManager.getAICavalry(i));
+						break;
+					}				
 				}
-				else {
-					for (int i = 0; i < 10; i++) //Find available unit
-					{
-						if (unitManager.getAIArcher(i)->getActive()) {
-							unitManager.selectUnit(unitManager.getAIArcher(i));
-							break;
-						}				
-					}
+			}
+			else {
+				for (int i = 0; i < 10; i++) //Find available unit
+				{
+					if (unitManager.getAIArcher(i)->getActive()) {
+						unitManager.selectUnit(unitManager.getAIArcher(i));
+						break;
+					}				
 				}
+			}
+	}
+	int dir, x, y = 0;
 
-		}
-		if (unitManager.getCurrentSelection() != nullptr && spawnOrMove == 1) {
-			Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
+	if (unitManager.getCurrentSelection() != nullptr && spawnOrMove == 1) {
+		Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
 
-			dir = unitManager.aiAttackDirection(target, x, y);
-			if(!fighting)
-				moveAttempt(dir, x, y);			
+		dir = unitManager.aiAttackDirection(target, x, y);
+		if(!fighting)
+			moveAttempt(dir, x, y);			
 
-		}
-	}	
-}	
+	}
+}
+
 //Changes unit direction if attempting to walk into an allied unit
 void PrimoVictoria::moveAttempt(int dir, int x, int y) { //New and Improved functionality!
 	while (true) {

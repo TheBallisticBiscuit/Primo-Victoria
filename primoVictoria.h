@@ -68,10 +68,10 @@ public:
 	void moveAttempt(int dir, int x, int y);
     void collisions();  // "
     void render();      // "
-    void releaseAll();
-    void resetAll();
 	int getCurrentMenu(){return currentMenu;}
 	void spawnUnit(int unitType, int team);
+	void levelOneAI();
+	void levelTwoAI();
 	void levelOne();
 	void levelTwo();
 	void gameReset();
@@ -81,6 +81,8 @@ public:
 	void moveRight();
 	void playerInput();
 	void endTurn();
+    void releaseAll();
+    void resetAll();
 };
 
 #endif
