@@ -29,19 +29,16 @@ void PrimoVictoria::initialize(HWND hwnd)
 {
 #pragma region Newell
 	Game::initialize(hwnd); // throws GameError
-	std::string s;
-	int x = 0;
-	float y = 0;
-	char ch = 'c';
-	mainMenu = new Menu();
+
+	mainMenu = new Menu("Main");
 	mainMenu->initialize(graphics, input);
-	optionsMenu = new Menu(s);
+	optionsMenu = new Menu("Levels");
 	optionsMenu->initialize(graphics, input);
-	defeatScreen = new Menu(x);
+	defeatScreen = new Menu("Defeat");
 	defeatScreen->initialize(graphics, input);
-	victoryScreen = new Menu(y);
+	victoryScreen = new Menu("Victory");
 	victoryScreen->initialize(graphics, input);
-	instructionsScreen = new Menu(ch);
+	instructionsScreen = new Menu("Instructions");
 	instructionsScreen->initialize(graphics, input);
 
 	currentMenu = 1;
@@ -419,6 +416,8 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) { //New and Improved func
 					return;
 				}
 			}
+		default:
+			dir = rand()%4 + 1;
 		}
 	}
 }
