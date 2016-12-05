@@ -568,6 +568,7 @@ void PrimoVictoria::playerInput() {
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
+		unitManager.setCurrentSelection(nullptr);
 		endTurn();
 	}
 	if(!input->isKeyDown(VK_UP) && keyDownLastFrame == VK_UP){

@@ -15,8 +15,8 @@ bool Infantry::initialize(int width, int height, int ncols, int team, TextureMan
 	setMovementPerTurn(3);
 	setMovementLeft(0);
 	setRange(1);
-	setHP(12);
-	setDamage(4);
+	setHP(60);
+	setDamage(20);
 	setTeam(team);
 	setFrameDelay(INFANTRY_ANIMATION_DELAY);
 	setFrameCounter(0);
