@@ -143,7 +143,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			if(!player1Infantry[i].getActive()){
 				player1Infantry[i].setActive(true);
 				player1Infantry[i].setVisible(true);
-				player1Infantry[i].setHP(60);
+				player1Infantry[i].setHP(12);
 				player1Infantry[i].setTile(x, y);
 				player1Infantry[i].setX(x*TERRAIN_WIDTH);
 				player1Infantry[i].setY(y*TERRAIN_HEIGHT);
@@ -157,7 +157,7 @@ void UnitManager::spawnInfantry(int x, int y, int team){
 			if(!player2Infantry[i].getActive()){
 				player2Infantry[i].setActive(true);
 				player2Infantry[i].setVisible(true);
-				player2Infantry[i].setHP(60);
+				player2Infantry[i].setHP(12);
 				player2Infantry[i].setTile(x, y);
 				player2Infantry[i].setX(x*TERRAIN_WIDTH);
 				player2Infantry[i].setY(y*TERRAIN_HEIGHT);
@@ -176,7 +176,7 @@ void UnitManager::spawnCavalry(int x, int y, int team){
 			if(!player1Cavalry[i].getActive()){
 				player1Cavalry[i].setActive(true);
 				player1Cavalry[i].setVisible(true);
-				player1Cavalry[i].setHP(35);
+				player1Cavalry[i].setHP(7);
 				player1Cavalry[i].setTile(x, y);
 				player1Cavalry[i].setX(x*TERRAIN_WIDTH);
 				player1Cavalry[i].setY(y*TERRAIN_HEIGHT);
@@ -190,7 +190,7 @@ void UnitManager::spawnCavalry(int x, int y, int team){
 			if(!player2Cavalry[i].getActive()){
 				player2Cavalry[i].setActive(true);
 				player2Cavalry[i].setVisible(true);
-				player2Cavalry[i].setHP(35);
+				player2Cavalry[i].setHP(7);
 				player2Cavalry[i].setTile(x, y);
 				player2Cavalry[i].setX(x*TERRAIN_WIDTH);
 				player2Cavalry[i].setY(y*TERRAIN_HEIGHT);
@@ -209,7 +209,7 @@ void UnitManager::spawnArcher(int x, int y, int team){
 			if(!player1Archers[i].getActive()){
 				player1Archers[i].setActive(true);
 				player1Archers[i].setVisible(true);
-				player1Archers[i].setHP(25);
+				player1Archers[i].setHP(5);
 				player1Archers[i].setTile(x, y);
 				player1Archers[i].setX(x*TERRAIN_WIDTH);
 				player1Archers[i].setY(y*TERRAIN_HEIGHT);
@@ -223,7 +223,7 @@ void UnitManager::spawnArcher(int x, int y, int team){
 			if(!player2Archers[i].getActive()){
 				player2Archers[i].setActive(true);
 				player2Archers[i].setVisible(true);
-				player2Archers[i].setHP(25);
+				player2Archers[i].setHP(5);
 				player2Archers[i].setTile(x, y);
 				player2Archers[i].setX(x*TERRAIN_WIDTH);
 				player2Archers[i].setY(y*TERRAIN_HEIGHT);
@@ -319,6 +319,8 @@ void UnitManager::selectionDown(){
 }
 bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveUp(audio)){
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY()+1)->getTerrain() == Forest)
+			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -327,6 +329,8 @@ bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 }
 bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveDown(audio)){
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY()-1)->getTerrain() == Forest)
+			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -335,6 +339,8 @@ bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 }
 bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveLeft(audio)){
+		if (tileManager->getTile(currentSelection->getTileX()+1,currentSelection->getTileY())->getTerrain() == Forest)
+			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -343,6 +349,8 @@ bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 }
 bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveRight(audio)){
+		if (tileManager->getTile(currentSelection->getTileX()-1,currentSelection->getTileY())->getTerrain() == Forest)
+			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;

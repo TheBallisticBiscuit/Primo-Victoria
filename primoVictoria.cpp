@@ -99,7 +99,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 void PrimoVictoria::update()
 {
 #pragma region Newell
-	if(unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getMovementLeft() == 0 && !fighting){
+	if(unitManager.getCurrentSelection() != nullptr && unitManager.getCurrentSelection()->getMovementLeft() <= 0 && !fighting){
 		unitManager.setCurrentSelection(nullptr);
 		endTurn();
 	}
@@ -441,10 +441,14 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 		spawnUnit(rand()%3,1);
 	}
 	tileManager.setTileVisibility(true);
-	x1 = rand()%10 + 2;
+	x1 = rand()%5 + 3;
 	y1 = rand()%7;
-	x2 = rand()%8 + 4;
+	x2 = rand()%5 + 6;
 	y2 = rand()%7;
+	if (x1 == x2 && y1 == y2) {
+		x2 = rand()%7 + 4;
+		y2 = rand()%7;
+	}
 
 	tileManager.levelTwoSetup(graphics,x1,y1,x2,y2,this);
 
