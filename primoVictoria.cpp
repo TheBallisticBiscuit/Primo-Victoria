@@ -205,12 +205,13 @@ void PrimoVictoria::update()
 		gameReset();
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 1){ //Go to level select
+		gameReset();
 		currentMenu = 2;
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //Restart level
 		if(level == 1){
-			//gameReset();
-			//levelTwo();
+			gameReset();
+			levelTwo();
 		}
 		else if(level == 2){
 			gameReset();
@@ -437,7 +438,6 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,2);
-
 		spawnUnit(rand()%3,1);
 	}
 	tileManager.setTileVisibility(true);
@@ -455,8 +455,8 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 }
 
 void PrimoVictoria::gameReset() {
-	tileManager.tilesReset();
 	unitManager.resetUnits();
+	tileManager.tilesReset();
 	isLevelInitialized = false;
 	level = 0;
 }

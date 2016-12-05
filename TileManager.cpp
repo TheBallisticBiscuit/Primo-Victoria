@@ -95,9 +95,9 @@ void TileManager::levelTwoSetup(Graphics* graphics, int x1, int y1, int x2, int 
 
 
 void TileManager::tilesReset(){
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < width; i++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int j = 0; j < height; j++)
 		{
 			tiles[i][j].leave();
 		}
