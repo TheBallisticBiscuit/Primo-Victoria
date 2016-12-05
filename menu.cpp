@@ -3,42 +3,42 @@
 
 Menu::Menu()
 {
-	menuHeading ="";
-	menuItem1 = "Play Game";
-	menuItem2 = "Level Select";
-	menuItem3 = "Instructions";
+	
 }
 
 Menu::Menu(std::string s)
 {
-	menuHeading = "Levels";
-	menuItem1 = "Level 1: Elimination";
-	menuItem2 = "Level 2: Domination";
-	menuItem3 = "Back";
+	if (s == "Main") {
+		menuHeading ="";
+		menuItem1 = "Play Game";
+		menuItem2 = "Level Select";
+		menuItem3 = "Instructions";
+	}
+	if (s == "Levels") {
+		menuHeading = "Levels";
+		menuItem1 = "Level 1: Elimination";
+		menuItem2 = "Level 2: Domination";
+		menuItem3 = "Back";
+	}
+	if (s == "Victory") {
+		menuHeading = " ";
+		menuItem1 = "Return to Main Menu";
+		menuItem2 = "Return to Level Select";
+		menuItem3 = "Next Level";
+	}
+	if (s == "Defeat") {
+		menuHeading = " ";
+		menuItem1 = "Return to Main Menu";
+		menuItem2 = "Return to Level Select";
+		menuItem3 = "Replay Level";
+	}
+	if (s == "Instructions") {
+		menuHeading = " ";
+		menuItem1 = " ";
+		menuItem2 = " ";
+		menuItem3 = " ";
+	}
 }
-
-Menu::Menu(int x){
-	menuHeading = " ";
-	menuItem1 = "Return to Main Menu";
-	menuItem2 = "Return to Level Select";
-	menuItem3 = "Replay Level";
-
-}
-
-Menu::Menu(float y){
-	menuHeading = " ";
-	menuItem1 = "Return to Main Menu";
-	menuItem2 = "Return to Level Select";
-	menuItem3 = "Next Level";
-}
-
-Menu::Menu(char ch){
-	menuHeading = " ";
-	menuItem1 = " ";
-	menuItem2 = " ";
-	menuItem3 = " ";
-}
-
 
 void Menu::initialize(Graphics *g, Input *i)
 {
