@@ -154,7 +154,7 @@ void PrimoVictoria::update()
 		unitManager.update(frameTime);
 		return;
 	}
-	if(currentMenu == 0){
+	if(currentMenu == 0 || currentMenu == 5){
 		if (isPlayerTurn == true)
 			playerInput();			
 	}
@@ -221,12 +221,6 @@ void PrimoVictoria::update()
 		}
 	}
 
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//FIX THIS: User needs to press up or down before enter to return to main menu
-	else if(currentMenu == 5 && (instructionsScreen->getSelectedItem() == 0 || instructionsScreen->getSelectedItem() == 1)) { //Return to Main Menu
-		currentMenu = 1;
-	}
-
 	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
 		currentMenu = 4;
 	}
@@ -240,7 +234,6 @@ void PrimoVictoria::update()
 		}
 
 	}
-
 
 	victoryScreen->update();
 	defeatScreen->update();
@@ -527,6 +520,11 @@ void PrimoVictoria::render()
 }
 
 void PrimoVictoria::playerInput() {
+	if(!input->isKeyDown(VK_RETURN) && keyDownLastFrame == VK_RETURN && currentMenu == 5){
+		keyDownLastFrame = NULL;
+		currentMenu = 1;
+		return;
+	}
 	if(input->isKeyDown(VK_SPACE)){
 		keyDownLastFrame = VK_SPACE;
 	}
