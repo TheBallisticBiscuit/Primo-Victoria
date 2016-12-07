@@ -274,13 +274,13 @@ void PrimoVictoria::update()
 		}
 	}
 
-	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
+	if (currentMenu == 0 && level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0){ //Level 1 Win con
 		currentMenu = 4;
 	}
-	if (unitManager.numEnemyUnits() >= 0 && unitManager.numAlliedUnits() == 0 && currentMenu == 0)	{
+	if (currentMenu == 0 && unitManager.numEnemyUnits() >= 0 && unitManager.numAlliedUnits() == 0)	{
 		currentMenu = 3;
 	}
-	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
+	if (currentMenu == 0 && level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
 		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1 && currentMenu == 0) {
 			currentMenu = 4;
 			gameReset();
