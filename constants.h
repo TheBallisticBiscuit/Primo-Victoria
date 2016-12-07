@@ -137,6 +137,7 @@ const char ARCHER_ATTACK[] = "arrowShot";
 const char BERSERKER_ATTACK[] = "";
 const char CAVALRY_ATTACK[] = "swordSlice";
 const char INFANTRY_ATTACK[] = "swordSlash";
+const char HUSSAR_ATTACK[] = "";
 const char BERSERKER_MOVE[] = "";
 const char CAVALRY_MOVE[] = "horseGalloping";
 const char INFANTRY_MOVE[] = "running";

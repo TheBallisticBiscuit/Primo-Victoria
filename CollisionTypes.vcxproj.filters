@@ -72,6 +72,9 @@
     <ClCompile Include="Berserker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WingedHussar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Berserker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WingedHussar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
