@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="archer.cpp" />
     <ClCompile Include="audio.cpp" />
+    <ClCompile Include="Berserker.cpp" />
     <ClCompile Include="cavalry.cpp" />
     <ClCompile Include="infantry.cpp" />
     <ClCompile Include="primoVictoria.cpp" />
@@ -109,6 +110,7 @@
   <ItemGroup>
     <ClInclude Include="archer.h" />
     <ClInclude Include="audio.h" />
+    <ClInclude Include="Berserker.h" />
     <ClInclude Include="cavalry.h" />
     <ClInclude Include="infantry.h" />
     <ClInclude Include="primoVictoria.h" />

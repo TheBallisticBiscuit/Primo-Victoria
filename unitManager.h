@@ -4,9 +4,10 @@ functions*/
 
 #pragma once
 #include "entity.h"
-#include "infantry.h"
-#include "cavalry.h"
 #include "archer.h"
+#include "Berserker.h"
+#include "cavalry.h"
+#include "infantry.h"
 #include "TileManager.h"
 #include "audio.h"
 

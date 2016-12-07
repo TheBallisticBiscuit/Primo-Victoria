@@ -134,8 +134,10 @@ const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
 const char BACKGROUND_MUSIC[] = "backGroundMusic";
 const char ARCHER_ATTACK[] = "arrowShot";
+const char BERSERKER_ATTACK[] = "";
 const char CAVALRY_ATTACK[] = "swordSlice";
 const char INFANTRY_ATTACK[] = "swordSlash";
+const char BERSERKER_MOVE[] = "";
 const char CAVALRY_MOVE[] = "horseGalloping";
 const char INFANTRY_MOVE[] = "running";
 
@@ -180,6 +182,12 @@ const int INFANTRY_DEATH_LEFT_START = 142;
 const int INFANTRY_DEATH_LEFT_END = 151;
 
 const float SELECTION_BOX_SCALE = 1;
+#pragma endregion
+
+#pragma region Higgs
+const float BERSERKER_SCALING = 1.0f;
+const float BERSERKER_ANIMATION_DELAY = 0.1f;
+const float BERSERKER_SPEED = 70.f;
 #pragma endregion
 
 #pragma region Newell
@@ -257,4 +265,5 @@ const int ARCHER_DEATH_DOWN_END = 146;
 const int ARCHER_DEATH_LEFT_START = 159;
 const int ARCHER_DEATH_LEFT_END = 159;
 #pragma endregion
+
 #endif
