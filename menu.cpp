@@ -38,6 +38,13 @@ Menu::Menu(std::string s)
 		menuItem2 = " ";
 		menuItem3 = " ";
 	}
+	if(s == "Countries"){
+		menuHeading = " ";
+		menuItem1 = " ";
+		menuItem2 = " ";
+		menuItem3 = " ";		
+	}
+
 }
 
 void Menu::initialize(Graphics *g, Input *i)
@@ -79,6 +86,14 @@ void Menu::update()
 	{
 		downDepressedLastFrame = true;
 	}
+	if (input->isKeyDown(VK_LEFT))
+	{
+		leftDepressedLastFrame = true;
+	}
+	if (input->isKeyDown(VK_RIGHT))
+	{
+		rightDepressedLastFrame = true;
+	}
 	if (!input->isKeyDown(VK_UP) && upDepressedLastFrame){
 		linePtr--;
 		upDepressedLastFrame = false;
@@ -86,6 +101,14 @@ void Menu::update()
 	if (!input->isKeyDown(VK_DOWN) && downDepressedLastFrame){
 		linePtr++;
 		downDepressedLastFrame = false;
+	}
+	if (!input->isKeyDown(VK_LEFT) && leftDepressedLastFrame){
+		linePtr--;
+		leftDepressedLastFrame = false;
+	}
+	if (!input->isKeyDown(VK_RIGHT) && rightDepressedLastFrame){
+		linePtr++;
+		rightDepressedLastFrame = false;
 	}
 	if (linePtr > 2) linePtr = 0;
 	if (linePtr < 0) linePtr = 2;

@@ -41,6 +41,8 @@ private:
 	COLOR_ARGB normalColor;
 	bool upDepressedLastFrame;
 	bool downDepressedLastFrame;
+	bool leftDepressedLastFrame;
+	bool rightDepressedLastFrame;
 	bool enterDepressedLastFrame;
 
 public:
@@ -51,6 +53,7 @@ public:
 	void initialize(Graphics *g, Input *i);
 	void update();
 	int getSelectedItem() {return selectedItem;}
+	int getLinePtr() {return linePtr;}
 	void displayMenu();
 	void setMenuHeading(std::string newHeading){menuHeading = newHeading;}
 	void setMenuItem1(std::string newItem){menuItem1 = newItem;}

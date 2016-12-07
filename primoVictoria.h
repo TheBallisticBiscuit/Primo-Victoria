@@ -31,6 +31,7 @@ private:
 	Menu* defeatScreen;
 	Menu* victoryScreen;
 	Menu* instructionsScreen;
+	Menu* countrySelect;
 	TextureManager backgroundTexture;
 	Image background;
 	TextureManager defeatScreenTexture;
@@ -39,11 +40,17 @@ private:
 	Image victoryScreenImage;
 	TextureManager instructionsTexture;
 	Image instructionsImage;
-	TileManager tileManager;
+	TextureManager britishTexture;
+	Image britishBanner;
+	TextureManager polishTexture;
+	Image polishBanner;
+	TextureManager norseTexture;
+	Image norseBanner;
 
 	TextDX *unitStats;
 	TextDX *spawnCooldown;
 	int currentMenu;
+	TileManager tileManager;
 	UnitManager unitManager;
 	Unit* fightTarget;
 	bool fighting;
@@ -54,6 +61,8 @@ private:
 	int level;
 	int x1,y1,x2,y2;
 	int spawnUnitCooldown;
+	enum Country {Britain, Poland, Norse} player1Country;
+	Country player2Country;
 public:
     // Constructor
     PrimoVictoria();

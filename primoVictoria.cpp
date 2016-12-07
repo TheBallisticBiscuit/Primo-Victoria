@@ -40,6 +40,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 	victoryScreen->initialize(graphics, input);
 	instructionsScreen = new Menu("Instructions");
 	instructionsScreen->initialize(graphics, input);
+	countrySelect = new Menu ("Countries");
+	countrySelect ->initialize(graphics, input);
 
 	currentMenu = 1;
 
@@ -82,6 +84,26 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "InstructionsTexture init fail"));
 	if (!instructionsImage.initialize(graphics, 0,0,0,&instructionsTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "InstructionsImage failed initialization"));
+	if (!britishTexture.initialize(graphics, "pictures\\britishBanner.png"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "britishTexture init fail"));
+	if (!britishBanner.initialize(graphics, 0,0,0,&britishTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "britishBanner failed initialization"));
+	if (!polishTexture.initialize(graphics, "pictures\\polishBanner.png"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "polishTexture init fail"));
+	if (!polishBanner.initialize(graphics, 0,0,0,&polishTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "polishBanner failed initialization"));
+	if (!norseTexture.initialize(graphics, "pictures\\norseBanner.png"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "norseTexture init fail"));
+	if (!norseBanner.initialize(graphics, 0,0,0,&norseTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "norseBanner failed initialization"));
+	britishBanner.setX(0);
+	britishBanner.setY(0);
+	norseBanner.setX(384);
+	norseBanner.setY(0);
+	polishBanner.setX(768);
+	polishBanner.setY(0);
+
+
 	victoryScreenImage.setScale(1.1);
 	graphics->setBackColor(SETCOLOR_ARGB(0xFF, 0xAF, 0x3F, 0x2F));
 
@@ -124,6 +146,7 @@ void PrimoVictoria::update()
 		mainMenu->update();
 		optionsMenu->update();
 		defeatScreen->update();
+		countrySelect->update();
 		unitManager.update(frameTime);
 		return;
 	}
@@ -148,6 +171,7 @@ void PrimoVictoria::update()
 		optionsMenu->update();
 		defeatScreen->update();
 		victoryScreen->update();
+		countrySelect->update();
 		unitManager.update(frameTime);
 		return;
 	}
@@ -160,10 +184,11 @@ void PrimoVictoria::update()
 		optionsMenu->update();
 		defeatScreen->update();
 		victoryScreen->update();
+		countrySelect->update();
 	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
-		currentMenu = 0;
-		levelOne();
+		currentMenu = 6;
+		level = 1;
 	}
 	else if(currentMenu == 1 && mainMenu->getSelectedItem() == 1){ //Level select
 		currentMenu = 2;
@@ -175,12 +200,12 @@ void PrimoVictoria::update()
 		currentMenu = 1;
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 0) { //Selecting Level One
-		currentMenu = 0;
-		levelOne();
+		currentMenu = 6;
+		level = 1;
 	}
 	else if (currentMenu == 2 && optionsMenu->getSelectedItem() == 1) { //Selecting Level Two
-		currentMenu = 0;
-		levelTwo();
+		currentMenu = 6;
+		level = 2;
 	}
 	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 0){ //Return to Main Menu
 		currentMenu = 1;
@@ -218,14 +243,44 @@ void PrimoVictoria::update()
 			levelOne();
 		}
 	}
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 0){ //selecting Britain
+		player1Country = Britain;
+		currentMenu = 0;
+		if(level == 1){
+			levelOne();
+		}
+		else if(level == 2){
+			levelTwo();
+		}
+	}
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 1){ //selecting Poland
+		player1Country = Poland;
+		currentMenu = 0;
+		if(level == 1){
+			levelOne();
+		}
+		else if(level == 2){
+			levelTwo();
+		}
+	}
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 2){ //selecting Norse
+		player1Country = Norse;
+		currentMenu = 0;
+		if(level == 1){
+			levelOne();
+		}
+		else if(level == 2){
+			levelTwo();
+		}
+	}
 
-	if (level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0 && currentMenu == 0){ //Level 1 Win con
+	if (currentMenu == 0 && level == 1 && unitManager.numEnemyUnits() == 0 && unitManager.numAlliedUnits() > 0){ //Level 1 Win con
 		currentMenu = 4;
 	}
-	if (unitManager.numEnemyUnits() >= 0 && unitManager.numAlliedUnits() == 0 && currentMenu == 0)	{
+	if (currentMenu == 0 && unitManager.numEnemyUnits() >= 0 && unitManager.numAlliedUnits() == 0)	{
 		currentMenu = 3;
 	}
-	if (level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
+	if (currentMenu == 0 && level == 2 && tileManager.getTile(x1,y1)->isOccupied() && tileManager.getTile(x2,y2)->isOccupied()){
 		if (tileManager.getTile(x1,y1)->getUnit()->getTeam() == 1 && tileManager.getTile(x2,y2)->getUnit()->getTeam() == 1 && currentMenu == 0) {
 			currentMenu = 4;
 			gameReset();
@@ -238,6 +293,7 @@ void PrimoVictoria::update()
 	mainMenu->update();
 	optionsMenu->update();
 	instructionsScreen->update();
+	countrySelect->update();
 	unitManager.update(frameTime);
 
 #pragma endregion
@@ -480,6 +536,7 @@ void PrimoVictoria::render()
 {
 	graphics->spriteBegin();  // begin drawing sprites
 	background.draw();
+#pragma region Newell
 	if (currentMenu == 0){
 		tileManager.draw();
 		if (level == 2) {
@@ -505,6 +562,26 @@ void PrimoVictoria::render()
 		instructionsImage.draw();
 		instructionsScreen->displayMenu();
 	}
+	else if(currentMenu == 6){
+		britishBanner.setColorFilter(graphicsNS::GRAY);
+		norseBanner.setColorFilter(graphicsNS::GRAY);
+		polishBanner.setColorFilter(graphicsNS::GRAY);
+		switch(countrySelect->getLinePtr()){
+		case 0: //britain hovered
+			britishBanner.setColorFilter(graphicsNS::WHITE);
+			break;
+		case 1: //norse hovered
+			norseBanner.setColorFilter(graphicsNS::WHITE);
+			break;
+		case 2: //poland hovered
+			polishBanner.setColorFilter(graphicsNS::WHITE);
+			break;
+		}
+		britishBanner.draw(britishBanner.getColorFilter());
+		polishBanner.draw(polishBanner.getColorFilter());
+		norseBanner.draw(norseBanner.getColorFilter());
+		countrySelect->displayMenu();
+	}
 	if (currentMenu == 0) {
 		if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
 			unitStats->setFontColor(graphicsNS::LIME);
@@ -518,6 +595,7 @@ void PrimoVictoria::render()
 			spawnCooldown->print("Unit Spawn Cooldown: " + std::to_string(spawnUnitCooldown), 50, 20);
 		}
 	}
+#pragma endregion
 
 	graphics->spriteEnd();                  // end drawing sprites
 }
