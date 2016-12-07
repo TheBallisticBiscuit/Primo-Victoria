@@ -299,24 +299,28 @@ void UnitManager::selectionRight(){
 		selectionX++;
 	}
 }
+
 void UnitManager::selectionLeft(){
 	if(selectionBox.getX()-TERRAIN_WIDTH >= 0){
 		selectionBox.setX(selectionBox.getX()-TERRAIN_WIDTH);
 		selectionX--;
 	}
 }
+
 void UnitManager::selectionUp(){
 	if(selectionBox.getY()-TERRAIN_HEIGHT >= 0){
 		selectionBox.setY(selectionBox.getY()-TERRAIN_HEIGHT);
 		selectionY--;
 	}
 }
+
 void UnitManager::selectionDown(){
 	if(selectionBox.getY()+TERRAIN_HEIGHT <= GAME_HEIGHT){
 		selectionBox.setY(selectionBox.getY()+TERRAIN_HEIGHT);
 		selectionY++;
 	}
 }
+
 bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveUp(audio)){
 		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY()+1)->getTerrain() == Forest)
@@ -327,6 +331,7 @@ bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 	}
 	return false;
 }
+
 bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveDown(audio)){
 		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY()-1)->getTerrain() == Forest)
@@ -337,6 +342,7 @@ bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 	}
 	return false;
 }
+
 bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveLeft(audio)){
 		if (tileManager->getTile(currentSelection->getTileX()+1,currentSelection->getTileY())->getTerrain() == Forest)
@@ -347,6 +353,7 @@ bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 	}
 	return false;
 }
+
 bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveRight(audio)){
 		if (tileManager->getTile(currentSelection->getTileX()-1,currentSelection->getTileY())->getTerrain() == Forest)
