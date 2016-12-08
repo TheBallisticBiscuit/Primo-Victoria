@@ -35,10 +35,10 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!cavalryTexture2.initialize(graphics,"pictures\\redCavalry.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
-	if (!archerTexture.initialize(graphics,"pictures\\greenArcher.png")){
+	if (!archerTexture.initialize(graphics,"pictures\\GreenArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenArcher texture"));
 	}
-	if (!archerTexture2.initialize(graphics,"pictures\\redArcher.png")){
+	if (!archerTexture2.initialize(graphics,"pictures\\RedArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redArcher texture"));
 	}
 	player1Infantry = new Infantry[10];
@@ -64,11 +64,11 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 		player2Cavalry[i].setActive(false);
 		player2Cavalry[i].setVisible(false);
 
-		player1Archers[i].initialize(96, 96, 6, 1, &archerTexture, gamePtr);
+		player1Archers[i].initialize(96, 96, 5, 1, &archerTexture, gamePtr);
 		player1Archers[i].setActive(false);
 		player1Archers[i].setVisible(false);
 
-		player2Archers[i].initialize(96, 96, 6, 2, &archerTexture2, gamePtr);
+		player2Archers[i].initialize(96, 96, 5, 2, &archerTexture2, gamePtr);
 		player2Archers[i].setActive(false);
 		player2Archers[i].setVisible(false);
 	}

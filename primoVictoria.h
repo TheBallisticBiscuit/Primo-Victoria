@@ -46,6 +46,12 @@ private:
 	Image polishBanner;
 	TextureManager norseTexture;
 	Image norseBanner;
+	TextureManager displayBerserkerTexture;
+	Berserker displayBerserker;
+	TextureManager displayHussarTexture;
+	Cavalry displayHussar;
+	TextureManager displayLongbowmanTexture;
+	Archer displayLongbowman;
 
 	TextDX *unitStats;
 	TextDX *spawnCooldown;
@@ -73,6 +79,7 @@ public:
     // Initialize the game
     void initialize(HWND hwnd);
     void update();      // must override pure virtual from Game
+	void displayUnitsUpdate(); //updates the sprites for the country selection menu
     void ai();          // "
 	void moveAttempt(int dir, int x, int y);
     void collisions();  // "

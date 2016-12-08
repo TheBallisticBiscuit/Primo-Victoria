@@ -99,7 +99,30 @@ void PrimoVictoria::initialize(HWND hwnd)
 	norseBanner.setY(0);
 	polishBanner.setX(768);
 	polishBanner.setY(0);
-
+	if(!displayBerserkerTexture.initialize(graphics,"pictures\\berserker.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
+	}
+	displayBerserker.initialize(96, 96, 10, 1, &displayBerserkerTexture, this);
+	displayBerserker.setX(535);
+	displayBerserker.setY(527);
+	displayBerserker.setFrames(BERSERKER_ATTACK_RIGHT_START, BERSERKER_ATTACK_RIGHT_END);
+	displayBerserker.setAnimating(true);
+	if(!displayHussarTexture.initialize(graphics,"pictures\\greenHussar.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
+	}
+	displayHussar.initialize(144, 144, 8, 1, &displayHussarTexture, this);
+	displayHussar.setX(925);
+	displayHussar.setY(500);
+	displayHussar.setFrames(CAVALRY_RUN_RIGHT_START, CAVALRY_RUN_RIGHT_END);
+	displayHussar.setAnimating(true);
+	if(!displayLongbowmanTexture.initialize(graphics,"pictures\\GreenArcher.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
+	}
+	displayLongbowman.initialize(96, 96, 5, 1, &displayLongbowmanTexture, this);
+	displayLongbowman.setX(150);
+	displayLongbowman.setY(468);
+	displayLongbowman.setFrames(ARCHER_IDLE_RIGHT_START, ARCHER_IDLE_RIGHT_END);
+	displayLongbowman.setAnimating(true);
 
 	victoryScreenImage.setScale(1.1);
 	graphics->setBackColor(SETCOLOR_ARGB(0xFF, 0xAF, 0x3F, 0x2F));
@@ -145,6 +168,7 @@ void PrimoVictoria::update()
 		defeatScreen->update();
 		countrySelect->update();
 		unitManager.update(frameTime);
+		displayUnitsUpdate();
 		return;
 	}
 	if(input->isKeyDown(VK_ESCAPE)){
@@ -170,6 +194,7 @@ void PrimoVictoria::update()
 		victoryScreen->update();
 		countrySelect->update();
 		unitManager.update(frameTime);
+		displayUnitsUpdate();
 		return;
 	}
 	if(currentMenu == 0 || currentMenu == 5){
@@ -182,6 +207,7 @@ void PrimoVictoria::update()
 		defeatScreen->update();
 		victoryScreen->update();
 		countrySelect->update();
+		displayUnitsUpdate();
 	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
 		currentMenu = 6;
@@ -292,6 +318,7 @@ void PrimoVictoria::update()
 	instructionsScreen->update();
 	countrySelect->update();
 	unitManager.update(frameTime);
+	displayUnitsUpdate();
 
 #pragma endregion
 }
@@ -563,21 +590,30 @@ void PrimoVictoria::render()
 		britishBanner.setColorFilter(graphicsNS::GRAY);
 		norseBanner.setColorFilter(graphicsNS::GRAY);
 		polishBanner.setColorFilter(graphicsNS::GRAY);
+		displayBerserker.setVisible(false);
+		displayHussar.setVisible(false);
+		displayLongbowman.setVisible(false);
 		switch(countrySelect->getLinePtr()){
 		case 0: //britain hovered
 			britishBanner.setColorFilter(graphicsNS::WHITE);
+			displayLongbowman.setVisible(true);
 			break;
 		case 1: //norse hovered
 			norseBanner.setColorFilter(graphicsNS::WHITE);
+			displayBerserker.setVisible(true);
 			break;
 		case 2: //poland hovered
 			polishBanner.setColorFilter(graphicsNS::WHITE);
+			displayHussar.setVisible(true);
 			break;
 		}
 		britishBanner.draw(britishBanner.getColorFilter());
 		polishBanner.draw(polishBanner.getColorFilter());
 		norseBanner.draw(norseBanner.getColorFilter());
 		countrySelect->displayMenu();
+		displayBerserker.draw();
+		displayHussar.draw();
+		displayLongbowman.draw();
 	}
 	if (currentMenu == 0) {
 		if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
@@ -923,5 +959,11 @@ void PrimoVictoria::resetAll()
 	unitManager.onResetDevice();
 	Game::resetAll();
 	return;
+}
+
+void PrimoVictoria::displayUnitsUpdate(){
+	displayBerserker.update(frameTime);
+	displayHussar.update(frameTime);
+	displayLongbowman.update(frameTime);
 }
 #pragma endregion
