@@ -136,10 +136,11 @@ const char BACKGROUND_MUSIC[] = "backGroundMusic";
 const char ARCHER_ATTACK[] = "arrowShot";
 const char BERSERKER_ATTACK[] = "";
 const char CAVALRY_ATTACK[] = "swordSlice";
-const char INFANTRY_ATTACK[] = "swordSlash";
 const char HUSSAR_ATTACK[] = "";
+const char INFANTRY_ATTACK[] = "swordSlash";
 const char BERSERKER_MOVE[] = "";
 const char CAVALRY_MOVE[] = "horseGalloping";
+const char HUSSAR_MOVE[] = "";
 const char INFANTRY_MOVE[] = "running";
 
 enum TerrainTypeEnum {Plains, Hills, Forest, CapturePoint};
@@ -228,6 +229,43 @@ const int CAVALRY_DEATH_DOWN_END = 145;
 const int CAVALRY_DEATH_LEFT_START = 146;
 const int CAVALRY_DEATH_LEFT_END = 151;
 #pragma endregion
+
+#pragma region Higgs
+const float HUSSAR_SCALING = 0.66666f;
+const float HUSSAR_ANIMATION_DELAY = 0.1f;
+const float HUSSAR_SPEED = 100;
+const int HUSSAR_RUN_RIGHT_START = 0;
+const int HUSSAR_RUN_RIGHT_END = 11;
+const int HUSSAR_RUN_UP_START = 12;
+const int HUSSAR_RUN_UP_END  = 23;
+const int HUSSAR_RUN_DOWN_START = 24;
+const int HUSSAR_RUN_DOWN_END = 35;
+const int HUSSAR_RUN_LEFT_START = 36;
+const int HUSSAR_RUN_LEFT_END = 47;
+const int HUSSAR_IDLE_RIGHT_START = 48;
+const int HUSSAR_IDLE_RIGHT_END = 59;
+const int HUSSAR_IDLE_UP_START = 60;
+const int HUSSAR_IDLE_UP_END = 71;
+const int HUSSAR_IDLE_DOWN_START = 72;
+const int HUSSAR_IDLE_DOWN_END = 83;
+const int HUSSAR_IDLE_LEFT_START = 84;
+const int HUSSAR_IDLE_LEFT_END = 95;
+const int HUSSAR_ATTACK_RIGHT_START = 96;
+const int HUSSAR_ATTACK_RIGHT_END = 103;
+const int HUSSAR_ATTACK_UP_START = 104;
+const int HUSSAR_ATTACK_UP_END = 111;
+const int HUSSAR_ATTACK_DOWN_START = 112;
+const int HUSSAR_ATTACK_DOWN_END = 119;
+const int HUSSAR_ATTACK_LEFT_START = 120;
+const int HUSSAR_ATTACK_LEFT_END = 127;
+const int HUSSAR_DEATH_RIGHT_START = 128;
+const int HUSSAR_DEATH_RIGHT_END = 133;
+const int HUSSAR_DEATH_UP_START = 134;
+const int HUSSAR_DEATH_UP_END = 139;
+const int HUSSAR_DEATH_DOWN_START = 140;
+const int HUSSAR_DEATH_DOWN_END = 145;
+const int HUSSAR_DEATH_LEFT_START = 146;
+const int HUSSAR_DEATH_LEFT_END = 151;
 
 #pragma region Newell
 const float ARCHER_SCALING = 1;
