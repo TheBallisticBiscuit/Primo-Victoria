@@ -105,6 +105,7 @@
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="unitManager.cpp" />
+    <ClCompile Include="WingedHussar.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="unit.h" />
     <ClInclude Include="unitManager.h" />
+    <ClInclude Include="WingedHussar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
