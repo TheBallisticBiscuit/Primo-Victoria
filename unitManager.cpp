@@ -294,7 +294,7 @@ void UnitManager::selectUnit(Unit* newSelection){
 }
 
 void UnitManager::selectionRight(){
-	if(selectionBox.getX()+TERRAIN_WIDTH <= GAME_WIDTH){
+	if(selectionBox.getX()+TERRAIN_WIDTH < GAME_WIDTH){
 		selectionBox.setX(selectionBox.getX()+TERRAIN_WIDTH);
 		selectionX++;
 	}
@@ -315,7 +315,7 @@ void UnitManager::selectionUp(){
 }
 
 void UnitManager::selectionDown(){
-	if(selectionBox.getY()+TERRAIN_HEIGHT <= GAME_HEIGHT){
+	if(selectionBox.getY()+TERRAIN_HEIGHT < GAME_HEIGHT){
 		selectionBox.setY(selectionBox.getY()+TERRAIN_HEIGHT);
 		selectionY++;
 	}
@@ -323,8 +323,13 @@ void UnitManager::selectionDown(){
 
 bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveUp(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY()+1)->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
+			currentSelection->setDef(1.2);
+		}
+		else 
+			currentSelection->setDef(1);
+
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -334,7 +339,7 @@ bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveDown(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY()-1)->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest)
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
@@ -345,7 +350,7 @@ bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveLeft(audio)){
-		if (tileManager->getTile(currentSelection->getTileX()+1,currentSelection->getTileY())->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest)
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
@@ -356,7 +361,7 @@ bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveRight(audio)){
-		if (tileManager->getTile(currentSelection->getTileX()-1,currentSelection->getTileY())->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest)
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 		tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);

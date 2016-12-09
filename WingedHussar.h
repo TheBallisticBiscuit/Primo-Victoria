@@ -1,4 +1,5 @@
 #pragma once
+#pragma region Higgs
 #include "unit.h"
 class WingedHussar : public Unit
 {
@@ -16,4 +17,4 @@ public:
 	bool moveRight(Audio* audio);
 	void setAttackFrames(LastDirection direction);
 };
-
+#pragma endregion

@@ -1,3 +1,4 @@
+#pragma region Higgs
 #include "WingedHussar.h"
 
 
@@ -16,6 +17,7 @@ bool WingedHussar::initialize(int width, int height, int ncols, int team, Textur
 	setMovementLeft(0);
 	setRange(1);
 	setHP(35);
+	setDef(1);
 	setDamage(25);
 	setTeam(team);
 	setFrameDelay(HUSSAR_ANIMATION_DELAY);
@@ -72,8 +74,8 @@ void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
 		audio->playCue(HUSSAR_ATTACK);
-		setHP(getHP()-opponent.getDamage());
-		opponent.setHP(opponent.getHP()-getDamage());
+		setHP(getHP()-opponent.getDamage()/getDef());
+		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}
@@ -195,3 +197,4 @@ void WingedHussar::setAttackFrames(LastDirection direction){
 		setAnimating(true);
 	}
 }
+#pragma endregion

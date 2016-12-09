@@ -16,6 +16,7 @@ bool Berserker::initialize(int width, int height, int ncols, int team, TextureMa
 	setMovementLeft(0);
 	setRange(1);
 	setHP(60);
+	setDef(1);
 	setDamage(20);
 	bloodRage = 0;
 	setTeam(team);
@@ -30,16 +31,16 @@ void Berserker::update(float frameTime){
 	if(velocity.x == 0 && velocity.y == 0 && !isAnimating()){
 		switch(getLastDirection()){
 		case up:
-			//setFrames(BERSERKER_IDLE_UP_START, BERSERKER_IDLE_UP_END);
+			setFrames(BERSERKER_IDLE_UP_START, BERSERKER_IDLE_UP_END);
 			break;
 		case left:
-			//setFrames(BERSERKER_IDLE_LEFT_START, BERSERKER_IDLE_LEFT_END);
+			setFrames(BERSERKER_IDLE_LEFT_START, BERSERKER_IDLE_LEFT_END);
 			break;
 		case down:
-			//setFrames(BERSERKER_IDLE_DOWN_START, BERSERKER_IDLE_DOWN_END);
+			setFrames(BERSERKER_IDLE_DOWN_START, BERSERKER_IDLE_DOWN_END);
 			break;
 		case right:
-			//setFrames(BERSERKER_IDLE_RIGHT_START, BERSERKER_IDLE_RIGHT_END);
+			setFrames(BERSERKER_IDLE_RIGHT_START, BERSERKER_IDLE_RIGHT_END);
 			break;
 		}
 	}
@@ -68,10 +69,10 @@ void Berserker::fight(Unit& opponent, float frameTime, Audio* audio){
 		break;
 	}
 	if(getFrameCounter() > BERSERKER_ANIMATION_DELAY*12){
-		//audio->playCue(BERSERKER_ATTACK);					//TODO: Add cue
+		audio->playCue(BERSERKER_ATTACK);					//TODO: Add cue
 		setFrameCounter(0);
-		setHP(getHP()-opponent.getDamage());
-		opponent.setHP(opponent.getHP()-getDamage());
+		setHP(getHP()-opponent.getDamage()/getDef());
+		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 
 		if (getHP() <= 0 && bloodRage == 0){
 			setHP(5);

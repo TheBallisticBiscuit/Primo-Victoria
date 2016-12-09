@@ -12,6 +12,7 @@ public:
 	int getMovementLeft(){return movementLeft;}
 	int getMovement(){return movementPerTurn;}
 	float getFrameCounter(){return frameCounter;}
+	float getDef(){return defence;}
 	enum LastDirection {up, down, left, right} getLastDirection(){return lastDirection;}
 	int getTileX(){return tile.x;}
 	int getTileY(){return tile.y;}
@@ -19,6 +20,7 @@ public:
 	bool isAnimating(){return animating;}
 	void setDamage(int newDamage);
 	void setHP(int newHP);
+	void setDef(float newDefence);
 	void setMovementPerTurn(int newMovement);
 	void setMovementLeft(int newMovement);
 	void setRange(int newRange);
@@ -37,6 +39,7 @@ public:
 private:
 	int damage;
 	int HP;
+	float defence;
 	int range;
 	int team;
 	struct pair{
