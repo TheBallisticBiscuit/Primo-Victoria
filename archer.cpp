@@ -22,7 +22,7 @@ bool Archer::initialize(int width, int height, int ncols, int team, TextureManag
 	setFrameDelay(ARCHER_ANIMATION_DELAY);
 	setFrameCounter(0);
 	setVelocity(VECTOR2(0, 0));
-	return Unit::initialize(width, height, ncols, textureM, game);
+	return Unit::initialize(width, height, ncols, team, textureM, game);
 }
 
 void Archer::update(float frameTime){

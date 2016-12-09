@@ -24,7 +24,7 @@ bool Berserker::initialize(int width, int height, int ncols, int team, TextureMa
 	setFrameCounter(0);
 	setVelocity(VECTOR2(0, 0));
 	
-	return Unit::initialize(height, width, ncols, textureM, game);
+	return Unit::initialize(height, width, ncols, team, textureM, game);
 }
 
 void Berserker::update(float frameTime){
@@ -88,16 +88,16 @@ void Berserker::fight(Unit& opponent, float frameTime, Audio* audio){
 bool Berserker::kill(float frameTime){
 	switch(getLastDirection()){
 	case up:
-		//setFrames(BERSERKER_DEATH_UP_START, BERSERKER_DEATH_UP_END);
+		setFrames(BERSERKER_DEATH_UP_START, BERSERKER_DEATH_UP_END);
 		break;
 	case left:
-		//setFrames(BERSERKER_DEATH_LEFT_START, BERSERKER_DEATH_LEFT_END);
+		setFrames(BERSERKER_DEATH_LEFT_START, BERSERKER_DEATH_LEFT_END);
 		break;
 	case down:
-		//setFrames(BERSERKER_DEATH_DOWN_START, BERSERKER_DEATH_DOWN_END);
+		setFrames(BERSERKER_DEATH_DOWN_START, BERSERKER_DEATH_DOWN_END);
 		break;
 	case right:
-		//setFrames(BERSERKER_DEATH_RIGHT_START, BERSERKER_DEATH_RIGHT_END);
+		setFrames(BERSERKER_DEATH_RIGHT_START, BERSERKER_DEATH_RIGHT_END);
 		break;
 	}
 	if(!getActive()){
@@ -118,7 +118,7 @@ bool Berserker::kill(float frameTime){
 bool Berserker::moveUp(Audio* audio){
 	setLastDirection(up);
 	audio->playCue(BERSERKER_MOVE);
-	//setFrames(BERSERKER_RUN_UP_START, BERSERKER_RUN_UP_END);
+	setFrames(BERSERKER_RUN_UP_START, BERSERKER_RUN_UP_END);
 	setVelocity(VECTOR2(0, -1));
 	if(getY() < (getTileY()-1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()-1);
@@ -133,7 +133,7 @@ bool Berserker::moveUp(Audio* audio){
 bool Berserker::moveDown(Audio* audio){
 	setLastDirection(down);
 	audio->playCue(BERSERKER_MOVE);
-	//setFrames(BERSERKER_RUN_DOWN_START, BERSERKER_RUN_DOWN_END);
+	setFrames(BERSERKER_RUN_DOWN_START, BERSERKER_RUN_DOWN_END);
 	setVelocity(VECTOR2(0, 1));
 	if(getY() > (getTileY()+1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()+1);
@@ -148,7 +148,7 @@ bool Berserker::moveDown(Audio* audio){
 bool Berserker::moveLeft(Audio* audio){
 	setLastDirection(left);
 	audio->playCue(BERSERKER_MOVE);
-	//setFrames(BERSERKER_RUN_LEFT_START, BERSERKER_RUN_LEFT_END);
+	setFrames(BERSERKER_RUN_LEFT_START, BERSERKER_RUN_LEFT_END);
 	setVelocity(VECTOR2(-1, 0));
 	if(getX() < (getTileX()-1)*TERRAIN_WIDTH){
 		setTile(getTileX()-1, getTileY());
@@ -163,7 +163,7 @@ bool Berserker::moveLeft(Audio* audio){
 bool Berserker::moveRight(Audio* audio){
 	setLastDirection(right);
 	audio->playCue(BERSERKER_MOVE);
-	//setFrames(BERSERKER_RUN_RIGHT_START, BERSERKER_RUN_RIGHT_END);
+	setFrames(BERSERKER_RUN_RIGHT_START, BERSERKER_RUN_RIGHT_END);
 	setVelocity(VECTOR2(1, 0));
 	if(getX() > (getTileX()+1)*TERRAIN_WIDTH){
 		setTile(getTileX()+1, getTileY());
@@ -178,22 +178,22 @@ bool Berserker::moveRight(Audio* audio){
 
 void Berserker::setAttackFrames(LastDirection direction){
 	if(direction == up){
-		//setFrames(BERSERKER_ATTACK_UP_START, BERSERKER_ATTACK_UP_END);
+		setFrames(BERSERKER_ATTACK_UP_START, BERSERKER_ATTACK_UP_END);
 		setLastDirection(up);
 		setAnimating(true);
 	}
 	else if(direction == down){
-		//setFrames(BERSERKER_ATTACK_DOWN_START, BERSERKER_ATTACK_DOWN_END);
+		setFrames(BERSERKER_ATTACK_DOWN_START, BERSERKER_ATTACK_DOWN_END);
 		setLastDirection(down);
 		setAnimating(true);
 	}
 	else if(direction == left){
-		//setFrames(BERSERKER_ATTACK_LEFT_START, BERSERKER_ATTACK_LEFT_END);
+		setFrames(BERSERKER_ATTACK_LEFT_START, BERSERKER_ATTACK_LEFT_END);
 		setLastDirection(left);
 		setAnimating(true);
 	}
 	if(direction == right){
-		//setFrames(BERSERKER_ATTACK_RIGHT_START, BERSERKER_ATTACK_RIGHT_END);
+		setFrames(BERSERKER_ATTACK_RIGHT_START, BERSERKER_ATTACK_RIGHT_END);
 		setLastDirection(right);
 		setAnimating(true);
 	}

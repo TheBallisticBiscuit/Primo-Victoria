@@ -5,7 +5,7 @@ class Unit : public Entity {
 public:
 	Unit();
 	~Unit();
-	bool initialize(int height, int width, int ncols, TextureManager* textureM, Game* game);
+	virtual bool initialize(int height, int width, int ncols, int team, TextureManager* textureM, Game* game);
 	int getDamage(){return damage;}
 	int getHP(){return HP;}
 	int getRange(){return range;}
