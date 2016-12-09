@@ -16,6 +16,7 @@ bool Archer::initialize(int width, int height, int ncols, int team, TextureManag
 	setMovementLeft(0);
 	setRange(2);
 	setHP(25);
+	setDef(1);
 	setDamage(30);
 	setTeam(team);
 	setFrameDelay(ARCHER_ANIMATION_DELAY);
@@ -78,9 +79,9 @@ void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
 		audio->playCue(ARCHER_ATTACK);
 		setFrameCounter(0);
 		if(getRange() <= opponent.getRange()){
-			setHP(getHP()-opponent.getDamage());
+			setHP(getHP()-opponent.getDamage()/getDef());
 		}
-		opponent.setHP(opponent.getHP()-getDamage());
+		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}

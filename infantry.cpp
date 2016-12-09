@@ -16,6 +16,7 @@ bool Infantry::initialize(int width, int height, int ncols, int team, TextureMan
 	setMovementLeft(0);
 	setRange(1);
 	setHP(60);
+	setDef(1);
 	setDamage(20);
 	setTeam(team);
 	setFrameDelay(INFANTRY_ANIMATION_DELAY);
@@ -68,8 +69,8 @@ void Infantry::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		audio->playCue(INFANTRY_ATTACK);
 		setFrameCounter(0);
-		setHP(getHP()-opponent.getDamage());
-		opponent.setHP(opponent.getHP()-getDamage());
+		setHP(getHP()-opponent.getDamage()/getDef());
+		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}

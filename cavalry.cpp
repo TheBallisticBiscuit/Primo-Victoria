@@ -16,6 +16,7 @@ bool Cavalry::initialize(int width, int height, int ncols, int team, TextureMana
 	setMovementLeft(0);
 	setRange(1);
 	setHP(35);
+	setDef(1);
 	setDamage(25);
 	setTeam(team);
 	setFrameDelay(CAVALRY_ANIMATION_DELAY);
@@ -69,8 +70,8 @@ void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
 		audio->playCue(CAVALRY_ATTACK);
-		setHP(getHP()-opponent.getDamage());
-		opponent.setHP(opponent.getHP()-getDamage());
+		setHP(getHP()-opponent.getDamage()/getDef());
+		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}

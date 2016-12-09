@@ -28,6 +28,10 @@ void Unit::setHP(int newHP){
 	HP = newHP;
 }
 
+void Unit::setDef(float newDefence){
+	defence = newDefence;
+}
+
 void Unit::setMovementPerTurn(int newMovement){
 	movementPerTurn = newMovement;
 }
