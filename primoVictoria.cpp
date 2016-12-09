@@ -113,7 +113,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	displayHussar.initialize(144, 144, 8, 1, &displayHussarTexture, this);
 	displayHussar.setX(925);
 	displayHussar.setY(500);
-	displayHussar.setFrames(CAVALRY_RUN_RIGHT_START, CAVALRY_RUN _RIGHT_END);
+	displayHussar.setFrames(CAVALRY_RUN_RIGHT_START, CAVALRY_RUN_RIGHT_END);
 	displayHussar.setAnimating(true);
 	if(!displayLongbowmanTexture.initialize(graphics,"pictures\\GreenArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
