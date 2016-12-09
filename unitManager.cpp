@@ -339,8 +339,13 @@ bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveDown(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
+			currentSelection->setDef(1.2);
+		}
+		else
+			currentSelection->setDef(1);
+
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -350,8 +355,13 @@ bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveLeft(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
+			currentSelection->setDef(1.2);
+		}
+		else
+			currentSelection->setDef(1);
+
 		tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -361,8 +371,13 @@ bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveRight(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest)
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
+			currentSelection->setDef(1.2);
+		}
+		else
+			currentSelection->setDef(1);
+
 		tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
