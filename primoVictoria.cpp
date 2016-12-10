@@ -276,8 +276,8 @@ void PrimoVictoria::update()
 			levelTwo();
 		}
 	}
-	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 1){ //selecting Poland
-		player1Country = Poland;
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 1){ //selecting Norse
+		player1Country = Norse;
 		currentMenu = 0;
 		if(level == 1){
 			levelOne();
@@ -286,8 +286,8 @@ void PrimoVictoria::update()
 			levelTwo();
 		}
 	}
-	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 2){ //selecting Norse
-		player1Country = Norse;
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 2){ //selecting Poland
+		player1Country = Poland;
 		currentMenu = 0;
 		if(level == 1){
 			levelOne();
@@ -498,6 +498,19 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) { //New and Improved func
 
 void PrimoVictoria::levelOne() { //Initialize level one
 	gameReset();
+	int newAICountry = rand()%3;
+	switch(newAICountry){
+	case 0:
+		player2Country = Britain;
+		break;
+	case 1:
+		player2Country = Norse;
+		break;
+	case 2:
+		player2Country = Poland;
+		break;
+	}
+	unitManager.setPlayerCountries(player1Country, player2Country, this);
 	for (int i = 0; i < 2; i++)
 	{
 		spawnUnit(rand()%3,2);
@@ -515,6 +528,19 @@ void PrimoVictoria::levelOne() { //Initialize level one
 
 void PrimoVictoria::levelTwo() { //Initialize level two
 	gameReset();
+	int newAICountry = rand()%3;
+	switch(newAICountry){
+	case 0:
+		player2Country = Britain;
+		break;
+	case 1:
+		player2Country = Norse;
+		break;
+	case 2:
+		player2Country = Poland;
+		break;
+	}
+	unitManager.setPlayerCountries(player1Country, player2Country, this);
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,2);

@@ -6,6 +6,7 @@ class Infantry : public Unit
 public:
 	Infantry(void);
 	~Infantry(void);
+
 	bool initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game);
 	void update(float frameTime);
 	void fight(Unit& opponent, float frameTime, Audio* audio);
