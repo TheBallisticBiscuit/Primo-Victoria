@@ -11,6 +11,7 @@ Berserker::~Berserker(void)
 }
 
 bool Berserker::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
+	bool ret = Unit::initialize(height, width, ncols, team, textureM, game);
 	setScale(BERSERKER_SCALING);
 	setMovementPerTurn(3);
 	setMovementLeft(0);
@@ -18,13 +19,13 @@ bool Berserker::initialize(int width, int height, int ncols, int team, TextureMa
 	setHP(60);
 	setDef(1);
 	setDamage(20);
-	bloodRage = 0;
+	//bloodRage = 0;
 	setTeam(team);
 	setFrameDelay(BERSERKER_ANIMATION_DELAY);
 	setFrameCounter(0);
 	setVelocity(VECTOR2(0, 0));
 	
-	return Unit::initialize(height, width, ncols, team, textureM, game);
+	return ret;
 }
 
 void Berserker::update(float frameTime){
@@ -68,17 +69,11 @@ void Berserker::fight(Unit& opponent, float frameTime, Audio* audio){
 		opponent.setAttackFrames(left);
 		break;
 	}
-	if(getFrameCounter() > BERSERKER_ANIMATION_DELAY*12){
+	if(getFrameCounter() > BERSERKER_ANIMATION_DELAY*10){
 		audio->playCue(BERSERKER_ATTACK);					//TODO: Add cue
 		setFrameCounter(0);
 		setHP(getHP()-opponent.getDamage()/getDef());
 		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
-
-		if (getHP() <= 0 && bloodRage == 0){
-			setHP(5);
-			bloodRage = 1;
-		}
-
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}
@@ -197,5 +192,15 @@ void Berserker::setAttackFrames(LastDirection direction){
 		setLastDirection(right);
 		setAnimating(true);
 	}
+}
+
+void Berserker::setHP(int newHP){
+	if(newHP < Unit::getHP()){ //damage being dealt
+		if(getHP() > 1 && newHP <= 0){ //dying from higher than 1 HP, survives
+			Unit::setHP(1);
+			return;
+		}
+	}
+	Unit::setHP(newHP);
 }
 #pragma endregion

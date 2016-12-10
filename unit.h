@@ -19,7 +19,7 @@ public:
 	int getTeam() {return team; };
 	bool isAnimating(){return animating;}
 	void setDamage(int newDamage);
-	void setHP(int newHP);
+	virtual void setHP(int newHP);
 	void setDef(float newDefence);
 	void setMovementPerTurn(int newMovement);
 	void setMovementLeft(int newMovement);

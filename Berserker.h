@@ -16,8 +16,8 @@ public:
 	bool moveLeft(Audio* audio);
 	bool moveRight(Audio* audio);
 	void setAttackFrames(LastDirection direction);
-
+	void setHP(int newHP);
 //private:
-	bool bloodRage;
+	//bool bloodRage;
 };
 #pragma endregion
