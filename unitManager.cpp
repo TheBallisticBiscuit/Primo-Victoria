@@ -580,7 +580,7 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 			player2Infantry[i].setActive(false);
 			player2Infantry[i].setVisible(false);
 
-			player2Cavalry[i].initialize(96, 96, 8, 2, &hussarTexture2, gamePtr);
+			player2Cavalry[i].initialize(144, 144, 8, 2, &hussarTexture2, gamePtr);
 			player2Cavalry[i].setActive(false);
 			player2Cavalry[i].setVisible(false);
 			player2Cavalry[i].setScale(CAVALRY_SCALING);

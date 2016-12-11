@@ -92,6 +92,7 @@
     <ClCompile Include="Berserker.cpp" />
     <ClCompile Include="cavalry.cpp" />
     <ClCompile Include="infantry.cpp" />
+    <ClCompile Include="longbowman.cpp" />
     <ClCompile Include="primoVictoria.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Berserker.h" />
     <ClInclude Include="cavalry.h" />
     <ClInclude Include="infantry.h" />
+    <ClInclude Include="longbowman.h" />
     <ClInclude Include="primoVictoria.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />

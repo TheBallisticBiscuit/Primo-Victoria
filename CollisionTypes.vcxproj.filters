@@ -75,6 +75,9 @@
     <ClCompile Include="WingedHussar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="longbowman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WingedHussar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="longbowman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
