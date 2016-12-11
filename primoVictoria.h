@@ -67,7 +67,7 @@ private:
 	int level;
 	int x1,y1,x2,y2;
 	int spawnUnitCooldown;
-	enum Country {Britain, Poland, Norse} player1Country;
+	Country player1Country;
 	Country player2Country;
 public:
     // Constructor

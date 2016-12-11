@@ -6,6 +6,7 @@ functions*/
 #include "entity.h"
 #include "archer.h"
 #include "Berserker.h"
+#include "WingedHussar.h"
 #include "cavalry.h"
 #include "infantry.h"
 #include "TileManager.h"
@@ -50,6 +51,7 @@ public:
 	bool unitRight(TileManager* tileManager, Audio* audio);
 	void endTurn();
 	void resetUnits();
+	void setPlayerCountries(Country player1, Country player2, Game* gamePtr);
 private:
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;
@@ -57,18 +59,22 @@ private:
 	TextureManager cavalryTexture2;
 	TextureManager archerTexture;
 	TextureManager archerTexture2;
+	TextureManager hussarTexture;
+	TextureManager hussarTexture2;
+	TextureManager berserkerTexture;
+	TextureManager berserkerTexture2;
 	TextureManager selectionBoxTexture;
 	Image selectionBox;
 	struct pair{
 		int x;
 		int y;
 	} selectedTile;
-	Infantry* player1Infantry;
-	Infantry* player2Infantry;
-	Cavalry* player1Cavalry;
-	Cavalry* player2Cavalry;
-	Archer* player1Archers;
-	Archer* player2Archers;
+	Unit* player1Infantry;
+	Unit* player2Infantry;
+	Unit* player1Cavalry;
+	Unit* player2Cavalry;
+	Unit* player1Archers;
+	Unit* player2Archers;
 	Unit* currentSelection;
 	Unit** player2Units;
 	int selectionX;

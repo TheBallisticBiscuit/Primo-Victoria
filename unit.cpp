@@ -10,7 +10,7 @@ Unit::~Unit(void)
 {
 }
 
-bool Unit::initialize(int height, int width, int ncols, TextureManager* textureM, Game* game){
+bool Unit::initialize(int height, int width, int ncols, int team, TextureManager* textureM, Game* game){
 	setLastDirection(right);
 	animating = false;
 	return Entity::initialize(game, height, width, ncols, textureM);

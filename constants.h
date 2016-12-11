@@ -144,7 +144,7 @@ const char HUSSAR_MOVE[] = "";
 const char INFANTRY_MOVE[] = "running";
 
 enum TerrainTypeEnum {Plains, Hills, Forest, CapturePoint};
-
+enum Country {Britain, Poland, Norse};
 
 #pragma region Newell
 const float INFANTRY_SCALING = 1;
@@ -187,9 +187,9 @@ const float SELECTION_BOX_SCALE = 1;
 #pragma endregion
 
 #pragma region Higgs
-const float BERSERKER_SCALING = 1.0f;
-const float BERSERKER_ANIMATION_DELAY = 0.1f;
-const float BERSERKER_SPEED = 70.f;
+const float BERSERKER_SCALING = 1;
+const float BERSERKER_ANIMATION_DELAY = 0.1;
+const float BERSERKER_SPEED = 70;
 const int BERSERKER_ATTACK_RIGHT_START = 0;
 const int BERSERKER_ATTACK_RIGHT_END = 9;
 const int BERSERKER_ATTACK_UP_START = 10;

@@ -1,23 +1,22 @@
-#include "archer.h"
+#include "longbowman.h"
 
 
-Archer::Archer(void)
+Longbowman::Longbowman(void)
 {
 }
 
 
-Archer::~Archer(void)
+Longbowman::~Longbowman(void)
 {
 }
 
-bool Archer::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
+bool Longbowman::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
 	setScale(ARCHER_SCALING);
 	setMovementPerTurn(3);
 	setMovementLeft(0);
-	setRange(2);
+	setRange(3);
 	setHP(25);
 	setDef(1);
-	setSpecial(0);
 	setDamage(30);
 	setTeam(team);
 	setFrameDelay(ARCHER_ANIMATION_DELAY);
@@ -26,7 +25,7 @@ bool Archer::initialize(int width, int height, int ncols, int team, TextureManag
 	return Unit::initialize(width, height, ncols, team, textureM, game);
 }
 
-void Archer::update(float frameTime){
+void Longbowman::update(float frameTime){
 	if(velocity.x == 0 && velocity.y == 0 && !isAnimating()){
 		switch(getLastDirection()){
 		case up:
@@ -48,7 +47,7 @@ void Archer::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
+void Longbowman::fight(Unit& opponent, float frameTime, Audio* audio){
 
 	switch(getLastDirection()){
 	case up:
@@ -89,7 +88,7 @@ void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
 	setFrameCounter(getFrameCounter()+frameTime);
 }
 
-bool Archer::kill(float frameTime){
+bool Longbowman::kill(float frameTime){
 	switch(getLastDirection()){
 	case up:
 		setFrames(ARCHER_DEATH_UP_START, ARCHER_DEATH_UP_END);
@@ -118,7 +117,7 @@ bool Archer::kill(float frameTime){
 	return false;
 }
 
-bool Archer::moveUp(Audio* audio){
+bool Longbowman::moveUp(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(up);
 	setFrames(ARCHER_RUN_UP_START, ARCHER_RUN_UP_END);
@@ -133,7 +132,7 @@ bool Archer::moveUp(Audio* audio){
 	}
 	return false;
 }
-bool Archer::moveDown(Audio* audio){
+bool Longbowman::moveDown(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(down);
 	setFrames(ARCHER_RUN_DOWN_START, ARCHER_RUN_DOWN_END);
@@ -148,7 +147,7 @@ bool Archer::moveDown(Audio* audio){
 	}
 	return false;
 }
-bool Archer::moveLeft(Audio* audio){
+bool Longbowman::moveLeft(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(left);
 	setFrames(ARCHER_RUN_LEFT_START, ARCHER_RUN_LEFT_END);
@@ -163,7 +162,7 @@ bool Archer::moveLeft(Audio* audio){
 	}
 	return false;
 }
-bool Archer::moveRight(Audio* audio){
+bool Longbowman::moveRight(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(right);
 	setFrames(ARCHER_RUN_RIGHT_START, ARCHER_RUN_RIGHT_END);
@@ -179,7 +178,7 @@ bool Archer::moveRight(Audio* audio){
 	return false;
 }
 
-void Archer::setAttackFrames(LastDirection direction){
+void Longbowman::setAttackFrames(LastDirection direction){
 	if(direction == up){
 		setFrames(ARCHER_ATTACK_UP_START, ARCHER_ATTACK_UP_END);
 		setLastDirection(up);

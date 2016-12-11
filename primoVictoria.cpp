@@ -99,7 +99,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	norseBanner.setY(0);
 	polishBanner.setX(768);
 	polishBanner.setY(0);
-	if(!displayBerserkerTexture.initialize(graphics,"pictures\\berserker.png")){
+	if(!displayBerserkerTexture.initialize(graphics,"pictures\\greenBerserker.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
 	}
 	displayBerserker.initialize(96, 96, 10, 1, &displayBerserkerTexture, this);
@@ -276,8 +276,8 @@ void PrimoVictoria::update()
 			levelTwo();
 		}
 	}
-	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 1){ //selecting Poland
-		player1Country = Poland;
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 1){ //selecting Norse
+		player1Country = Norse;
 		currentMenu = 0;
 		if(level == 1){
 			levelOne();
@@ -286,8 +286,8 @@ void PrimoVictoria::update()
 			levelTwo();
 		}
 	}
-	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 2){ //selecting Norse
-		player1Country = Norse;
+	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 2){ //selecting Poland
+		player1Country = Poland;
 		currentMenu = 0;
 		if(level == 1){
 			levelOne();
@@ -388,7 +388,7 @@ void PrimoVictoria::levelOneAI() {
 void PrimoVictoria::levelTwoAI() {
 	int spawnOrMove = rand()%2;
 	int r = 0;
-	
+
 	if (spawnOrMove == 0 || unitManager.numEnemyUnits() <= 0){
 		if(unitManager.numEnemyUnits() >= 6 || unitManager.getCurrentSelection() != nullptr){
 			spawnOrMove = 1;
@@ -498,6 +498,19 @@ void PrimoVictoria::moveAttempt(int dir, int x, int y) { //New and Improved func
 
 void PrimoVictoria::levelOne() { //Initialize level one
 	gameReset();
+	int newAICountry = rand()%3;
+	switch(newAICountry){
+	case 0:
+		player2Country = Britain;
+		break;
+	case 1:
+		player2Country = Norse;
+		break;
+	case 2:
+		player2Country = Poland;
+		break;
+	}
+	unitManager.setPlayerCountries(player1Country, player2Country, this);
 	for (int i = 0; i < 2; i++)
 	{
 		spawnUnit(rand()%3,2);
@@ -515,6 +528,19 @@ void PrimoVictoria::levelOne() { //Initialize level one
 
 void PrimoVictoria::levelTwo() { //Initialize level two
 	gameReset();
+	int newAICountry = rand()%3;
+	switch(newAICountry){
+	case 0:
+		player2Country = Britain;
+		break;
+	case 1:
+		player2Country = Norse;
+		break;
+	case 2:
+		player2Country = Poland;
+		break;
+	}
+	unitManager.setPlayerCountries(player1Country, player2Country, this);
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,2);
@@ -775,36 +801,48 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 void PrimoVictoria::moveUp(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::up);
 	if (unitManager.getCurrentSelection()->getTileY() > 0) {
-		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() > 1
-			&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->isOccupied() &&
-			tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit()->getTeam()
-			!= unitManager.getCurrentSelection()->getTeam()){
-				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit();
-				fighting = true;
-				moving = NULL;
+		//if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() > 1
+		//	&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->isOccupied() &&
+		//	tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit()->getTeam()
+		//	!= unitManager.getCurrentSelection()->getTeam()){
+		//		fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit();
+		//		fighting = true;
+		//		moving = NULL;
+		//}
+		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
+			if(unitManager.getCurrentSelection()->getTileY() - i >= 0){
+				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-i)->isOccupied() &&
+					tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-i)->getUnit()->getTeam()
+					!= unitManager.getCurrentSelection()->getTeam()){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-i)->getUnit();
+						fighting = true;
+						moving = NULL;
+						return;
+				}
+			}
 		}
-		else if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+		if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
 			->isOccupied())){
 				if(unitManager.unitUp(&tileManager, audio)){
 					moving = NULL;
 				}
 		}
-		else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-			->isOccupied()){
-				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-					->getUnit()->getTeam() == 2 && isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-							->getUnit();
-						fighting = true;
-				}
-				else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-					->getUnit()->getTeam() == 1 && !isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-							->getUnit();
-						fighting = true;
-				}
-				moving = NULL;
-		}
+		//else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+		//	->isOccupied()){
+		//		if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+		//			->getUnit()->getTeam() == 2 && isPlayerTurn){
+		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+		//					->getUnit();
+		//				fighting = true;
+		//		}
+		//		else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+		//			->getUnit()->getTeam() == 1 && !isPlayerTurn){
+		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
+		//					->getUnit();
+		//				fighting = true;
+		//		}
+		//		moving = NULL;
+		//}
 	}
 	else{
 		moving = NULL;
@@ -814,21 +852,33 @@ void PrimoVictoria::moveUp(){
 void PrimoVictoria::moveDown(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::down);
 	if (unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-1) {
-		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-2
-			&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->isOccupied() &&
-			tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit()->getTeam()
-			!= unitManager.getCurrentSelection()->getTeam()){
-				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit();
-				fighting = true;
-				moving = NULL;
+		//if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-2
+		//	&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->isOccupied() &&
+		//	tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit()->getTeam()
+		//	!= unitManager.getCurrentSelection()->getTeam()){
+		//		fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit();
+		//		fighting = true;
+		//		moving = NULL;
+		//}
+		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
+			if(unitManager.getCurrentSelection()->getTileY() + i <= tileManager.getHeight()-1){
+				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+i)->isOccupied() &&
+					tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+i)->getUnit()->getTeam()
+					!= unitManager.getCurrentSelection()->getTeam()){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+i)->getUnit();
+						fighting = true;
+						moving = NULL;
+						return;
+				}
+			}
 		}
-		else if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+		if(!(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
 			->isOccupied())){
 				if(unitManager.unitDown(&tileManager, audio)){
 					moving = NULL;
 				}
 		}
-		else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
+		/*else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
 			->isOccupied()){
 				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
 					->getUnit()->getTeam() == 2 && isPlayerTurn){
@@ -843,7 +893,7 @@ void PrimoVictoria::moveDown(){
 						fighting = true;
 				}
 				moving = NULL;
-		}
+		}*/
 	}
 	else{
 		moving = NULL;
@@ -853,21 +903,33 @@ void PrimoVictoria::moveDown(){
 void PrimoVictoria::moveLeft(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::left);
 	if (unitManager.getCurrentSelection()->getTileX() > 0) {
-		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() > 1
+		/*if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() > 1
 			&& tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->isOccupied() &&
 			tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->getUnit()->getTeam()
 			!= unitManager.getCurrentSelection()->getTeam()){
 				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->getUnit();
 				fighting = true;
 				moving = NULL;
+		}*/		
+		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
+			if(unitManager.getCurrentSelection()->getTileY() - i >= 0){
+				if(tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->isOccupied() &&
+					tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->getUnit()->getTeam()
+					!= unitManager.getCurrentSelection()->getTeam()){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->getUnit();
+						fighting = true;
+						moving = NULL;
+						return;
+				}
+			}
 		}
-		else if(!(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+		if(!(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
 			->isOccupied())){
 				if(unitManager.unitLeft(&tileManager, audio)){
 					moving = NULL;
 				}
 		}
-		else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
+		/*else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
 			->isOccupied()){
 				if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
 					->getUnit()->getTeam() == 2 && isPlayerTurn){
@@ -882,7 +944,7 @@ void PrimoVictoria::moveLeft(){
 						fighting = true;
 				}
 				moving = NULL;
-		}
+		}*/
 	}
 	else{
 		moving = NULL;
@@ -892,36 +954,48 @@ void PrimoVictoria::moveLeft(){
 void PrimoVictoria::moveRight(){
 	unitManager.getCurrentSelection()->setLastDirection(Unit::right);
 	if (unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-1) {
-		if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-2
-			&& tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->isOccupied() &&
-			tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit()->getTeam()
-			!= unitManager.getCurrentSelection()->getTeam()){
-				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit();
-				fighting = true;
-				moving = NULL;
+		//if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-2
+		//	&& tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->isOccupied() &&
+		//	tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit()->getTeam()
+		//	!= unitManager.getCurrentSelection()->getTeam()){
+		//		fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit();
+		//		fighting = true;
+		//		moving = NULL;
+		//}
+		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
+			if(unitManager.getCurrentSelection()->getTileY() + i <= tileManager.getWidth()-1){
+				if(tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->isOccupied() &&
+					tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->getUnit()->getTeam()
+					!= unitManager.getCurrentSelection()->getTeam()){
+						fightTarget = tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->getUnit();
+						fighting = true;
+						moving = NULL;
+						return;
+				}
+			}
 		}
-		else if(!(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+		if(!(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
 			->isOccupied())){
 				if(unitManager.unitRight(&tileManager, audio)){
 					moving = NULL;
 				}
 		}
-		else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-			->isOccupied()){
-				if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-					->getUnit()->getTeam() == 2 && isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-							->getUnit();
-						fighting = true;
-				}
-				else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-					->getUnit()->getTeam() == 1 && !isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-							->getUnit();
-						fighting = true;
-				}
-				moving = NULL;
-		}
+		//else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+		//	->isOccupied()){
+		//		if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+		//			->getUnit()->getTeam() == 2 && isPlayerTurn){
+		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+		//					->getUnit();
+		//				fighting = true;
+		//		}
+		//		else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+		//			->getUnit()->getTeam() == 1 && !isPlayerTurn){
+		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
+		//					->getUnit();
+		//				fighting = true;
+		//		}
+		//		moving = NULL;
+		//}
 	}
 	else{
 		moving = NULL;

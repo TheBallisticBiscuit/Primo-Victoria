@@ -29,11 +29,23 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!infantryTexture2.initialize(graphics,"pictures\\redKnight.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redKnight texture"));
 	}
+	if(!berserkerTexture.initialize(graphics,"pictures\\greenBerserker.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenBerserker texture"));
+	}
+	if (!berserkerTexture2.initialize(graphics,"pictures\\greenBerserker.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redBerserker texture"));
+	}
 	if (!cavalryTexture.initialize(graphics,"pictures\\greenCavalry.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
 	}
 	if (!cavalryTexture2.initialize(graphics,"pictures\\redCavalry.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenCavalry texture"));
+	}
+	if (!hussarTexture.initialize(graphics,"pictures\\greenHussar.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenHussar texture"));
+	}
+	if (!hussarTexture2.initialize(graphics,"pictures\\greenHussar.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenHussar texture"));
 	}
 	if (!archerTexture.initialize(graphics,"pictures\\GreenArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenArcher texture"));
@@ -124,6 +136,10 @@ void UnitManager::onResetDevice(){
 	infantryTexture2.onResetDevice();
 	cavalryTexture.onResetDevice();
 	cavalryTexture2.onResetDevice();
+	berserkerTexture.onResetDevice();
+	berserkerTexture2.onResetDevice();
+	hussarTexture.onResetDevice();
+	hussarTexture2.onResetDevice();
 	archerTexture.onResetDevice();
 	archerTexture2.onResetDevice();
 }
@@ -133,6 +149,10 @@ void UnitManager::onLostDevice(){
 	infantryTexture2.onLostDevice();
 	cavalryTexture.onLostDevice();
 	cavalryTexture2.onLostDevice();
+	berserkerTexture.onLostDevice();
+	berserkerTexture2.onLostDevice();
+	hussarTexture.onLostDevice();
+	hussarTexture2.onLostDevice();
 	archerTexture.onLostDevice();
 	archerTexture2.onLostDevice();
 }
@@ -504,4 +524,91 @@ int UnitManager::aiAttackDirection(Unit* target, int& x, int& y) {
 		return 2;
 }
 
+#pragma endregion
+
+#pragma region Newell
+
+void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gamePtr){
+	switch(player1){
+	case Britain:
+		break;
+	case Poland:
+		delete [] player1Cavalry;
+		player1Cavalry = new WingedHussar[10];
+		for(int i = 0; i < 10; i ++){
+			player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
+			player1Infantry[i].setActive(false);
+			player1Infantry[i].setVisible(false);
+
+			player1Cavalry[i].initialize(144, 144, 8, 1, &hussarTexture, gamePtr);
+			player1Cavalry[i].setActive(false);
+			player1Cavalry[i].setVisible(false);
+			player1Cavalry[i].setScale(CAVALRY_SCALING);
+
+			player1Archers[i].initialize(96, 96, 5, 1, &archerTexture, gamePtr);
+			player1Archers[i].setActive(false);
+			player1Archers[i].setVisible(false);
+		}
+		break;
+	case Norse:
+		delete [] player1Infantry;
+		player1Infantry = new Berserker[10];
+		for(int i = 0; i < 10; i ++){
+			player1Infantry[i].initialize(96, 96, 10, 1, &berserkerTexture, gamePtr);
+			player1Infantry[i].setActive(false);
+			player1Infantry[i].setVisible(false);
+
+			player1Cavalry[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+			player1Cavalry[i].setActive(false);
+			player1Cavalry[i].setVisible(false);
+			player1Cavalry[i].setScale(CAVALRY_SCALING);
+
+			player1Archers[i].initialize(96, 96, 5, 1, &archerTexture, gamePtr);
+			player1Archers[i].setActive(false);
+			player1Archers[i].setVisible(false);
+		}
+		break;
+	}
+	switch(player2){
+	case Britain:
+		break;
+	case Poland:
+		delete [] player2Cavalry;
+		player2Cavalry = new WingedHussar[10];
+		for(int i = 0; i < 10; i ++){
+			player2Infantry[i].initialize(96, 96, 3, 2, &infantryTexture2, gamePtr);
+			player2Infantry[i].setActive(false);
+			player2Infantry[i].setVisible(false);
+
+			player2Cavalry[i].initialize(144, 144, 8, 2, &hussarTexture2, gamePtr);
+			player2Cavalry[i].setActive(false);
+			player2Cavalry[i].setVisible(false);
+			player2Cavalry[i].setScale(CAVALRY_SCALING);
+
+			player2Archers[i].initialize(96, 96, 5, 2, &archerTexture2, gamePtr);
+			player2Archers[i].setActive(false);
+			player2Archers[i].setVisible(false);
+		}
+		break;
+	case Norse:
+		delete [] player2Infantry;
+		player2Infantry = new Berserker[10];
+		for(int i = 0; i < 10; i ++){
+			player2Infantry[i].initialize(96, 96, 10, 2, &berserkerTexture, gamePtr);
+			player2Infantry[i].setActive(false);
+			player2Infantry[i].setVisible(false);
+
+			player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
+			player2Cavalry[i].setActive(false);
+			player2Cavalry[i].setVisible(false);
+			player2Cavalry[i].setScale(CAVALRY_SCALING);
+
+			player2Archers[i].initialize(96, 96, 5, 2, &archerTexture, gamePtr);
+			player2Archers[i].setActive(false);
+			player2Archers[i].setVisible(false);
+		}
+		break;
+
+	}
+}
 #pragma endregion
