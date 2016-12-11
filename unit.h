@@ -11,6 +11,7 @@ public:
 	int getRange(){return range;}
 	int getMovementLeft(){return movementLeft;}
 	int getMovement(){return movementPerTurn;}
+	int getSpecial(){return specialAbility;}
 	float getFrameCounter(){return frameCounter;}
 	float getDef(){return defence;}
 	enum LastDirection {up, down, left, right} getLastDirection(){return lastDirection;}
@@ -23,6 +24,7 @@ public:
 	void setDef(float newDefence);
 	void setMovementPerTurn(int newMovement);
 	void setMovementLeft(int newMovement);
+	void setSpecial(int newSpecial);
 	void setRange(int newRange);
 	void setTile(int x, int y);
 	void setTeam(int t) {team = t; };
@@ -42,6 +44,7 @@ private:
 	float defence;
 	int range;
 	int team;
+	int specialAbility;
 	struct pair{
 		int x;
 		int y;

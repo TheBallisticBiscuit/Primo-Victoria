@@ -18,6 +18,7 @@ bool WingedHussar::initialize(int width, int height, int ncols, int team, Textur
 	setRange(1);
 	setHP(35);
 	setDef(1);
+	setSpecial(1);
 	setDamage(25);
 	setTeam(team);
 	setFrameDelay(HUSSAR_ANIMATION_DELAY);
@@ -81,6 +82,55 @@ void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio){
 	}
 }
 
+void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio, TileManager* tileManager){
+	//counter = 0;
+	switch (getLastDirection()) {
+	case up:
+		if (opponent.getTileY() == 0){
+			fight(opponent, frameTime, audio);
+			return;
+		}
+		if (tileManager->getTile(opponent.getTileX(),opponent.getTileY()-1)->isOccupied()){
+			fight(opponent, frameTime, audio);
+			return;
+		}
+		else  
+			break;
+
+		/*while (opponent.getTileY() - counter > 0) {
+			if (tileManager->getTile(opponent.getTileX(), opponent.getTileY() - (counter+1))->isOccupied &&
+				tileManager->getTile(opponent.getTileX(), opponent.getTileY() - (counter+1))->getUnit()->getTeam() == getTeam()){
+				fight(opponent, frameTime, audio);
+				counter = 0;
+				return;
+			}
+			else if (tileManager->getTile(getX()*84, opponent.getTileY() - (counter+1))->isOccupied &&
+				tileManager->getTile(getX()*84, opponent.getTileY() - (counter+1))->getUnit()->getTeam() != getTeam()){
+				counter++;
+			}
+			else
+				counter++;
+				break;
+		}
+		break;*/
+	default:
+		fight(opponent, frameTime, audio);
+		return;
+		break;
+	}
+
+	switch (getLastDirection())
+	{
+	case up:
+		setSpecial(1);
+		moveUp(audio);
+		opponent.setHP(opponent.getHP() - getDamage());
+	default:
+		break;
+	}
+}
+
+
 bool WingedHussar::kill(float frameTime){
 	switch(getLastDirection()){
 	case up:
@@ -118,9 +168,13 @@ bool WingedHussar::moveUp(Audio* audio){
 	setVelocity(VECTOR2(0, -1));
 	if(getY() < (getTileY()-1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()-1);
-		setVelocity(VECTOR2(0, 0));
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
+		if (getSpecial() == 1){
+			setSpecial(0);
+			return false;
+		}
+		setVelocity(VECTOR2(0, 0));
 		audio->stopCue(HUSSAR_MOVE);
 		return true;
 	}
