@@ -827,6 +827,9 @@ void PrimoVictoria::moveUp(){
 					moving = NULL;
 				}
 		}
+		else{
+			moving = NULL;
+		}
 		//else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
 		//	->isOccupied()){
 		//		if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
@@ -877,6 +880,9 @@ void PrimoVictoria::moveDown(){
 				if(unitManager.unitDown(&tileManager, audio)){
 					moving = NULL;
 				}
+		}
+		else{
+			moving = NULL;
 		}
 		/*else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
 			->isOccupied()){
@@ -929,6 +935,9 @@ void PrimoVictoria::moveLeft(){
 					moving = NULL;
 				}
 		}
+		else{
+			moving = NULL;
+		}
 		/*else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
 			->isOccupied()){
 				if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
@@ -979,6 +988,9 @@ void PrimoVictoria::moveRight(){
 				if(unitManager.unitRight(&tileManager, audio)){
 					moving = NULL;
 				}
+		}
+		else{
+			moving = NULL;
 		}
 		//else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
 		//	->isOccupied()){
