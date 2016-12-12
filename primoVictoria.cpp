@@ -918,7 +918,7 @@ void PrimoVictoria::moveLeft(){
 				moving = NULL;
 		}*/		
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
-			if(unitManager.getCurrentSelection()->getTileY() - i >= 0){
+			if(unitManager.getCurrentSelection()->getTileX() - i >= 0){
 				if(tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->isOccupied() &&
 					tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->getUnit()->getTeam()
 					!= unitManager.getCurrentSelection()->getTeam()){
@@ -972,7 +972,7 @@ void PrimoVictoria::moveRight(){
 		//		moving = NULL;
 		//}
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
-			if(unitManager.getCurrentSelection()->getTileY() + i <= tileManager.getWidth()-1){
+			if(unitManager.getCurrentSelection()->getTileX() + i <= tileManager.getWidth()-1){
 				if(tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->isOccupied() &&
 					tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->getUnit()->getTeam()
 					!= unitManager.getCurrentSelection()->getTeam()){
