@@ -75,7 +75,7 @@ void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
 		}
 		break;
 	}
-	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
+	if(getFrameCounter() > ARCHER_ANIMATION_DELAY*8){
 		audio->playCue(ARCHER_ATTACK);
 		setFrameCounter(0);
 		if(getRange() <= opponent.getRange()){
