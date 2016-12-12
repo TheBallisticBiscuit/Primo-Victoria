@@ -134,13 +134,13 @@ const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
 const char BACKGROUND_MUSIC[] = "backGroundMusic";
 const char ARCHER_ATTACK[] = "arrowShot";
-const char BERSERKER_ATTACK[] = "";
+const char BERSERKER_ATTACK[] = "swordSlash";
 const char CAVALRY_ATTACK[] = "swordSlice";
-const char HUSSAR_ATTACK[] = "";
+const char HUSSAR_ATTACK[] = "swordSlice";
 const char INFANTRY_ATTACK[] = "swordSlash";
-const char BERSERKER_MOVE[] = "";
+const char BERSERKER_MOVE[] = "running";
 const char CAVALRY_MOVE[] = "horseGalloping";
-const char HUSSAR_MOVE[] = "";
+const char HUSSAR_MOVE[] = "horseGalloping";
 const char INFANTRY_MOVE[] = "running";
 
 enum TerrainTypeEnum {Plains, Hills, Forest, CapturePoint};
