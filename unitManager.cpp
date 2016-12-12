@@ -416,7 +416,9 @@ void UnitManager::endTurn(){
 		player1Infantry[i].setMovementLeft(player1Infantry[i].getMovement());
 		player2Infantry[i].setMovementLeft(player2Infantry[i].getMovement());
 		player1Cavalry[i].setMovementLeft(player1Cavalry[i].getMovement());
+		player1Cavalry[i].setDamage(25);
 		player2Cavalry[i].setMovementLeft(player2Cavalry[i].getMovement());
+		player2Cavalry[i].setDamage(25);
 		player1Archers[i].setMovementLeft(player1Archers[i].getMovement());
 		player2Archers[i].setMovementLeft(player2Archers[i].getMovement());
 	}

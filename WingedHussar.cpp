@@ -75,6 +75,7 @@ void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio){
 		audio->playCue(HUSSAR_ATTACK);
 		setHP(getHP()-opponent.getDamage()/getDef());
 		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
+		setDamage(25);
 		setAnimating(false);
 		opponent.setAnimating(false);
 	}
@@ -119,12 +120,9 @@ bool WingedHussar::moveUp(Audio* audio){
 		setTile(getTileX(), getTileY()-1);
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
-		if (getSpecial() == 1){
-			setSpecial(0);
-			return false;
-		}
 		setVelocity(VECTOR2(0, 0));
 		audio->stopCue(HUSSAR_MOVE);
+		setDamage(getDamage()+5);
 		return true;
 	}
 	return false;
@@ -141,6 +139,7 @@ bool WingedHussar::moveDown(Audio* audio){
 		setY(getTileY()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
 		audio->stopCue(HUSSAR_MOVE);
+		setDamage(getDamage()+5);
 		return true;
 	}
 	return false;
@@ -157,6 +156,7 @@ bool WingedHussar::moveLeft(Audio* audio){
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
 		audio->stopCue(HUSSAR_MOVE);
+		setDamage(getDamage()+5);
 		return true;
 	}
 	return false;
@@ -173,6 +173,7 @@ bool WingedHussar::moveRight(Audio* audio){
 		setX(getTileX()*TERRAIN_HEIGHT);
 		setMovementLeft(getMovementLeft()-1);
 		audio->stopCue(HUSSAR_MOVE);
+		setDamage(getDamage()+5);
 		return true;
 	}
 	return false;
