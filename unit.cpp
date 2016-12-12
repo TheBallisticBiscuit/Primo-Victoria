@@ -44,6 +44,10 @@ void Unit::setRange(int newRange){
 	range = newRange;
 }
 
+void Unit::setSpecial(int newSpecial){
+	specialAbility = newSpecial;
+}
+
 void Unit::setTile(int x, int y){
 	tile.x = x;
 	tile.y = y;
