@@ -145,7 +145,7 @@ const char INFANTRY_MOVE[] = "running";
 const char BERSERKER_BATTLECRY[] = "annoyingYell";
 
 enum TerrainTypeEnum {Plains, Hills, Forest, CapturePoint};
-enum Country {Britain, Poland, Norse};
+enum Country {Norse, Poland, Britain};
 
 #pragma region Newell
 const float INFANTRY_SCALING = 1;

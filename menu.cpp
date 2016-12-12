@@ -24,7 +24,7 @@ Menu::Menu(std::string s)
 		menuHeading = " ";
 		menuItem1 = "Return to Main Menu";
 		menuItem2 = "Return to Level Select";
-		menuItem3 = "Next Level";
+		menuItem3 = "Play Again";
 	}
 	if (s == "Defeat") {
 		menuHeading = " ";

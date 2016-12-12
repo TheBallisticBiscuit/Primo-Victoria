@@ -250,20 +250,18 @@ void PrimoVictoria::update()
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 0){ //Return to main menu
 		currentMenu = 1;
-		gameReset();
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 1){ //Go to level select
-		gameReset();
 		currentMenu = 2;
 	}
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //Restart level
 		if(level == 1){
-			gameReset();
-			levelTwo();
+			levelOne();
+			currentMenu = 0;
 		}
 		else if(level == 2){
-			gameReset();
-			levelOne();
+			levelTwo();
+			currentMenu = 0;
 		}
 	}
 	else if(currentMenu == 6 && countrySelect->getSelectedItem() == 0){ //selecting Britain
@@ -511,14 +509,35 @@ void PrimoVictoria::levelOne() { //Initialize level one
 		break;
 	}
 	unitManager.setPlayerCountries(player1Country, player2Country, this);
-	for (int i = 0; i < 2; i++)
+
+	for (int i = 0; i < 2; i++) //Spawns player2's units
 	{
 		spawnUnit(rand()%3,2);
 		spawnUnit(rand()%3,2);
-		spawnUnit(rand()%3,1);
-		spawnUnit(rand()%3,1);
 	}
 	spawnUnit(rand()%3,2);
+
+	switch(player1Country){
+	case Britain:
+		spawnUnit(rand()%2,1);
+		spawnUnit(2,1);
+		spawnUnit(2,1);
+		spawnUnit(rand()%2,1);
+		break;
+	case Norse:
+		spawnUnit(rand()%2+1, 1);
+		spawnUnit(0,1);
+		spawnUnit(0,1);
+		spawnUnit(rand()%2+1, 1);
+		break;
+	case Poland:
+		spawnUnit(rand()%2*2,1);
+		spawnUnit(1,1);
+		spawnUnit(1,1);
+		spawnUnit(rand()%2*2,1);
+		break;
+	}
+
 	tileManager.setTileVisibility(true);
 	isLevelInitialized = true;
 	isPlayerTurn = true;
@@ -544,7 +563,10 @@ void PrimoVictoria::levelTwo() { //Initialize level two
 	for (int i = 0; i < 3; i++)
 	{
 		spawnUnit(rand()%3,2);
-		spawnUnit(rand()%3,1);
+		if (i == 0)
+			spawnUnit(static_cast<int>(player1Country),1);
+		else
+			spawnUnit(rand()%3,1);
 	}
 	tileManager.setTileVisibility(true);
 	x1 = rand()%5 + 3;
