@@ -69,8 +69,6 @@ void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio){
 		break;
 	}
 
-	//TODO: Add in special ability
-
 	setFrameCounter(getFrameCounter()+frameTime);
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		setFrameCounter(0);
@@ -81,55 +79,6 @@ void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio){
 		opponent.setAnimating(false);
 	}
 }
-
-void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio, TileManager* tileManager){
-	//counter = 0;
-	switch (getLastDirection()) {
-	case up:
-		if (opponent.getTileY() == 0){
-			fight(opponent, frameTime, audio);
-			return;
-		}
-		if (tileManager->getTile(opponent.getTileX(),opponent.getTileY()-1)->isOccupied()){
-			fight(opponent, frameTime, audio);
-			return;
-		}
-		else  
-			break;
-
-		/*while (opponent.getTileY() - counter > 0) {
-			if (tileManager->getTile(opponent.getTileX(), opponent.getTileY() - (counter+1))->isOccupied &&
-				tileManager->getTile(opponent.getTileX(), opponent.getTileY() - (counter+1))->getUnit()->getTeam() == getTeam()){
-				fight(opponent, frameTime, audio);
-				counter = 0;
-				return;
-			}
-			else if (tileManager->getTile(getX()*84, opponent.getTileY() - (counter+1))->isOccupied &&
-				tileManager->getTile(getX()*84, opponent.getTileY() - (counter+1))->getUnit()->getTeam() != getTeam()){
-				counter++;
-			}
-			else
-				counter++;
-				break;
-		}
-		break;*/
-	default:
-		fight(opponent, frameTime, audio);
-		return;
-		break;
-	}
-
-	switch (getLastDirection())
-	{
-	case up:
-		setSpecial(1);
-		moveUp(audio);
-		opponent.setHP(opponent.getHP() - getDamage());
-	default:
-		break;
-	}
-}
-
 
 bool WingedHussar::kill(float frameTime){
 	switch(getLastDirection()){
