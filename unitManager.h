@@ -9,6 +9,7 @@ functions*/
 #include "WingedHussar.h"
 #include "cavalry.h"
 #include "infantry.h"
+#include "longbowman.h"
 #include "TileManager.h"
 #include "audio.h"
 
@@ -63,6 +64,8 @@ private:
 	TextureManager hussarTexture2;
 	TextureManager berserkerTexture;
 	TextureManager berserkerTexture2;
+	TextureManager longbowmanTexture;
+	TextureManager longbowmanTexture2;
 	TextureManager selectionBoxTexture;
 	Image selectionBox;
 	struct pair{

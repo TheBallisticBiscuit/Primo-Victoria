@@ -53,6 +53,12 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!archerTexture2.initialize(graphics,"pictures\\RedArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redArcher texture"));
 	}
+	if (!longbowmanTexture.initialize(graphics,"pictures\\GreenArcher.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenArcher texture"));
+	}
+	if (!longbowmanTexture2.initialize(graphics,"pictures\\RedArcher.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redArcher texture"));
+	}
 	player1Infantry = new Infantry[10];
 	player2Infantry = new Infantry[10];
 	player1Cavalry = new Cavalry[10];
@@ -531,6 +537,22 @@ int UnitManager::aiAttackDirection(Unit* target, int& x, int& y) {
 void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gamePtr){
 	switch(player1){
 	case Britain:
+		delete [] player1Archers;
+		player1Archers = new Longbowman[10];
+		for(int i = 0; i < 10; i ++){
+			player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
+			player1Infantry[i].setActive(false);
+			player1Infantry[i].setVisible(false);
+
+			player1Cavalry[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+			player1Cavalry[i].setActive(false);
+			player1Cavalry[i].setVisible(false);
+			player1Cavalry[i].setScale(CAVALRY_SCALING);
+
+			player1Archers[i].initialize(96, 96, 5, 1, &longbowmanTexture, gamePtr);
+			player1Archers[i].setActive(false);
+			player1Archers[i].setVisible(false);
+		}
 		break;
 	case Poland:
 		delete [] player1Cavalry;
@@ -571,6 +593,22 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 	}
 	switch(player2){
 	case Britain:
+		delete [] player2Archers;
+		player2Archers = new Longbowman[10];
+		for(int i = 0; i < 10; i ++){
+			player2Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
+			player2Infantry[i].setActive(false);
+			player2Infantry[i].setVisible(false);
+
+			player2Cavalry[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+			player2Cavalry[i].setActive(false);
+			player2Cavalry[i].setVisible(false);
+			player2Cavalry[i].setScale(CAVALRY_SCALING);
+
+			player2Archers[i].initialize(96, 96, 5, 1, &longbowmanTexture, gamePtr);
+			player2Archers[i].setActive(false);
+			player2Archers[i].setVisible(false);
+		}
 		break;
 	case Poland:
 		delete [] player2Cavalry;
