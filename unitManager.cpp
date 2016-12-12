@@ -596,16 +596,16 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 		delete [] player2Archers;
 		player2Archers = new Longbowman[10];
 		for(int i = 0; i < 10; i ++){
-			player2Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
+			player2Infantry[i].initialize(96, 96, 3, 2, &infantryTexture2, gamePtr);
 			player2Infantry[i].setActive(false);
 			player2Infantry[i].setVisible(false);
 
-			player2Cavalry[i].initialize(144, 144, 8, 1, &cavalryTexture, gamePtr);
+			player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture2, gamePtr);
 			player2Cavalry[i].setActive(false);
 			player2Cavalry[i].setVisible(false);
 			player2Cavalry[i].setScale(CAVALRY_SCALING);
 
-			player2Archers[i].initialize(96, 96, 5, 1, &longbowmanTexture, gamePtr);
+			player2Archers[i].initialize(96, 96, 5, 2, &longbowmanTexture2, gamePtr);
 			player2Archers[i].setActive(false);
 			player2Archers[i].setVisible(false);
 		}
@@ -632,16 +632,16 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 		delete [] player2Infantry;
 		player2Infantry = new Berserker[10];
 		for(int i = 0; i < 10; i ++){
-			player2Infantry[i].initialize(96, 96, 10, 2, &berserkerTexture, gamePtr);
+			player2Infantry[i].initialize(96, 96, 10, 2, &berserkerTexture2, gamePtr);
 			player2Infantry[i].setActive(false);
 			player2Infantry[i].setVisible(false);
 
-			player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture, gamePtr);
+			player2Cavalry[i].initialize(144, 144, 8, 2, &cavalryTexture2, gamePtr);
 			player2Cavalry[i].setActive(false);
 			player2Cavalry[i].setVisible(false);
 			player2Cavalry[i].setScale(CAVALRY_SCALING);
 
-			player2Archers[i].initialize(96, 96, 5, 2, &archerTexture, gamePtr);
+			player2Archers[i].initialize(96, 96, 5, 2, &archerTexture2, gamePtr);
 			player2Archers[i].setActive(false);
 			player2Archers[i].setVisible(false);
 		}
