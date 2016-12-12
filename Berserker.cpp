@@ -19,7 +19,6 @@ bool Berserker::initialize(int width, int height, int ncols, int team, TextureMa
 	setHP(60);
 	setDef(1);
 	setDamage(20);
-	//bloodRage = 0;
 	setTeam(team);
 	setFrameDelay(BERSERKER_ANIMATION_DELAY);
 	setFrameCounter(0);
@@ -70,9 +69,11 @@ void Berserker::fight(Unit& opponent, float frameTime, Audio* audio){
 		break;
 	}
 	if(getFrameCounter() > BERSERKER_ANIMATION_DELAY*10){
-		audio->playCue(BERSERKER_ATTACK);					//TODO: Add cue
+		audio->playCue(BERSERKER_ATTACK);
 		setFrameCounter(0);
 		setHP(getHP()-opponent.getDamage()/getDef());
+		if (getHP() == 1)
+			audio->playCue(BERSERKER_BATTLECRY);
 		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 		setAnimating(false);
 		opponent.setAnimating(false);
