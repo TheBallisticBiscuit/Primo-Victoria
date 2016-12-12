@@ -113,15 +113,15 @@ void PrimoVictoria::initialize(HWND hwnd)
 	displayHussar.initialize(144, 144, 8, 1, &displayHussarTexture, this);
 	displayHussar.setX(925);
 	displayHussar.setY(500);
-	displayHussar.setFrames(CAVALRY_RUN_RIGHT_START, CAVALRY_RUN_RIGHT_END);
+	displayHussar.setFrames(HUSSAR_RUN_RIGHT_START, HUSSAR_RUN_RIGHT_END);
 	displayHussar.setAnimating(true);
-	if(!displayLongbowmanTexture.initialize(graphics,"pictures\\GreenArcher.png")){
+	if(!displayLongbowmanTexture.initialize(graphics,"pictures\\greenLongbowman.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
 	}
 	displayLongbowman.initialize(96, 96, 5, 1, &displayLongbowmanTexture, this);
 	displayLongbowman.setX(150);
 	displayLongbowman.setY(468);
-	displayLongbowman.setFrames(ARCHER_IDLE_RIGHT_START, ARCHER_IDLE_RIGHT_END);
+	displayLongbowman.setFrames(LONGBOWMAN_IDLE_RIGHT_START, LONGBOWMAN_IDLE_RIGHT_END);
 	displayLongbowman.setAnimating(true);
 
 	victoryScreenImage.setScale(1.1);
@@ -827,6 +827,9 @@ void PrimoVictoria::moveUp(){
 					moving = NULL;
 				}
 		}
+		else{
+			moving = NULL;
+		}
 		//else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
 		//	->isOccupied()){
 		//		if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
@@ -877,6 +880,9 @@ void PrimoVictoria::moveDown(){
 				if(unitManager.unitDown(&tileManager, audio)){
 					moving = NULL;
 				}
+		}
+		else{
+			moving = NULL;
 		}
 		/*else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
 			->isOccupied()){
@@ -929,6 +935,9 @@ void PrimoVictoria::moveLeft(){
 					moving = NULL;
 				}
 		}
+		else{
+			moving = NULL;
+		}
 		/*else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
 			->isOccupied()){
 				if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
@@ -979,6 +988,9 @@ void PrimoVictoria::moveRight(){
 				if(unitManager.unitRight(&tileManager, audio)){
 					moving = NULL;
 				}
+		}
+		else{
+			moving = NULL;
 		}
 		//else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
 		//	->isOccupied()){
