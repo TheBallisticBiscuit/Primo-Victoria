@@ -32,7 +32,7 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if(!berserkerTexture.initialize(graphics,"pictures\\greenBerserker.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenBerserker texture"));
 	}
-	if (!berserkerTexture2.initialize(graphics,"pictures\\greenBerserker.png")){
+	if (!berserkerTexture2.initialize(graphics,"pictures\\redBerserker.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redBerserker texture"));
 	}
 	if (!cavalryTexture.initialize(graphics,"pictures\\greenCavalry.png")){
@@ -53,10 +53,10 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 	if (!archerTexture2.initialize(graphics,"pictures\\RedArcher.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redArcher texture"));
 	}
-	if (!longbowmanTexture.initialize(graphics,"pictures\\GreenArcher.png")){
+	if (!longbowmanTexture.initialize(graphics,"pictures\\greenLongbowman.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing greenArcher texture"));
 	}
-	if (!longbowmanTexture2.initialize(graphics,"pictures\\RedArcher.png")){
+	if (!longbowmanTexture2.initialize(graphics,"pictures\\redLongbowman.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing redArcher texture"));
 	}
 	player1Infantry = new Infantry[10];
@@ -540,7 +540,11 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 	switch(player1){
 	case Britain:
 		delete [] player1Archers;
+		delete [] player1Infantry;
+		delete [] player1Cavalry;
 		player1Archers = new Longbowman[10];
+		player1Infantry = new Infantry[10];
+		player1Cavalry = new Cavalry[10];
 		for(int i = 0; i < 10; i ++){
 			player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
 			player1Infantry[i].setActive(false);
@@ -551,13 +555,17 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 			player1Cavalry[i].setVisible(false);
 			player1Cavalry[i].setScale(CAVALRY_SCALING);
 
-			player1Archers[i].initialize(96, 96, 5, 1, &longbowmanTexture, gamePtr);
+			player1Archers[i].initialize(96, 96, 13, 1, &longbowmanTexture, gamePtr);
 			player1Archers[i].setActive(false);
 			player1Archers[i].setVisible(false);
 		}
 		break;
 	case Poland:
+		delete [] player1Archers;
+		delete [] player1Infantry;
 		delete [] player1Cavalry;
+		player1Archers = new Archer[10];
+		player1Infantry = new Infantry[10];
 		player1Cavalry = new WingedHussar[10];
 		for(int i = 0; i < 10; i ++){
 			player1Infantry[i].initialize(96, 96, 3, 1, &infantryTexture, gamePtr);
@@ -575,8 +583,12 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 		}
 		break;
 	case Norse:
+		delete [] player1Archers;
 		delete [] player1Infantry;
+		delete [] player1Cavalry;
+		player1Archers = new Archer[10];
 		player1Infantry = new Berserker[10];
+		player1Cavalry = new Cavalry[10];
 		for(int i = 0; i < 10; i ++){
 			player1Infantry[i].initialize(96, 96, 10, 1, &berserkerTexture, gamePtr);
 			player1Infantry[i].setActive(false);
@@ -596,7 +608,11 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 	switch(player2){
 	case Britain:
 		delete [] player2Archers;
+		delete [] player2Infantry;
+		delete [] player2Cavalry;
 		player2Archers = new Longbowman[10];
+		player2Infantry = new Infantry[10];
+		player2Cavalry = new Cavalry[10];
 		for(int i = 0; i < 10; i ++){
 			player2Infantry[i].initialize(96, 96, 3, 2, &infantryTexture2, gamePtr);
 			player2Infantry[i].setActive(false);
@@ -607,13 +623,17 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 			player2Cavalry[i].setVisible(false);
 			player2Cavalry[i].setScale(CAVALRY_SCALING);
 
-			player2Archers[i].initialize(96, 96, 5, 2, &longbowmanTexture2, gamePtr);
+			player2Archers[i].initialize(96, 96, 13, 2, &longbowmanTexture2, gamePtr);
 			player2Archers[i].setActive(false);
 			player2Archers[i].setVisible(false);
 		}
 		break;
 	case Poland:
+		delete [] player2Archers;
+		delete [] player2Infantry;
 		delete [] player2Cavalry;
+		player2Archers = new Archer[10];
+		player2Infantry = new Infantry[10];
 		player2Cavalry = new WingedHussar[10];
 		for(int i = 0; i < 10; i ++){
 			player2Infantry[i].initialize(96, 96, 3, 2, &infantryTexture2, gamePtr);
@@ -631,8 +651,12 @@ void UnitManager::setPlayerCountries(Country player1, Country player2, Game* gam
 		}
 		break;
 	case Norse:
+		delete [] player2Archers;
 		delete [] player2Infantry;
+		delete [] player2Cavalry;
+		player2Archers = new Archer[10];
 		player2Infantry = new Berserker[10];
+		player2Cavalry = new Cavalry[10];
 		for(int i = 0; i < 10; i ++){
 			player2Infantry[i].initialize(96, 96, 10, 2, &berserkerTexture2, gamePtr);
 			player2Infantry[i].setActive(false);

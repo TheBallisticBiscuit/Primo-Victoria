@@ -195,9 +195,9 @@ void Archer::setAttackFrames(LastDirection direction){
 		setLastDirection(left);
 		setAnimating(true);
 	}
-	if(direction == down){
-		setFrames(ARCHER_ATTACK_DOWN_START, ARCHER_ATTACK_DOWN_END);
-		setLastDirection(up);
+	if(direction == right){
+		setFrames(ARCHER_ATTACK_RIGHT_START, ARCHER_ATTACK_RIGHT_END);
+		setLastDirection(right);
 		setAnimating(true);
 	}
 }

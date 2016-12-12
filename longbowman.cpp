@@ -11,7 +11,7 @@ Longbowman::~Longbowman(void)
 }
 
 bool Longbowman::initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game){
-	setScale(ARCHER_SCALING);
+	setScale(LONGBOWMAN_SCALING);
 	setMovementPerTurn(3);
 	setMovementLeft(0);
 	setRange(3);
@@ -19,7 +19,7 @@ bool Longbowman::initialize(int width, int height, int ncols, int team, TextureM
 	setDef(1);
 	setDamage(30);
 	setTeam(team);
-	setFrameDelay(ARCHER_ANIMATION_DELAY);
+	setFrameDelay(LONGBOWMAN_ANIMATION_DELAY);
 	setFrameCounter(0);
 	setVelocity(VECTOR2(0, 0));
 	return Unit::initialize(width, height, ncols, team, textureM, game);
@@ -29,21 +29,21 @@ void Longbowman::update(float frameTime){
 	if(velocity.x == 0 && velocity.y == 0 && !isAnimating()){
 		switch(getLastDirection()){
 		case up:
-			setFrames(ARCHER_IDLE_UP_START, ARCHER_IDLE_UP_END);
+			setFrames(LONGBOWMAN_IDLE_UP_START, LONGBOWMAN_IDLE_UP_END);
 			break;
 		case left:
-			setFrames(ARCHER_IDLE_LEFT_START, ARCHER_IDLE_LEFT_END);
+			setFrames(LONGBOWMAN_IDLE_LEFT_START, LONGBOWMAN_IDLE_LEFT_END);
 			break;
 		case down:
-			setFrames(ARCHER_IDLE_DOWN_START, ARCHER_IDLE_DOWN_END);
+			setFrames(LONGBOWMAN_IDLE_DOWN_START, LONGBOWMAN_IDLE_DOWN_END);
 			break;
 		case right:
-			setFrames(ARCHER_IDLE_RIGHT_START, ARCHER_IDLE_RIGHT_END);
+			setFrames(LONGBOWMAN_IDLE_RIGHT_START, LONGBOWMAN_IDLE_RIGHT_END);
 			break;
 		}
 	}
-	setX(getX()+getVelocity().x*ARCHER_SPEED*frameTime);
-	setY(getY()+getVelocity().y*ARCHER_SPEED*frameTime);
+	setX(getX()+getVelocity().x*LONGBOWMAN_SPEED*frameTime);
+	setY(getY()+getVelocity().y*LONGBOWMAN_SPEED*frameTime);
 	Entity::update(frameTime);
 }
 
@@ -91,22 +91,22 @@ void Longbowman::fight(Unit& opponent, float frameTime, Audio* audio){
 bool Longbowman::kill(float frameTime){
 	switch(getLastDirection()){
 	case up:
-		setFrames(ARCHER_DEATH_UP_START, ARCHER_DEATH_UP_END);
+		setFrames(LONGBOWMAN_DEATH_UP_START, LONGBOWMAN_DEATH_UP_END);
 		break;
 	case left:
-		setFrames(ARCHER_DEATH_LEFT_START, ARCHER_DEATH_LEFT_END);
+		setFrames(LONGBOWMAN_DEATH_LEFT_START, LONGBOWMAN_DEATH_LEFT_END);
 		break;
 	case down:
-		setFrames(ARCHER_DEATH_DOWN_START, ARCHER_DEATH_DOWN_END);
+		setFrames(LONGBOWMAN_DEATH_DOWN_START, LONGBOWMAN_DEATH_DOWN_END);
 		break;
 	case right:
-		setFrames(ARCHER_DEATH_RIGHT_START, ARCHER_DEATH_RIGHT_END);
+		setFrames(LONGBOWMAN_DEATH_RIGHT_START, LONGBOWMAN_DEATH_RIGHT_END);
 		break;
 	}
 	if(!getActive()){
 		return true;
 	}
-	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*6){
+	if(getFrameCounter() > LONGBOWMAN_ANIMATION_DELAY*11){
 		setFrameCounter(0);
 		setVisible(false);
 		setActive(false);
@@ -120,7 +120,7 @@ bool Longbowman::kill(float frameTime){
 bool Longbowman::moveUp(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(up);
-	setFrames(ARCHER_RUN_UP_START, ARCHER_RUN_UP_END);
+	setFrames(LONGBOWMAN_RUN_UP_START, LONGBOWMAN_RUN_UP_END);
 	setVelocity(VECTOR2(0, -1));
 	if(getY() < (getTileY()-1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()-1);
@@ -135,7 +135,7 @@ bool Longbowman::moveUp(Audio* audio){
 bool Longbowman::moveDown(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(down);
-	setFrames(ARCHER_RUN_DOWN_START, ARCHER_RUN_DOWN_END);
+	setFrames(LONGBOWMAN_RUN_DOWN_START, LONGBOWMAN_RUN_DOWN_END);
 	setVelocity(VECTOR2(0, 1));
 	if(getY() > (getTileY()+1)*TERRAIN_HEIGHT){
 		setTile(getTileX(), getTileY()+1);
@@ -150,7 +150,7 @@ bool Longbowman::moveDown(Audio* audio){
 bool Longbowman::moveLeft(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(left);
-	setFrames(ARCHER_RUN_LEFT_START, ARCHER_RUN_LEFT_END);
+	setFrames(LONGBOWMAN_RUN_LEFT_START, LONGBOWMAN_RUN_LEFT_END);
 	setVelocity(VECTOR2(-1, 0));
 	if(getX() < (getTileX()-1)*TERRAIN_WIDTH){
 		setTile(getTileX()-1, getTileY());
@@ -165,7 +165,7 @@ bool Longbowman::moveLeft(Audio* audio){
 bool Longbowman::moveRight(Audio* audio){
 	audio->playCue(INFANTRY_MOVE);
 	setLastDirection(right);
-	setFrames(ARCHER_RUN_RIGHT_START, ARCHER_RUN_RIGHT_END);
+	setFrames(LONGBOWMAN_RUN_RIGHT_START, LONGBOWMAN_RUN_RIGHT_END);
 	setVelocity(VECTOR2(1, 0));
 	if(getX() > (getTileX()+1)*TERRAIN_WIDTH){
 		setTile(getTileX()+1, getTileY());
@@ -180,23 +180,23 @@ bool Longbowman::moveRight(Audio* audio){
 
 void Longbowman::setAttackFrames(LastDirection direction){
 	if(direction == up){
-		setFrames(ARCHER_ATTACK_UP_START, ARCHER_ATTACK_UP_END);
+		setFrames(LONGBOWMAN_ATTACK_UP_START, LONGBOWMAN_ATTACK_UP_END);
 		setLastDirection(up);
 		setAnimating(true);
 	}
 	else if(direction == down){
-		setFrames(ARCHER_ATTACK_DOWN_START, ARCHER_ATTACK_DOWN_END);
+		setFrames(LONGBOWMAN_ATTACK_DOWN_START, LONGBOWMAN_ATTACK_DOWN_END);
 		setLastDirection(down);
 		setAnimating(true);
 	}
 	else if(direction == left){
-		setFrames(ARCHER_ATTACK_LEFT_START, ARCHER_ATTACK_LEFT_END);
+		setFrames(LONGBOWMAN_ATTACK_LEFT_START, LONGBOWMAN_ATTACK_LEFT_END);
 		setLastDirection(left);
 		setAnimating(true);
 	}
-	if(direction == down){
-		setFrames(ARCHER_ATTACK_DOWN_START, ARCHER_ATTACK_DOWN_END);
-		setLastDirection(up);
+	if(direction == right){
+		setFrames(LONGBOWMAN_ATTACK_RIGHT_START, LONGBOWMAN_ATTACK_RIGHT_END);
+		setLastDirection(right);
 		setAnimating(true);
 	}
 }
