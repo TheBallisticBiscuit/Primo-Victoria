@@ -110,7 +110,7 @@ const int TERRAIN_HEIGHT = 96;
 const int TERRAIN_SCALE = 1;
 const float BACKGROUND_IMAGE_SCALE = 1.0f;
 
-const char DUST_IMAGE[] = "pictures\\DustParticle2.png";
+const char DUST_IMAGE[] = "pictures\\DustParticle3.png";
 
 const float MAX_PARTICLE_LIFETIME = 1.5f;
 const int MAX_NUMBER_PARTICLES = 2000;

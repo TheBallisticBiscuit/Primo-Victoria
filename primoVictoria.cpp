@@ -354,36 +354,70 @@ void PrimoVictoria::ai()
 void PrimoVictoria::levelOneAI() {
 	int r = 0;
 
-	if (unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr //If no unit is selected,
-		&& unitManager.getCurrentSelection()->getTeam() != 2)) {				   //select one
+	if (unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr //If no unit is 
+		&& unitManager.getCurrentSelection()->getTeam() != 2)) {				   //selected, select one
 			r = rand()%3;
 			if (r == 0) {
-				for (int i = 0; i < 10; i++) //Find available unit
-				{
-					if (unitManager.getInfantry(i)->getActive()) { 
-						unitManager.selectUnit(unitManager.getInfantry(i));
-						break;
+				if (rand()%2) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getInfantry(i)->getActive()) { 
+							unitManager.selectUnit(unitManager.getInfantry(i));
+							break;
+						}
+					}
+				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getInfantry(9-i)->getActive()) { 
+							unitManager.selectUnit(unitManager.getInfantry(9-i));
+							break;
+						}
 					}
 				}
 			}
 			else if (r == 1) {
-				for (int i = 0; i < 10; i++) //Find available unit
-				{
-					if (unitManager.getAICavalry(i)->getActive()) {
-						unitManager.selectUnit(unitManager.getAICavalry(i));
-						break;
-					}				
+				if (rand()%2) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAICavalry(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAICavalry(i));
+							break;
+						}				
+					}
+				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAICavalry(9-i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAICavalry(9-i));
+							break;
+						}				
+					}
 				}
 			}
 			else {
-				for (int i = 0; i < 10; i++) //Find available unit
-				{
-					if (unitManager.getAIArcher(i)->getActive()) {
-						unitManager.selectUnit(unitManager.getAIArcher(i));
-						break;
-					}				
+				if (rand()%2) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAIArcher(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAIArcher(i));
+							break;
+						}				
+					}
+				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAIArcher(9-i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAIArcher(9-i));
+							break;
+						}				
+					}
 				}
 			}
+
 	}
 	int dir, x, y = 0;
 
@@ -415,35 +449,68 @@ void PrimoVictoria::levelTwoAI() {
 		&& unitManager.getCurrentSelection()->getTeam() != 2)) && spawnOrMove == 1) {				   //select one
 			r = rand()%3;
 			if (r == 0) {
-				for (int i = 0; i < 10; i++) //Find available unit
-				{
-					if (unitManager.getInfantry(i)->getActive()) { 
-						unitManager.selectUnit(unitManager.getInfantry(i));
-						break;
+				if (rand()%2) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getInfantry(i)->getActive()) { 
+							unitManager.selectUnit(unitManager.getInfantry(i));
+							break;
+						}
+					}
+				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getInfantry(9-i)->getActive()) { 
+							unitManager.selectUnit(unitManager.getInfantry(9-i));
+							break;
+						}
 					}
 				}
 			}
 			else if (r == 1) {
-				for (int i = 0; i < 10; i++) //Find available unit
-				{
-					if (unitManager.getAICavalry(i)->getActive()) {
-						unitManager.selectUnit(unitManager.getAICavalry(i));
-						break;
-					}				
+				if (rand()%2) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAICavalry(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAICavalry(i));
+							break;
+						}				
+					}
+				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAICavalry(9-i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAICavalry(9-i));
+							break;
+						}				
+					}
 				}
 			}
 			else {
-				for (int i = 0; i < 10; i++) //Find available unit
-				{
-					if (unitManager.getAIArcher(i)->getActive()) {
-						unitManager.selectUnit(unitManager.getAIArcher(i));
-						break;
-					}				
+				if (rand()%2) {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAIArcher(i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAIArcher(i));
+							break;
+						}				
+					}
+				}
+				else {
+					for (int i = 0; i < 10; i++) //Find available unit
+					{
+						if (unitManager.getAIArcher(9-i)->getActive()) {
+							unitManager.selectUnit(unitManager.getAIArcher(9-i));
+							break;
+						}				
+					}
 				}
 			}
 	}
 	int dir, x, y = 0;
-
+	
 	if (unitManager.getCurrentSelection() != nullptr && spawnOrMove == 1) {
 		Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
 
@@ -837,9 +904,18 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 #pragma region Newell
 void PrimoVictoria::moveUp(){	
 	VECTOR2 pos, vel;
-	pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%20+35,unitManager.getCurrentSelection()->getCenterY()+25);
-	vel = VECTOR2(0,0.3);
-	createParticleEffect(pos,vel,2);
+	if (unitManager.getCurrentSelection()->getMovement() != 6) {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
+			unitManager.getCurrentSelection()->getCenterY()+25);
+		vel = VECTOR2(0,0.3);
+		createParticleEffect(pos,vel,2);
+	}
+	else {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
+			unitManager.getCurrentSelection()->getCenterY()+25);
+		vel = VECTOR2(0,0.3);
+		createParticleEffect(pos,vel,2);
+	}
 
 	unitManager.getCurrentSelection()->setLastDirection(Unit::up);
 	if (unitManager.getCurrentSelection()->getTileY() > 0) {
@@ -872,10 +948,18 @@ void PrimoVictoria::moveUp(){
 
 void PrimoVictoria::moveDown(){
 	VECTOR2 pos, vel;
-	pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%20+35,unitManager.getCurrentSelection()->getCenterY());
-	vel = VECTOR2(0,-0.3);
-	createParticleEffect(pos,vel,2);
-
+	if (unitManager.getCurrentSelection()->getMovement() != 6){
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
+			unitManager.getCurrentSelection()->getY()+rand()%20+20);
+		vel = VECTOR2(0,-0.3);
+		createParticleEffect(pos,vel,2);
+	}
+	else {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
+			unitManager.getCurrentSelection()->getY()+rand()%40);
+		vel = VECTOR2(0,-0.3);
+		createParticleEffect(pos,vel,2);
+	}
 	unitManager.getCurrentSelection()->setLastDirection(Unit::down);
 	if (unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-1) {
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
@@ -907,10 +991,18 @@ void PrimoVictoria::moveDown(){
 
 void PrimoVictoria::moveLeft(){
 	VECTOR2 pos, vel;
-	pos = VECTOR2(unitManager.getCurrentSelection()->getCenterX()+rand()%25-10,
-		unitManager.getCurrentSelection()->getCenterY()+rand()%15+10);
-	vel = VECTOR2(0.2,0);
-	createParticleEffect(pos,vel,1);
+	if (unitManager.getCurrentSelection()->getMovement() != 6) {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%25+35, //Create dust
+			unitManager.getCurrentSelection()->getY()+rand()%12+60);
+		vel = VECTOR2(0.2,0);
+		createParticleEffect(pos,vel,1);
+	}
+	else {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%30+25, //Create dust
+			unitManager.getCurrentSelection()->getY()+rand()%15+48);
+		vel = VECTOR2(0.2,0);
+		createParticleEffect(pos,vel,1);
+	}
 
 	unitManager.getCurrentSelection()->setLastDirection(Unit::left);
 	if (unitManager.getCurrentSelection()->getTileX() > 0) {
@@ -943,10 +1035,18 @@ void PrimoVictoria::moveLeft(){
 
 void PrimoVictoria::moveRight(){
 	VECTOR2 pos, vel;
-	pos = VECTOR2(unitManager.getCurrentSelection()->getCenterX()+rand()%25-10,
-		unitManager.getCurrentSelection()->getCenterY()+rand()%15+10);
-	vel = VECTOR2(-0.2,0);
-	createParticleEffect(pos,vel,1);
+	if (unitManager.getCurrentSelection()->getMovement() != 6) {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%25+30, //Create dust
+			unitManager.getCurrentSelection()->getY()+rand()%12+60);
+		vel = VECTOR2(0.2,0);
+		createParticleEffect(pos,vel,1);
+	}
+	else {
+		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%30+25, //Create dust
+			unitManager.getCurrentSelection()->getY()+rand()%15+48);
+		vel = VECTOR2(0.2,0);
+		createParticleEffect(pos,vel,1);
+	}
 
 	unitManager.getCurrentSelection()->setLastDirection(Unit::right);
 	if (unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-1) {
