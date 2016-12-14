@@ -9,7 +9,7 @@ public:
 
 	bool initialize(int width, int height, int ncols, int team, TextureManager* textureM, Game* game);
 	void update(float frameTime);
-	void fight(Unit& opponent, float frameTime, Audio* audio);
+	void fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack);
 	bool kill(float frameTime);
 	bool moveUp(Audio* audio);
 	bool moveDown(Audio* audio);
@@ -17,7 +17,5 @@ public:
 	bool moveRight(Audio* audio);
 	void setAttackFrames(LastDirection direction);
 	void setHP(int newHP);
-//private:
-	//bool bloodRage;
 };
 #pragma endregion

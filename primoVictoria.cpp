@@ -200,7 +200,7 @@ void PrimoVictoria::update()
 		exit(0);
 	}
 	if(fighting == true){
-		if(unitManager.fight(*fightTarget, frameTime, audio)){
+		if(unitManager.fight(*fightTarget, frameTime, audio, rangeOfAttack)){
 			fighting = false;
 			if(fightTarget->getHP() <= 0){
 				tileManager.getTile(fightTarget->getTileX(), fightTarget->getTileY())->leave();
@@ -266,11 +266,11 @@ void PrimoVictoria::update()
 		gameReset();
 	}
 	else if(currentMenu == 3 && defeatScreen->getSelectedItem() == 2){ //selecting RETRY
-		if(level == 1){
+		if(lastLevel == 1){
 			gameReset();
 			levelOne();
 		}
-		else if(level == 2){
+		else if(lastLevel == 2){
 			gameReset();
 			levelTwo();
 		}
@@ -281,13 +281,13 @@ void PrimoVictoria::update()
 	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 1){ //Go to level select
 		currentMenu = 2;
 	}
-	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //Restart level
-		if(level == 1){
-			levelOne();
+	else if(currentMenu == 4 && victoryScreen->getSelectedItem() == 2){ //next level
+		if(lastLevel == 1){
+			levelTwo();
 			currentMenu = 0;
 		}
-		else if(level == 2){
-			levelTwo();
+		else if(lastLevel == 2){
+			levelOne();
 			currentMenu = 0;
 		}
 	}
@@ -693,6 +693,7 @@ void PrimoVictoria::gameReset() {
 	unitManager.resetUnits();
 	tileManager.tilesReset();
 	isLevelInitialized = false;
+	lastLevel = level;
 	level = 0;
 }
 #pragma endregion
@@ -768,7 +769,12 @@ void PrimoVictoria::render()
 		displayLongbowman.draw();
 	}
 	if (currentMenu == 0) {
-		if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
+		if(unitManager.getCurrentSelection()){
+			unitStats->setFontColor(graphicsNS::LIME);
+			unitStats->print("HP: " + std::to_string(unitManager.getCurrentSelection()->getHP()) + "          Movement Remaining: " +
+				std::to_string(unitManager.getCurrentSelection()->getMovementLeft()), 50, GAME_HEIGHT-50);
+		}
+		else if(tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->isOccupied()){
 			unitStats->setFontColor(graphicsNS::LIME);
 			unitStats->print("HP: " +std::to_string(tileManager.getTile(unitManager.getSelectionX(), 
 				unitManager.getSelectionY())->getUnit()->getHP())+ "          Movement Remaining: " +
@@ -977,6 +983,7 @@ void PrimoVictoria::moveUp(){
 						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-i)->getUnit();
 						fighting = true;
 						moving = NULL;
+						rangeOfAttack = i;
 						return;
 				}
 			}
@@ -1020,6 +1027,7 @@ void PrimoVictoria::moveDown(){
 						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+i)->getUnit();
 						fighting = true;
 						moving = NULL;
+						rangeOfAttack = i;
 						return;
 				}
 			}
@@ -1064,6 +1072,7 @@ void PrimoVictoria::moveLeft(){
 						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->getUnit();
 						fighting = true;
 						moving = NULL;
+						rangeOfAttack = i;
 						return;
 				}
 			}
@@ -1108,6 +1117,7 @@ void PrimoVictoria::moveRight(){
 						fightTarget = tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->getUnit();
 						fighting = true;
 						moving = NULL;
+						rangeOfAttack = i;
 						return;
 				}
 			}

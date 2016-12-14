@@ -49,7 +49,7 @@ void Berserker::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Berserker::fight(Unit& opponent, float frameTime, Audio* audio){
+void Berserker::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
@@ -199,8 +199,12 @@ void Berserker::setHP(int newHP){
 	if(newHP < Unit::getHP()){ //damage being dealt
 		if(getHP() > 1 && newHP <= 0){ //dying from higher than 1 HP, survives
 			Unit::setHP(1);
+			setColorFilter(graphicsNS::RED);
 			return;
 		}
+	}
+	if(getHP() > 1){
+		setColorFilter(graphicsNS::WHITE);
 	}
 	Unit::setHP(newHP);
 }
