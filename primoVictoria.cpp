@@ -71,6 +71,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundImg init fail"));
 	background.setScale(BACKGROUND_IMAGE_SCALE);
 	background.setX(140.f);
+#pragma endregion
+#pragma region Newell
 	if (!defeatScreenTexture.initialize(graphics, "pictures\\defeatScreen.PNG"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
 	if (!defeatScreenImage.initialize(graphics, 0,0,0, &defeatScreenTexture))
@@ -101,6 +103,26 @@ void PrimoVictoria::initialize(HWND hwnd)
 	norseBanner.setY(0);
 	polishBanner.setX(768);
 	polishBanner.setY(0);
+	if(!spawnCavalryTexture.initialize(graphics,"pictures\\spawnCavalry.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
+	}
+	if(!spawnInfantryTexture.initialize(graphics,"pictures\\spawnInfantry.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
+	}
+	if(!spawnArcherTexture.initialize(graphics,"pictures\\spawnArcher.png")){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
+	}
+	spawnCavalryDisplay.initialize(graphics, 60, 70, 1, &spawnCavalryTexture);
+	spawnCavalryDisplay.setX(110);
+	spawnCavalryDisplay.setY(20);
+	spawnInfantryDisplay.initialize(graphics, 60, 70, 1, &spawnInfantryTexture);
+	spawnInfantryDisplay.setX(50);
+	spawnInfantryDisplay.setY(25); //slightly weirdly proportioned texture, needs to be lower than others
+	spawnArcherDisplay.initialize(graphics, 60, 70, 1, &spawnArcherTexture);
+	spawnArcherDisplay.setX(170);
+	spawnArcherDisplay.setY(20);
+
+
 	if(!displayBerserkerTexture.initialize(graphics,"pictures\\greenBerserker.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
 	}
@@ -329,7 +351,7 @@ void PrimoVictoria::update()
 
 #pragma region Higgs
 void PrimoVictoria::createParticleEffect(VECTOR2 pos, VECTOR2 vel, int numParticles){
-	
+
 	pm.setPosition(pos);
 	pm.setVelocity(vel);
 	pm.setVisibleNParticles(numParticles);
@@ -687,8 +709,14 @@ void PrimoVictoria::render()
 				unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
 		}
 		if(level == 2){
+			spawnArcherDisplay.draw(spawnArcherDisplay.getColorFilter());
+			spawnCavalryDisplay.draw(spawnCavalryDisplay.getColorFilter());
+			spawnInfantryDisplay.draw(spawnInfantryDisplay.getColorFilter());
 			spawnCooldown->setFontColor(graphicsNS::RED);
-			spawnCooldown->print("Unit Spawn Cooldown: " + std::to_string(spawnUnitCooldown), 50, 20);
+			if(spawnUnitCooldown > 0){
+				spawnCooldown->print(std::to_string(spawnUnitCooldown) + "       " + std::to_string(spawnUnitCooldown) + "       " 
+					+ std::to_string(spawnUnitCooldown), 70, 20);
+			}
 		}
 	}
 #pragma endregion
@@ -722,27 +750,39 @@ void PrimoVictoria::playerInput() {
 	}
 	if(input->isKeyDown(0x31)){
 		keyDownLastFrame = 0x31;
+		if(spawnUnitCooldown <= 0){
+			spawnInfantryDisplay.setColorFilter(graphicsNS::LIME);
+		}
 	}
 	if(input->isKeyDown(0x32)){
 		keyDownLastFrame = 0x32;
+		if(spawnUnitCooldown <= 0){
+			spawnCavalryDisplay.setColorFilter(graphicsNS::LIME);
+		}
 	}
 	if(input->isKeyDown(0x33)){
 		keyDownLastFrame = 0x33;
+		if(spawnUnitCooldown <= 0){
+			spawnArcherDisplay.setColorFilter(graphicsNS::LIME);
+		}
 	}
 	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0){
 		keyDownLastFrame = NULL;
+		spawnInfantryDisplay.setColorFilter(graphicsNS::WHITE);
 		spawnUnit(0, 1);
-		spawnUnitCooldown += 2;
+		spawnUnitCooldown += 3;
 	}
 	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0){
 		keyDownLastFrame = NULL;
+		spawnCavalryDisplay.setColorFilter(graphicsNS::WHITE);
 		spawnUnit(1, 1);
-		spawnUnitCooldown += 2;
+		spawnUnitCooldown += 3;
 	}
 	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0){
 		keyDownLastFrame = NULL;
+		spawnArcherDisplay.setColorFilter(graphicsNS::WHITE);
 		spawnUnit(2, 1);
-		spawnUnitCooldown += 2;
+		spawnUnitCooldown += 3;
 	}
 	if(!input->isKeyDown(VK_SPACE) && keyDownLastFrame == VK_SPACE){
 		keyDownLastFrame = NULL;
@@ -994,6 +1034,12 @@ void PrimoVictoria::releaseAll()
 {
 	unitManager.onLostDevice();
 	tileManager.onLostDevice();
+	displayBerserkerTexture.onLostDevice();
+	displayHussarTexture.onLostDevice();
+	displayLongbowmanTexture.onLostDevice();
+	spawnCavalryTexture.onLostDevice();
+	spawnInfantryTexture.onLostDevice();
+	spawnArcherTexture.onLostDevice();
 	Game::releaseAll();
 	return;
 }
@@ -1006,6 +1052,12 @@ void PrimoVictoria::resetAll()
 {
 	tileManager.onResetDevice();
 	unitManager.onResetDevice();
+	displayBerserkerTexture.onResetDevice();
+	displayHussarTexture.onResetDevice();
+	displayLongbowmanTexture.onResetDevice();
+	spawnCavalryTexture.onResetDevice();
+	spawnInfantryTexture.onResetDevice();
+	spawnArcherTexture.onResetDevice();
 	Game::resetAll();
 	return;
 }
@@ -1014,5 +1066,8 @@ void PrimoVictoria::displayUnitsUpdate(){
 	displayBerserker.update(frameTime);
 	displayHussar.update(frameTime);
 	displayLongbowman.update(frameTime);
+	spawnArcherDisplay.update(frameTime);
+	spawnCavalryDisplay.update(frameTime);
+	spawnInfantryDisplay.update(frameTime);
 }
 #pragma endregion

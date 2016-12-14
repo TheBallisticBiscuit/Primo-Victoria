@@ -53,6 +53,12 @@ private:
 	Cavalry displayHussar;
 	TextureManager displayLongbowmanTexture;
 	Archer displayLongbowman;
+	TextureManager spawnCavalryTexture;
+	Image spawnCavalryDisplay;
+	TextureManager spawnInfantryTexture;
+	Image spawnInfantryDisplay;
+	TextureManager spawnArcherTexture;
+	Image spawnArcherDisplay;
 
 	TextDX *unitStats;
 	TextDX *spawnCooldown;
