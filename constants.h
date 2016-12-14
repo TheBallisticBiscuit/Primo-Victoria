@@ -108,6 +108,9 @@ const int TERRAIN_HEIGHT = 96;
 const int TERRAIN_SCALE = 1;
 const float BACKGROUND_IMAGE_SCALE = 1.0f;
 
+const float MAX_PARTICLE_LIFETIME = 1.5f;
+const int MAX_NUMBER_PARTICLES = 2000;
+
 #pragma endregion
 // key mappings
 // In this game simple constants are used for key mappings. If variables were used
