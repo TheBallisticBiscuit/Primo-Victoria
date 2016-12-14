@@ -24,6 +24,10 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture1 init failure"));
 	if (!forestTexture2.initialize(graphics, FOREST_2_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture2 init failure"));
+	if (!forestTexture3.initialize(graphics, FOREST_3_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture3 init failure"));
+	if (!forestTexture4.initialize(graphics, FOREST_4_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "ForestTexture4 init failure"));
 	if (!cPoint1Texture.initialize(graphics, CAPTURE_POINT_1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "CapturePoint1 init failure"));
 	if (!cPoint2Texture.initialize(graphics, CAPTURE_POINT_2))
@@ -45,32 +49,38 @@ bool TileManager::initialize(Graphics* graphics, int x, int y, Game* game) {
 			r = rand()%2; 
 
 			if (r == 0) { //Grass
-				tileTerrain = Plains;
 				s = rand()%3;
 				if (s == 0) {
-					if (!tiles[i][j].initialize(graphics, &grassTexture1, tileTerrain, i, j, game)) 
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
+					if (!tiles[i][j].initialize(graphics, &grassTexture1, Plains, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Plains1 tile initialize failure"));
 				}
 				if (s == 1) {
-					if (!tiles[i][j].initialize(graphics, &grassTexture2, tileTerrain, i, j, game)) 
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
+					if (!tiles[i][j].initialize(graphics, &grassTexture2, Plains, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Plains2 tile initialize failure"));
 				}
 				else {
-					if (!tiles[i][j].initialize(graphics, &grassTexture3, tileTerrain, i, j, game)) 
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
+					if (!tiles[i][j].initialize(graphics, &grassTexture3, Plains, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Plains3 tile initialize failure"));
 				}
 			}
 
 			else if (r == 1) { //Forest
-				tileTerrain = Forest;
-				s = rand()%2;
+				s = rand()%4;
 				if (s == 0) {
-					if (!tiles[i][j].initialize(graphics, &forestTexture1, tileTerrain, i, j, game)) 
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
+					if (!tiles[i][j].initialize(graphics, &forestTexture1, Forest, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Forest1 tile initialize failure"));
+				}
+				else if (s == 1){
+					if (!tiles[i][j].initialize(graphics, &forestTexture2, Forest, i, j, game)) 
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Forest2 tile initialize failure"));
+				}
+				else if (s == 2) {
+					if (!tiles[i][j].initialize(graphics, &forestTexture3, Forest, i, j, game))
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Forest3 tile initialize failure"));
 				}
 				else {
-					if (!tiles[i][j].initialize(graphics, &forestTexture2, tileTerrain, i, j, game)) 
-						throw(GameError(gameErrorNS::FATAL_ERROR, "Tile[" + std::to_string(i) + "][" + std::to_string(j) + "] init fail"));
+					if (!tiles[i][j].initialize(graphics, &forestTexture4, Forest, i, j, game))
+						throw(GameError(gameErrorNS::FATAL_ERROR, "Forest3 tile initialize failure"));
 				}
 			}
 		}

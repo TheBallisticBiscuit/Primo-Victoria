@@ -44,6 +44,8 @@ private:
 	TextureManager grassTexture3;
 	TextureManager forestTexture1;
 	TextureManager forestTexture2;
+	TextureManager forestTexture3;
+	TextureManager forestTexture4;
 	TextureManager cPoint1Texture;
 	TextureManager cPoint2Texture;
 	TextureManager hillsTexture;

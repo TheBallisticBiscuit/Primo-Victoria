@@ -93,6 +93,8 @@
     <ClCompile Include="cavalry.cpp" />
     <ClCompile Include="infantry.cpp" />
     <ClCompile Include="longbowman.cpp" />
+    <ClCompile Include="particle.cpp" />
+    <ClCompile Include="particleManager.cpp" />
     <ClCompile Include="primoVictoria.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game.cpp" />
@@ -116,6 +118,8 @@
     <ClInclude Include="cavalry.h" />
     <ClInclude Include="infantry.h" />
     <ClInclude Include="longbowman.h" />
+    <ClInclude Include="particle.h" />
+    <ClInclude Include="particleManager.h" />
     <ClInclude Include="primoVictoria.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="entity.h" />

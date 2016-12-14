@@ -99,6 +99,8 @@ const char GRASS_2_IMAGE[] = "pictures\\Grass2.png";
 const char GRASS_3_IMAGE[] = "pictures\\Grass3.png";
 const char FOREST_1_IMAGE[] = "pictures\\Forest1.png";
 const char FOREST_2_IMAGE[] = "pictures\\Forest2.png";
+const char FOREST_3_IMAGE[] = "pictures\\Forest3.png";
+const char FOREST_4_IMAGE[] = "pictures\\Forest4.png";
 const char CAPTURE_POINT_1[] = "pictures\\capturePoint1.png";
 const char CAPTURE_POINT_2[] = "pictures\\capturePoint2.png";
 const char BACKGROUND_IMAGE[] = "pictures\\background.PNG";
@@ -107,6 +109,8 @@ const int TERRAIN_WIDTH = 96;
 const int TERRAIN_HEIGHT = 96;
 const int TERRAIN_SCALE = 1;
 const float BACKGROUND_IMAGE_SCALE = 1.0f;
+
+const char DUST_IMAGE[] = "DustParticle.jpg";
 
 const float MAX_PARTICLE_LIFETIME = 1.5f;
 const int MAX_NUMBER_PARTICLES = 2000;
