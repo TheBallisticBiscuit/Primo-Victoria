@@ -15,6 +15,7 @@ class PrimoVictoria;
 #include "unitManager.h"
 #include "Tile.h"
 #include "TileManager.h"
+#include "particleManager.h"
 #include <sstream>
 #include <string>
 #include <random>
@@ -58,6 +59,7 @@ private:
 	int currentMenu;
 	TileManager tileManager;
 	UnitManager unitManager;
+	ParticleManager pm;
 	Unit* fightTarget;
 	bool fighting;
 	int keyDownLastFrame;
@@ -84,6 +86,7 @@ public:
 	void moveAttempt(int dir, int x, int y);
     void collisions();  // "
     void render();      // "
+	void createParticleEffect(VECTOR2 pos, VECTOR2 vel, int numParticles);
 	int getCurrentMenu(){return currentMenu;}
 	void spawnUnit(int unitType, int team);
 	void levelOneAI();

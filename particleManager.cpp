@@ -12,8 +12,8 @@ ParticleManager::~ParticleManager()
 }
 float ParticleManager::getVariance()
 {
-	float foo = (rand() );
-	foo = ((int)foo	% 100)/100.0f;
+	float foo = (rand()%100 );
+	foo /= 100.0f;
 	foo += 0.5f;
 	return foo;
 }
@@ -58,8 +58,8 @@ bool ParticleManager::initialize(Graphics *g)
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing dust"));
 		particles[i].setActive(false);
 		particles[i].setVisible(false);
-		particles[i].setScale(0.01f);
-		particles[i].setRotationValue(0.05f);
+		particles[i].setScale(0.02f);
+		particles[i].setRotationValue(pow(-1,rand()%2)*0.05f);
 	}
 	return true;
 }

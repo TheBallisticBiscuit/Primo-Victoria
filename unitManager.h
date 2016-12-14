@@ -11,6 +11,7 @@ functions*/
 #include "infantry.h"
 #include "longbowman.h"
 #include "TileManager.h"
+#include "particleManager.h"
 #include "audio.h"
 
 #pragma region Newell
@@ -54,6 +55,8 @@ public:
 	void resetUnits();
 	void setPlayerCountries(Country player1, Country player2, Game* gamePtr);
 private:
+	ParticleManager pm;
+
 	TextureManager infantryTexture;
 	TextureManager infantryTexture2;
 	TextureManager cavalryTexture;

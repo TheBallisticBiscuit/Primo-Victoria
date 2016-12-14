@@ -63,6 +63,8 @@ void PrimoVictoria::initialize(HWND hwnd)
 	x1,y1,x2,y2 = 0;
 	srand(time(0));
 
+	pm.initialize(graphics);
+
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
 	if (!background.initialize(graphics, 0,0,0,&backgroundTexture))
@@ -169,6 +171,7 @@ void PrimoVictoria::update()
 		countrySelect->update();
 		unitManager.update(frameTime);
 		displayUnitsUpdate();
+		pm.update(frameTime);
 		return;
 	}
 	if(input->isKeyDown(VK_ESCAPE)){
@@ -195,6 +198,7 @@ void PrimoVictoria::update()
 		countrySelect->update();
 		unitManager.update(frameTime);
 		displayUnitsUpdate();
+		pm.update(frameTime);
 		return;
 	}
 	if(currentMenu == 0 || currentMenu == 5){
@@ -208,6 +212,7 @@ void PrimoVictoria::update()
 		victoryScreen->update();
 		countrySelect->update();
 		displayUnitsUpdate();
+		pm.update(frameTime);
 	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
 		currentMenu = 6;
@@ -317,11 +322,20 @@ void PrimoVictoria::update()
 	countrySelect->update();
 	unitManager.update(frameTime);
 	displayUnitsUpdate();
+	pm.update(frameTime);
 
 #pragma endregion
 }
 
 #pragma region Higgs
+void PrimoVictoria::createParticleEffect(VECTOR2 pos, VECTOR2 vel, int numParticles){
+	
+	pm.setPosition(pos);
+	pm.setVelocity(vel);
+	pm.setVisibleNParticles(numParticles);
+
+}
+
 //=============================================================================
 // Artificial Intelligence
 //=============================================================================
@@ -614,6 +628,7 @@ void PrimoVictoria::render()
 		if (level == 2) {
 			tileManager.draw(2);
 		}
+		pm.draw();
 		unitManager.draw();
 	}
 	else if(currentMenu == 1){
@@ -820,17 +835,14 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 #pragma endregion
 
 #pragma region Newell
-void PrimoVictoria::moveUp(){
+void PrimoVictoria::moveUp(){	
+	VECTOR2 pos, vel;
+	pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%20+35,unitManager.getCurrentSelection()->getCenterY()+25);
+	vel = VECTOR2(0,0.3);
+	createParticleEffect(pos,vel,2);
+
 	unitManager.getCurrentSelection()->setLastDirection(Unit::up);
 	if (unitManager.getCurrentSelection()->getTileY() > 0) {
-		//if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() > 1
-		//	&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->isOccupied() &&
-		//	tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit()->getTeam()
-		//	!= unitManager.getCurrentSelection()->getTeam()){
-		//		fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-2)->getUnit();
-		//		fighting = true;
-		//		moving = NULL;
-		//}
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
 			if(unitManager.getCurrentSelection()->getTileY() - i >= 0){
 				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-i)->isOccupied() &&
@@ -852,22 +864,6 @@ void PrimoVictoria::moveUp(){
 		else{
 			moving = NULL;
 		}
-		//else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-		//	->isOccupied()){
-		//		if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-		//			->getUnit()->getTeam() == 2 && isPlayerTurn){
-		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-		//					->getUnit();
-		//				fighting = true;
-		//		}
-		//		else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-		//			->getUnit()->getTeam() == 1 && !isPlayerTurn){
-		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()-1)
-		//					->getUnit();
-		//				fighting = true;
-		//		}
-		//		moving = NULL;
-		//}
 	}
 	else{
 		moving = NULL;
@@ -875,16 +871,13 @@ void PrimoVictoria::moveUp(){
 }
 
 void PrimoVictoria::moveDown(){
+	VECTOR2 pos, vel;
+	pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%20+35,unitManager.getCurrentSelection()->getCenterY());
+	vel = VECTOR2(0,-0.3);
+	createParticleEffect(pos,vel,2);
+
 	unitManager.getCurrentSelection()->setLastDirection(Unit::down);
 	if (unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-1) {
-		//if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-2
-		//	&& tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->isOccupied() &&
-		//	tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit()->getTeam()
-		//	!= unitManager.getCurrentSelection()->getTeam()){
-		//		fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+2)->getUnit();
-		//		fighting = true;
-		//		moving = NULL;
-		//}
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
 			if(unitManager.getCurrentSelection()->getTileY() + i <= tileManager.getHeight()-1){
 				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+i)->isOccupied() &&
@@ -906,22 +899,6 @@ void PrimoVictoria::moveDown(){
 		else{
 			moving = NULL;
 		}
-		/*else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
-			->isOccupied()){
-				if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
-					->getUnit()->getTeam() == 2 && isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
-							->getUnit();
-						fighting = true;
-				}
-				else if(tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
-					->getUnit()->getTeam() == 1 && !isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX(), unitManager.getSelectedTileY()+1)
-							->getUnit();
-						fighting = true;
-				}
-				moving = NULL;
-		}*/
 	}
 	else{
 		moving = NULL;
@@ -929,16 +906,14 @@ void PrimoVictoria::moveDown(){
 }
 
 void PrimoVictoria::moveLeft(){
+	VECTOR2 pos, vel;
+	pos = VECTOR2(unitManager.getCurrentSelection()->getCenterX()+rand()%25-10,
+		unitManager.getCurrentSelection()->getCenterY()+rand()%15+10);
+	vel = VECTOR2(0.2,0);
+	createParticleEffect(pos,vel,1);
+
 	unitManager.getCurrentSelection()->setLastDirection(Unit::left);
 	if (unitManager.getCurrentSelection()->getTileX() > 0) {
-		/*if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() > 1
-			&& tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->isOccupied() &&
-			tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->getUnit()->getTeam()
-			!= unitManager.getCurrentSelection()->getTeam()){
-				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-2, unitManager.getSelectedTileY())->getUnit();
-				fighting = true;
-				moving = NULL;
-		}*/		
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
 			if(unitManager.getCurrentSelection()->getTileX() - i >= 0){
 				if(tileManager.getTile(unitManager.getSelectedTileX()-i, unitManager.getSelectedTileY())->isOccupied() &&
@@ -960,22 +935,6 @@ void PrimoVictoria::moveLeft(){
 		else{
 			moving = NULL;
 		}
-		/*else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
-			->isOccupied()){
-				if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
-					->getUnit()->getTeam() == 2 && isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
-							->getUnit();
-						fighting = true;
-				}
-				else if(tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
-					->getUnit()->getTeam() == 1 && !isPlayerTurn){
-						fightTarget = tileManager.getTile(unitManager.getSelectedTileX()-1, unitManager.getSelectedTileY())
-							->getUnit();
-						fighting = true;
-				}
-				moving = NULL;
-		}*/
 	}
 	else{
 		moving = NULL;
@@ -983,16 +942,14 @@ void PrimoVictoria::moveLeft(){
 }
 
 void PrimoVictoria::moveRight(){
+	VECTOR2 pos, vel;
+	pos = VECTOR2(unitManager.getCurrentSelection()->getCenterX()+rand()%25-10,
+		unitManager.getCurrentSelection()->getCenterY()+rand()%15+10);
+	vel = VECTOR2(-0.2,0);
+	createParticleEffect(pos,vel,1);
+
 	unitManager.getCurrentSelection()->setLastDirection(Unit::right);
 	if (unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-1) {
-		//if(unitManager.getCurrentSelection()->getRange() > 1 && unitManager.getCurrentSelection()->getTileX() < tileManager.getWidth()-2
-		//	&& tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->isOccupied() &&
-		//	tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit()->getTeam()
-		//	!= unitManager.getCurrentSelection()->getTeam()){
-		//		fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+2, unitManager.getSelectedTileY())->getUnit();
-		//		fighting = true;
-		//		moving = NULL;
-		//}
 		for(int i = 1; i <= unitManager.getCurrentSelection()->getRange(); i++){
 			if(unitManager.getCurrentSelection()->getTileX() + i <= tileManager.getWidth()-1){
 				if(tileManager.getTile(unitManager.getSelectedTileX() + i, unitManager.getSelectedTileY())->isOccupied() &&
@@ -1014,22 +971,6 @@ void PrimoVictoria::moveRight(){
 		else{
 			moving = NULL;
 		}
-		//else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-		//	->isOccupied()){
-		//		if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-		//			->getUnit()->getTeam() == 2 && isPlayerTurn){
-		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-		//					->getUnit();
-		//				fighting = true;
-		//		}
-		//		else if(tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-		//			->getUnit()->getTeam() == 1 && !isPlayerTurn){
-		//				fightTarget = tileManager.getTile(unitManager.getSelectedTileX()+1, unitManager.getSelectedTileY())
-		//					->getUnit();
-		//				fighting = true;
-		//		}
-		//		moving = NULL;
-		//}
 	}
 	else{
 		moving = NULL;
