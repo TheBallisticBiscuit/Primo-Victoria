@@ -157,7 +157,7 @@ enum Country {Norse, Poland, Britain};
 #pragma region Newell
 const float INFANTRY_SCALING = 1;
 const float INFANTRY_ANIMATION_DELAY = 0.1;
-const float INFANTRY_SPEED = 70;
+const float INFANTRY_SPEED = 100;
 const int INFANTRY_ATTACK_RIGHT_START = 0;
 const int INFANTRY_ATTACK_RIGHT_END = 11;
 const int INFANTRY_ATTACK_UP_START = 12;
@@ -197,7 +197,7 @@ const float SELECTION_BOX_SCALE = 1;
 #pragma region Higgs
 const float BERSERKER_SCALING = 1;
 const float BERSERKER_ANIMATION_DELAY = 0.1;
-const float BERSERKER_SPEED = 70;
+const float BERSERKER_SPEED = 100;
 const int BERSERKER_ATTACK_RIGHT_START = 0;
 const int BERSERKER_ATTACK_RIGHT_END = 9;
 const int BERSERKER_ATTACK_UP_START = 10;
@@ -236,7 +236,7 @@ const int BERSERKER_DEATH_LEFT_END = 147;
 #pragma region Newell
 const float CAVALRY_SCALING = 0.66666;
 const float CAVALRY_ANIMATION_DELAY = 0.1;
-const float CAVALRY_SPEED = 100;
+const float CAVALRY_SPEED = 120;
 const int CAVALRY_RUN_RIGHT_START = 0;
 const int CAVALRY_RUN_RIGHT_END = 11;
 const int CAVALRY_RUN_UP_START = 12;
@@ -274,7 +274,7 @@ const int CAVALRY_DEATH_LEFT_END = 151;
 #pragma region Higgs
 const float HUSSAR_SCALING = 0.66666f;
 const float HUSSAR_ANIMATION_DELAY = 0.1f;
-const float HUSSAR_SPEED = 100;
+const float HUSSAR_SPEED = 120;
 const int HUSSAR_RUN_RIGHT_START = 0;
 const int HUSSAR_RUN_RIGHT_END = 11;
 const int HUSSAR_RUN_UP_START = 12;
@@ -311,7 +311,7 @@ const int HUSSAR_DEATH_LEFT_END = 151;
 #pragma region Newell
 const float ARCHER_SCALING = 1;
 const float ARCHER_ANIMATION_DELAY = 0.1;
-const float ARCHER_SPEED = 70;
+const float ARCHER_SPEED = 100;
 const int ARCHER_IDLE_RIGHT_START = 0;
 const int ARCHER_IDLE_RIGHT_END = 8;
 const int ARCHER_IDLE_UP_START = 9;
@@ -347,7 +347,7 @@ const int ARCHER_DEATH_LEFT_END = 171;
 
 const float LONGBOWMAN_SCALING = 1;
 const float LONGBOWMAN_ANIMATION_DELAY = 0.1;
-const float LONGBOWMAN_SPEED = 70;
+const float LONGBOWMAN_SPEED = 100;
 const int LONGBOWMAN_IDLE_RIGHT_START = 0;
 const int LONGBOWMAN_IDLE_RIGHT_END = 12;
 const int LONGBOWMAN_IDLE_UP_START = 13;
