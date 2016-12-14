@@ -118,7 +118,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 	if(!displayLongbowmanTexture.initialize(graphics,"pictures\\greenLongbowman.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing displayBerserker texture"));
 	}
-	displayLongbowman.initialize(96, 96, 5, 1, &displayLongbowmanTexture, this);
+	displayLongbowman.initialize(96, 96, 13, 1, &displayLongbowmanTexture, this);
 	displayLongbowman.setX(150);
 	displayLongbowman.setY(468);
 	displayLongbowman.setFrames(LONGBOWMAN_IDLE_RIGHT_START, LONGBOWMAN_IDLE_RIGHT_END);
