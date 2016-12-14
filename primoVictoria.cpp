@@ -709,6 +709,11 @@ void PrimoVictoria::render()
 				unitManager.getSelectionY())->getUnit()->getMovementLeft()), 50, GAME_HEIGHT-50);
 		}
 		if(level == 2){
+			if(spawnUnitCooldown > 0){
+				spawnInfantryDisplay.setColorFilter(graphicsNS::GRAY);
+				spawnCavalryDisplay.setColorFilter(graphicsNS::GRAY);
+				spawnArcherDisplay.setColorFilter(graphicsNS::GRAY);
+			}
 			spawnArcherDisplay.draw(spawnArcherDisplay.getColorFilter());
 			spawnCavalryDisplay.draw(spawnCavalryDisplay.getColorFilter());
 			spawnInfantryDisplay.draw(spawnInfantryDisplay.getColorFilter());
