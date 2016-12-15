@@ -411,7 +411,7 @@ bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
 	return false;
 } 
 
-void UnitManager::endTurn(){
+void UnitManager::endTurn(bool isPlayerTurn){
 	for(int i = 0; i < 10; i++){
 		player1Infantry[i].setMovementLeft(player1Infantry[i].getMovement());
 		player2Infantry[i].setMovementLeft(player2Infantry[i].getMovement());
@@ -422,8 +422,14 @@ void UnitManager::endTurn(){
 		player1Archers[i].setMovementLeft(player1Archers[i].getMovement());
 		player2Archers[i].setMovementLeft(player2Archers[i].getMovement());
 	}
-	selectionBox.setX(5*TERRAIN_WIDTH);
-	selectionBox.setY(3*TERRAIN_HEIGHT);
+	if (isPlayerTurn) {
+		lastX = selectionBox.getX();
+		lastY = selectionBox.getY();
+	}
+	else {
+		selectionBox.setX(lastX);
+		selectionBox.setY(lastY);
+	}
 }
 #pragma endregion
 

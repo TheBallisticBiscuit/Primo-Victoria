@@ -1123,7 +1123,7 @@ void PrimoVictoria::moveRight(){
 }
 
 void PrimoVictoria::endTurn(){
-	unitManager.endTurn();
+	unitManager.endTurn(isPlayerTurn);
 	isPlayerTurn = !isPlayerTurn;
 	if(isPlayerTurn && spawnUnitCooldown > 0){
 		spawnUnitCooldown--;
