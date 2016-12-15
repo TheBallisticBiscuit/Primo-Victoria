@@ -51,7 +51,7 @@ public:
 	bool unitDown(TileManager* tileManager, Audio* audio);
 	bool unitLeft(TileManager* tileManager, Audio* audio);
 	bool unitRight(TileManager* tileManager, Audio* audio);
-	void endTurn();
+	void endTurn(bool isPlayerTurn);
 	void resetUnits();
 	void setPlayerCountries(Country player1, Country player2, Game* gamePtr);
 private:
@@ -85,6 +85,8 @@ private:
 	Unit** player2Units;
 	int selectionX;
 	int selectionY;
+	int lastX;
+	int lastY;
 	int archerDamage;
 };
 #pragma endregion 

@@ -8,6 +8,9 @@ Menu::Menu()
 
 Menu::Menu(std::string s)
 {
+	menuAnchor = D3DXVECTOR2(240,180);
+	highlightColor = graphicsNS::CYAN;
+	normalColor = graphicsNS::WHITE;
 	if (s == "Main") {
 		menuHeading ="";
 		menuItem1 = "Play Game";
@@ -25,6 +28,10 @@ Menu::Menu(std::string s)
 		menuItem1 = "Return to Main Menu";
 		menuItem2 = "Return to Level Select";
 		menuItem3 = "Play Again";
+		highlightColor = graphicsNS::CYAN;
+		//highlightColor = SETCOLOR_ARGB(255, 0, 120, 50);
+		normalColor = graphicsNS::NAVY;
+		menuAnchor = D3DXVECTOR2(240,240);
 	}
 	if (s == "Defeat") {
 		menuHeading = " ";
@@ -49,10 +56,6 @@ Menu::Menu(std::string s)
 
 void Menu::initialize(Graphics *g, Input *i)
 {
-
-	highlightColor = graphicsNS::CYAN;
-	normalColor = graphicsNS::WHITE;
-	menuAnchor = D3DXVECTOR2(240,180);
 	input = i;
 	verticalOffset = 50;
 	linePtr = 0;
