@@ -1157,6 +1157,13 @@ void PrimoVictoria::releaseAll()
 {
 	unitManager.onLostDevice();
 	tileManager.onLostDevice();
+	backgroundTexture.onLostDevice();
+	defeatScreenTexture.onLostDevice();
+	victoryScreenTexture.onLostDevice();
+	instructionsTexture.onLostDevice();
+	britishTexture.onLostDevice();
+	polishTexture.onLostDevice();
+	norseTexture.onLostDevice();
 	displayBerserkerTexture.onLostDevice();
 	displayHussarTexture.onLostDevice();
 	displayLongbowmanTexture.onLostDevice();
@@ -1175,6 +1182,13 @@ void PrimoVictoria::resetAll()
 {
 	tileManager.onResetDevice();
 	unitManager.onResetDevice();
+	backgroundTexture.onResetDevice();
+	defeatScreenTexture.onResetDevice();
+	victoryScreenTexture.onResetDevice();
+	instructionsTexture.onResetDevice();
+	britishTexture.onResetDevice();
+	polishTexture.onResetDevice();
+	norseTexture.onResetDevice();
 	displayBerserkerTexture.onResetDevice();
 	displayHussarTexture.onResetDevice();
 	displayLongbowmanTexture.onResetDevice();
