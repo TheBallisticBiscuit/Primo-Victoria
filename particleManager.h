@@ -34,6 +34,10 @@ public:
 	void ParticleManager::update(float frametime, bool isRotate);
 	void ParticleManager::draw(bool isFade);
 
+	void ParticleManager::update(float frametime);
+	void ParticleManager::draw();
+	void ParticleManager::onLostDevice();
+	void ParticleManager::onResetDevice();
 
 };
 
