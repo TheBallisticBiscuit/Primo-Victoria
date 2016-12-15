@@ -349,13 +349,14 @@ void UnitManager::selectionDown(){
 
 bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveUp(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest
+			&& currentSelection->getDef() < 5){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 			currentSelection->setDef(1.2);
 		}
-		else 
+		else  if (currentSelection->getDef() < 5){
 			currentSelection->setDef(1);
-
+		}
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()+1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -365,13 +366,14 @@ bool UnitManager::unitUp(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveDown(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest
+			&& currentSelection->getDef() < 5){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 			currentSelection->setDef(1.2);
 		}
-		else
+		else if (currentSelection->getDef() < 5){
 			currentSelection->setDef(1);
-
+		}
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY()-1)->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -381,13 +383,14 @@ bool UnitManager::unitDown(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveLeft(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest
+			&& currentSelection->getDef() < 5){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 			currentSelection->setDef(1.2);
 		}
-		else
+		else if (currentSelection->getDef() < 5){
 			currentSelection->setDef(1);
-
+		}
 		tileManager->getTile(currentSelection->getTileX()+1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
 		return true;
@@ -397,12 +400,14 @@ bool UnitManager::unitLeft(TileManager* tileManager, Audio* audio){
 
 bool UnitManager::unitRight(TileManager* tileManager, Audio* audio){
 	if(currentSelection->moveRight(audio)){
-		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest){
+		if (tileManager->getTile(currentSelection->getTileX(),currentSelection->getTileY())->getTerrain() == Forest
+			&& currentSelection->getDef() < 5){
 			currentSelection->setMovementLeft(currentSelection->getMovementLeft()-1);
 			currentSelection->setDef(1.2);
 		}
-		else
+		else if (currentSelection->getDef() < 5){
 			currentSelection->setDef(1);
+		}
 
 		tileManager->getTile(currentSelection->getTileX()-1, currentSelection->getTileY())->leave();
 		tileManager->getTile(currentSelection->getTileX(), currentSelection->getTileY())->occupy(currentSelection);
@@ -434,6 +439,25 @@ void UnitManager::endTurn(bool isPlayerTurn){
 #pragma endregion
 
 #pragma region Higgs
+void UnitManager::cheats(bool isCheatingActive) {
+	if (isCheatingActive) {
+		for (int i = 0; i < 10; i++)
+		{
+			player1Archers[i].setDef(10000);
+			player1Cavalry[i].setDef(10000);
+			player1Infantry[i].setDef(10000);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			player1Archers[i].setDef(1);
+			player1Cavalry[i].setDef(1);
+			player1Infantry[i].setDef(1);
+		}
+	}
+}
 void UnitManager::resetUnits() {
 	for (int i = 0; i < 10; i++)
 	{

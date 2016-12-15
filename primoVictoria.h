@@ -69,6 +69,7 @@ private:
 	ParticleManager bloodManager;
 	Unit* fightTarget;
 	bool fighting;
+	bool cheating;
 	int keyDownLastFrame;
 	int moving;
 	bool isPlayerTurn;

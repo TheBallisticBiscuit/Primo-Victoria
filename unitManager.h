@@ -54,6 +54,7 @@ public:
 	void endTurn(bool isPlayerTurn);
 	void resetUnits();
 	void setPlayerCountries(Country player1, Country player2, Game* gamePtr);
+	void cheats(bool isCheatingActive);
 private:
 	ParticleManager pm;
 

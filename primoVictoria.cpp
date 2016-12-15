@@ -59,6 +59,7 @@ void PrimoVictoria::initialize(HWND hwnd)
 #pragma region Higgs
 	isPlayerTurn = true;
 	isLevelInitialized = false;
+	cheating = false;
 	level = 0;
 	x1,y1,x2,y2 = 0;
 	srand(time(0));
@@ -835,6 +836,9 @@ void PrimoVictoria::playerInput() {
 	if(input->isKeyDown(VK_RETURN)){
 		keyDownLastFrame = VK_RETURN;
 	}
+	if(input->isKeyDown(0x51)){
+		keyDownLastFrame = 0x51;
+	}
 	if(input->isKeyDown(0x31)){
 		keyDownLastFrame = 0x31;
 		if(spawnUnitCooldown <= 0){
@@ -925,6 +929,11 @@ void PrimoVictoria::playerInput() {
 					unitManager.selectUnit((tileManager.getTile(unitManager.getSelectionX(), unitManager.getSelectionY())->getUnit()));
 			}
 		}
+	}
+	if (!input->isKeyDown(0x51) && keyDownLastFrame == 0x51) {
+		keyDownLastFrame = NULL;
+		cheating = !cheating;
+		unitManager.cheats(cheating);
 	}
 	unitManager.update(frameTime);
 }
@@ -1157,6 +1166,8 @@ void PrimoVictoria::releaseAll()
 {
 	unitManager.onLostDevice();
 	tileManager.onLostDevice();
+	dustManager.onLostDevice();
+	bloodManager.onLostDevice();
 	backgroundTexture.onLostDevice();
 	defeatScreenTexture.onLostDevice();
 	victoryScreenTexture.onLostDevice();
@@ -1182,6 +1193,8 @@ void PrimoVictoria::resetAll()
 {
 	tileManager.onResetDevice();
 	unitManager.onResetDevice();
+	dustManager.onResetDevice();
+	bloodManager.onResetDevice();
 	backgroundTexture.onResetDevice();
 	defeatScreenTexture.onResetDevice();
 	victoryScreenTexture.onResetDevice();

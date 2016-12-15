@@ -27,7 +27,7 @@ Menu::Menu(std::string s)
 		menuHeading = " ";
 		menuItem1 = "Return to Main Menu";
 		menuItem2 = "Return to Level Select";
-		menuItem3 = "Play Again";
+		menuItem3 = "Next Level";
 		highlightColor = graphicsNS::CYAN;
 		//highlightColor = SETCOLOR_ARGB(255, 0, 120, 50);
 		normalColor = graphicsNS::NAVY;
@@ -80,7 +80,6 @@ void Menu::initialize(Graphics *g, Input *i)
 
 void Menu::update()
 {
-	
 	if (input->isKeyDown(VK_UP))
 	{
 		upDepressedLastFrame = true;
