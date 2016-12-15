@@ -71,6 +71,10 @@ void PrimoVictoria::initialize(HWND hwnd)
 	bloodManager.setFrameDelay(BLOOD_ANIMATION_DELAY);
 	bloodManager.setMaxTimeAlive(BLOOD_ANIMATION_DELAY*4);
 
+	cheatsText = new TextDX;
+	if (!cheatsText->initialize(graphics, 36, 1, 0, "Consolas"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Cheat text failure"));
+	cheatsText->setFontColor(graphicsNS::RED);
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
 	if (!background.initialize(graphics, 0,0,0,&backgroundTexture))
@@ -774,6 +778,9 @@ void PrimoVictoria::render()
 		displayLongbowman.draw();
 	}
 	if (currentMenu == 0) {
+		if (cheating) {
+			cheatsText->print("CHEATS: Active", 880, 30);
+		}
 		if(unitManager.getCurrentSelection()){
 			unitStats->setFontColor(graphicsNS::LIME);
 			unitStats->print("HP: " + std::to_string(unitManager.getCurrentSelection()->getHP()) + "          Movement Remaining: " +

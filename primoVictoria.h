@@ -60,6 +60,7 @@ private:
 	TextureManager spawnArcherTexture;
 	Image spawnArcherDisplay;
 
+	TextDX *cheatsText;
 	TextDX *unitStats;
 	TextDX *spawnCooldown;
 	int currentMenu;
