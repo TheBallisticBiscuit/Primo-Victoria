@@ -853,19 +853,19 @@ void PrimoVictoria::playerInput() {
 			spawnArcherDisplay.setColorFilter(graphicsNS::LIME);
 		}
 	}
-	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0){
+	if(!input->isKeyDown(0x31) && keyDownLastFrame == 0x31 && spawnUnitCooldown == 0 && unitManager.getCurrentSelection() == nullptr){
 		keyDownLastFrame = NULL;
 		spawnInfantryDisplay.setColorFilter(graphicsNS::WHITE);
 		spawnUnit(0, 1);
 		spawnUnitCooldown += 3;
 	}
-	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0){
+	if(!input->isKeyDown(0x32) && keyDownLastFrame == 0x32 && spawnUnitCooldown == 0 && unitManager.getCurrentSelection() == nullptr){
 		keyDownLastFrame = NULL;
 		spawnCavalryDisplay.setColorFilter(graphicsNS::WHITE);
 		spawnUnit(1, 1);
 		spawnUnitCooldown += 3;
 	}
-	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0){
+	if(!input->isKeyDown(0x33) && keyDownLastFrame == 0x33 && spawnUnitCooldown == 0 && unitManager.getCurrentSelection() == nullptr){
 		keyDownLastFrame = NULL;
 		spawnArcherDisplay.setColorFilter(graphicsNS::WHITE);
 		spawnUnit(2, 1);

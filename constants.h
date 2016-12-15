@@ -155,7 +155,7 @@ const char BERSERKER_MOVE[] = "running";
 const char CAVALRY_MOVE[] = "horseGalloping";
 const char HUSSAR_MOVE[] = "horseGalloping";
 const char INFANTRY_MOVE[] = "running";
-const char BERSERKER_BATTLECRY[] = "annoyingYell";
+const char BERSERKER_BATTLECRY[] = "berserkerBattlecry";
 
 enum TerrainTypeEnum {Plains, Hills, Forest, CapturePoint};
 enum Country {Norse, Poland, Britain};
