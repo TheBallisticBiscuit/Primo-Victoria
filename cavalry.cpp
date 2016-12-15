@@ -49,7 +49,7 @@ void Cavalry::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
+void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack, ParticleManager* pm){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
@@ -70,6 +70,11 @@ void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAt
 	}
 	setFrameCounter(getFrameCounter()+frameTime);
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
+		pm->setFrames(BLOOD_SPLATTER_START, BLOOD_SPLATTER_END);
+		pm->setRotation(0);
+		pm->setFade(1);
+		pm->createParticleEffect(VECTOR2(opponent.getX()+10, opponent.getY()+10), VECTOR2(0, 0), BLOOD_PARTICLES, true);
+		pm->createParticleEffect(VECTOR2(getX()+10, getY()+10), VECTOR2(0, 0), BLOOD_PARTICLES, true);
 		setFrameCounter(0);
 		audio->playCue(CAVALRY_ATTACK);
 		setHP(getHP()-opponent.getDamage()/getDef());

@@ -48,7 +48,7 @@ void Archer::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Archer::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
+void Archer::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack, ParticleManager* pm){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
@@ -77,9 +77,14 @@ void Archer::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAtt
 	}
 	if(getFrameCounter() > ARCHER_ANIMATION_DELAY*8){
 		audio->playCue(ARCHER_ATTACK);
+		pm->setFrames(BLOOD_SPLATTER_START, BLOOD_SPLATTER_END);
+		pm->setRotation(0);
+		pm->setFade(1);
+		pm->createParticleEffect(VECTOR2(opponent.getX()+10, opponent.getY()+10), VECTOR2(0, 0), BLOOD_PARTICLES, true);
 		setFrameCounter(0);
 		if(rangeOfAttack <= opponent.getRange()){
 			setHP(getHP()-opponent.getDamage()/getDef());
+			pm->createParticleEffect(VECTOR2(getX()+10, getY()+10), VECTOR2(0, 0), BLOOD_PARTICLES, true);
 		}
 		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
 		setAnimating(false);

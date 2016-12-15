@@ -1,5 +1,6 @@
 #pragma once
 #include "entity.h"
+#include "particleManager.h"
 #pragma region Newell
 class Unit : public Entity {
 public:
@@ -31,7 +32,7 @@ public:
 	void setFrameCounter(float newFrameCounter);
 	void setAnimating(bool newBool);
 	void setLastDirection(LastDirection newDirection);
-	virtual void fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){}
+	virtual void fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack, ParticleManager* pm){}
 	virtual bool kill(float frameTime){return true;}
 	virtual bool moveUp(Audio* audio){return false;}
 	virtual bool moveDown(Audio* audio){return false;}

@@ -20,13 +20,19 @@ public:
 	ParticleManager();
 	~ParticleManager();
 	void ParticleManager::setInvisibleAllParticles();
-	void ParticleManager::setVisibleNParticles(int n);
+	void ParticleManager::setVisibleNParticles(int n, bool isBlood);
 	void ParticleManager::setPosition(VECTOR2 pos) {position = pos;}
 	void ParticleManager::setVelocity(VECTOR2 vel) {velocity = vel;}
-	bool ParticleManager::initialize(Graphics *g);
-
-	void ParticleManager::update(float frametime);
-	void ParticleManager::draw();
+	bool ParticleManager::initialize(Graphics *g, const char filename[], int width, int height, int ncols);
+	void ParticleManager::setScale(float newScale);
+	void ParticleManager::setFrames(int startFrame, int endFrame);
+	void ParticleManager::setFrameDelay(float delay);
+	void ParticleManager::setMaxTimeAlive(float t);
+	void ParticleManager::setRotation(float rotation);
+	void ParticleManager::setFade(float fade);
+	void ParticleManager::createParticleEffect(VECTOR2 pos, VECTOR2 vel, int numParticles, bool isBlood);
+	void ParticleManager::update(float frametime, bool isRotate);
+	void ParticleManager::draw(bool isFade);
 
 
 };

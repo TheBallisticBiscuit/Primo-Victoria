@@ -63,7 +63,12 @@ void PrimoVictoria::initialize(HWND hwnd)
 	x1,y1,x2,y2 = 0;
 	srand(time(0));
 
-	pm.initialize(graphics);
+	dustManager.initialize(graphics, DUST_IMAGE, 0, 0, 0);
+	dustManager.setScale(0.02f);
+
+	bloodManager.initialize(graphics, BLOOD_IMAGE, 64, 64, 4);
+	bloodManager.setFrameDelay(BLOOD_ANIMATION_DELAY);
+	bloodManager.setMaxTimeAlive(BLOOD_ANIMATION_DELAY*4);
 
 	if (!backgroundTexture.initialize(graphics, "pictures\\background.PNG"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "BackgroundTexture init fail"));
@@ -193,14 +198,15 @@ void PrimoVictoria::update()
 		countrySelect->update();
 		unitManager.update(frameTime);
 		displayUnitsUpdate();
-		pm.update(frameTime);
+		dustManager.update(frameTime, true);
+		bloodManager.update(frameTime, false);
 		return;
 	}
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
 	if(fighting == true){
-		if(unitManager.fight(*fightTarget, frameTime, audio, rangeOfAttack)){
+		if(unitManager.fight(*fightTarget, frameTime, audio, rangeOfAttack, &bloodManager)){
 			fighting = false;
 			if(fightTarget->getHP() <= 0){
 				tileManager.getTile(fightTarget->getTileX(), fightTarget->getTileY())->leave();
@@ -220,7 +226,8 @@ void PrimoVictoria::update()
 		countrySelect->update();
 		unitManager.update(frameTime);
 		displayUnitsUpdate();
-		pm.update(frameTime);
+		dustManager.update(frameTime, true);
+		bloodManager.update(frameTime, false);
 		return;
 	}
 	if(currentMenu == 0 || currentMenu == 5){
@@ -234,7 +241,8 @@ void PrimoVictoria::update()
 		victoryScreen->update();
 		countrySelect->update();
 		displayUnitsUpdate();
-		pm.update(frameTime);
+		dustManager.update(frameTime, true);
+		bloodManager.update(frameTime, false);
 	}
 	if (currentMenu == 1 && mainMenu->getSelectedItem() == 0) { //Selecting Play Game
 		currentMenu = 6;
@@ -344,19 +352,14 @@ void PrimoVictoria::update()
 	countrySelect->update();
 	unitManager.update(frameTime);
 	displayUnitsUpdate();
-	pm.update(frameTime);
+	dustManager.update(frameTime, true);
+	bloodManager.update(frameTime, false);
 
 #pragma endregion
 }
 
 #pragma region Higgs
-void PrimoVictoria::createParticleEffect(VECTOR2 pos, VECTOR2 vel, int numParticles){
 
-	pm.setPosition(pos);
-	pm.setVelocity(vel);
-	pm.setVisibleNParticles(numParticles);
-
-}
 
 //=============================================================================
 // Artificial Intelligence
@@ -532,7 +535,7 @@ void PrimoVictoria::levelTwoAI() {
 			}
 	}
 	int dir, x, y = 0;
-	
+
 	if (unitManager.getCurrentSelection() != nullptr && spawnOrMove == 1) {
 		Unit* target = unitManager.closestUnit(unitManager.getCurrentSelection()); //Select closest player unit
 
@@ -718,8 +721,9 @@ void PrimoVictoria::render()
 		if (level == 2) {
 			tileManager.draw(2);
 		}
-		pm.draw();
+		dustManager.draw(true);
 		unitManager.draw();
+		bloodManager.draw(false);
 	}
 	else if(currentMenu == 1){
 		mainMenu->displayMenu();
@@ -952,7 +956,6 @@ void PrimoVictoria::spawnUnit(int unitType, int team){
 			break;
 		}
 	}
-	//if (isPlayerTurn)
 	unitManager.setCurrentSelection(nullptr);
 }
 #pragma endregion
@@ -964,13 +967,13 @@ void PrimoVictoria::moveUp(){
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
 			unitManager.getCurrentSelection()->getCenterY()+25);
 		vel = VECTOR2(0,0.3);
-		createParticleEffect(pos,vel,2);
+		dustManager.createParticleEffect(pos,vel,2, false);
 	}
 	else {
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
 			unitManager.getCurrentSelection()->getCenterY()+25);
 		vel = VECTOR2(0,0.3);
-		createParticleEffect(pos,vel,2);
+		dustManager.createParticleEffect(pos,vel,2, false);
 	}
 
 	unitManager.getCurrentSelection()->setLastDirection(Unit::up);
@@ -1009,13 +1012,13 @@ void PrimoVictoria::moveDown(){
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
 			unitManager.getCurrentSelection()->getY()+rand()%20+20);
 		vel = VECTOR2(0,-0.3);
-		createParticleEffect(pos,vel,2);
+		dustManager.createParticleEffect(pos,vel,2, false);
 	}
 	else {
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%15+40, //Create dust
 			unitManager.getCurrentSelection()->getY()+rand()%40);
 		vel = VECTOR2(0,-0.3);
-		createParticleEffect(pos,vel,2);
+		dustManager.createParticleEffect(pos,vel,2, false);
 	}
 	unitManager.getCurrentSelection()->setLastDirection(Unit::down);
 	if (unitManager.getCurrentSelection()->getTileY() < tileManager.getHeight()-1) {
@@ -1053,13 +1056,13 @@ void PrimoVictoria::moveLeft(){
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%25+35, //Create dust
 			unitManager.getCurrentSelection()->getY()+rand()%12+60);
 		vel = VECTOR2(0.2,0);
-		createParticleEffect(pos,vel,1);
+		dustManager.createParticleEffect(pos,vel,1, false);
 	}
 	else {
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%30+25, //Create dust
 			unitManager.getCurrentSelection()->getY()+rand()%15+48);
 		vel = VECTOR2(0.2,0);
-		createParticleEffect(pos,vel,1);
+		dustManager.createParticleEffect(pos,vel,1, false);
 	}
 
 	unitManager.getCurrentSelection()->setLastDirection(Unit::left);
@@ -1098,13 +1101,13 @@ void PrimoVictoria::moveRight(){
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%25+30, //Create dust
 			unitManager.getCurrentSelection()->getY()+rand()%12+60);
 		vel = VECTOR2(0.2,0);
-		createParticleEffect(pos,vel,1);
+		dustManager.createParticleEffect(pos,vel,1, false);
 	}
 	else {
 		pos = VECTOR2(unitManager.getCurrentSelection()->getX()+rand()%30+25, //Create dust
 			unitManager.getCurrentSelection()->getY()+rand()%15+48);
 		vel = VECTOR2(0.2,0);
-		createParticleEffect(pos,vel,1);
+		dustManager.createParticleEffect(pos,vel,1, false);
 	}
 
 	unitManager.getCurrentSelection()->setLastDirection(Unit::right);

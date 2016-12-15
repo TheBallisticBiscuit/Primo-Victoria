@@ -46,8 +46,9 @@ bool Particle::initialize(Graphics *g, int width, int height, int ncols,
 	return true;
 }
 
-void Particle::update(float frametime)
+void Particle::update(float frametime, bool isRotate)
 {
+	Image::update(frametime);
 	if (!active)
 		return;
 	timeAlive += frametime;
@@ -61,7 +62,7 @@ void Particle::update(float frametime)
 	setX(getX() + velocity.x * frametime);
 	setY(getY() + velocity.y * frametime);
 	rotationValue += frametime;
-	if (rotationValue> 2*2.14159) //prevent overrotation
+	if (rotationValue> 2*2.14159 || !isRotate) //prevent overrotation
 		rotationValue = 0;
 	setRadians(rotationValue);
 

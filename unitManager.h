@@ -28,7 +28,7 @@ public:
 	void spawnInfantry(int x, int y, int team);
 	void spawnCavalry(int x, int y, int team);
 	void spawnArcher(int x, int y, int team);
-	bool fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack);
+	bool fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack, ParticleManager* pm);
 	int getSelectionX(){return selectionX;}
 	int getSelectionY(){return selectionY;}
 	int numEnemyUnits();

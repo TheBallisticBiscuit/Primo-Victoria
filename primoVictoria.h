@@ -65,7 +65,8 @@ private:
 	int currentMenu;
 	TileManager tileManager;
 	UnitManager unitManager;
-	ParticleManager pm;
+	ParticleManager dustManager;
+	ParticleManager bloodManager;
 	Unit* fightTarget;
 	bool fighting;
 	int keyDownLastFrame;
@@ -94,7 +95,6 @@ public:
 	void moveAttempt(int dir, int x, int y);
     void collisions();  // "
     void render();      // "
-	void createParticleEffect(VECTOR2 pos, VECTOR2 vel, int numParticles);
 	int getCurrentMenu(){return currentMenu;}
 	void spawnUnit(int unitType, int team);
 	void levelOneAI();

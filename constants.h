@@ -111,6 +111,12 @@ const int TERRAIN_SCALE = 1;
 const float BACKGROUND_IMAGE_SCALE = 1.0f;
 
 const char DUST_IMAGE[] = "pictures\\DustParticle3.png";
+const char BLOOD_IMAGE[] = "pictures\\blood.png";
+
+const float BLOOD_ANIMATION_DELAY = 0.05;
+const int BLOOD_SPLATTER_START = 0;
+const int BLOOD_SPLATTER_END = 3;
+const int BLOOD_PARTICLES = 30;
 
 const float MAX_PARTICLE_LIFETIME = 1.5f;
 const int MAX_NUMBER_PARTICLES = 2000;

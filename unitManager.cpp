@@ -262,12 +262,12 @@ void UnitManager::spawnArcher(int x, int y, int team){
 	}
 }
 
-bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
+bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack, ParticleManager* pm){
 	if(rangeOfAttack > opponent.getRange() &&
 		(abs(currentSelection->getTileX()-opponent.getTileX()) > opponent.getRange() || 
 		abs(currentSelection->getTileY()-opponent.getTileY()) > opponent.getRange())){
 			archerDamage = opponent.getHP();
-			currentSelection->fight(opponent, frameTime, audio, rangeOfAttack);
+			currentSelection->fight(opponent, frameTime, audio, rangeOfAttack, pm);
 			if(opponent.getHP() <= 0){
 				currentSelection->setAnimating(false);
 				return opponent.kill(frameTime);
@@ -301,7 +301,7 @@ bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio, int range
 			}
 		}
 		else{
-			currentSelection->fight(opponent, frameTime, audio, rangeOfAttack); 
+			currentSelection->fight(opponent, frameTime, audio, rangeOfAttack, pm); 
 		}
 		return false;
 	}

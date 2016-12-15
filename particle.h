@@ -58,13 +58,14 @@ public:
 	void setMaxTimeAlive(float t) {maxTimeAlive = t;}
 	void setRotationValue(float r) {rotationValue = r;}
 	void setVisible(bool b) {visible = b;}
+	void setFadeValue(float f) {fadeValue = f;}
 
 
 	////////////////////////////////////////
 	//         Other functions            //
 	////////////////////////////////////////
 
-	void update(float frameTime);
+	void update(float frameTime, bool isRotate);
 	bool initialize(Graphics *g, int width, int height, int ncols,
 		TextureManager *textureM);
 	void resetParticle();
