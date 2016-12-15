@@ -382,6 +382,9 @@ void PrimoVictoria::ai()
 	}
 }	
 void PrimoVictoria::levelOneAI() {
+	if(unitManager.numEnemyUnits() == 0){
+		return;
+	}
 	int r = 0;
 
 	if (unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr //If no unit is 
@@ -462,6 +465,9 @@ void PrimoVictoria::levelOneAI() {
 }
 
 void PrimoVictoria::levelTwoAI() {
+	if(unitManager.numEnemyUnits() == 0){
+		return;
+	}
 	int spawnOrMove = rand()%(unitManager.numEnemyUnits());
 	int r = 0;
 
@@ -799,7 +805,8 @@ void PrimoVictoria::render()
 				spawnCavalryDisplay.setColorFilter(graphicsNS::GRAY);
 				spawnArcherDisplay.setColorFilter(graphicsNS::GRAY);
 			}
-			else if(spawnUnitCooldown == 0){
+			else if(spawnUnitCooldown == 0 && spawnArcherDisplay.getColorFilter() != graphicsNS::LIME &&
+				spawnInfantryDisplay.getColorFilter() != graphicsNS::LIME && spawnCavalryDisplay.getColorFilter() != graphicsNS::LIME){
 				spawnInfantryDisplay.setColorFilter(graphicsNS::WHITE);
 				spawnCavalryDisplay.setColorFilter(graphicsNS::WHITE);
 				spawnArcherDisplay.setColorFilter(graphicsNS::WHITE);
