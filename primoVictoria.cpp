@@ -378,6 +378,9 @@ void PrimoVictoria::ai()
 	}
 }	
 void PrimoVictoria::levelOneAI() {
+	if(unitManager.numEnemyUnits() == 0){
+		return;
+	}
 	int r = 0;
 
 	if (unitManager.getCurrentSelection() == nullptr || (unitManager.getCurrentSelection() != nullptr //If no unit is 
@@ -458,6 +461,9 @@ void PrimoVictoria::levelOneAI() {
 }
 
 void PrimoVictoria::levelTwoAI() {
+	if(unitManager.numEnemyUnits() == 0){
+		return;
+	}
 	int spawnOrMove = rand()%(unitManager.numEnemyUnits());
 	int r = 0;
 
