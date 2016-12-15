@@ -98,8 +98,8 @@ void UnitManager::initialize(Game* gamePtr, Graphics* graphics){
 void UnitManager::draw(){
 	selectionBox.draw(selectionBox.getColorFilter());
 	for(int i = 0; i < 10; i++){
-		player1Infantry[i].draw();
-		player2Infantry[i].draw();
+		player1Infantry[i].draw(player1Infantry[i].getColorFilter());
+		player2Infantry[i].draw(player2Infantry[i].getColorFilter());
 		player1Cavalry[i].draw();
 		player2Cavalry[i].draw();
 		player1Archers[i].draw();
@@ -262,12 +262,12 @@ void UnitManager::spawnArcher(int x, int y, int team){
 	}
 }
 
-bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio){
-	if(currentSelection->getRange() > opponent.getRange() &&
+bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
+	if(rangeOfAttack > opponent.getRange() &&
 		(abs(currentSelection->getTileX()-opponent.getTileX()) > opponent.getRange() || 
 		abs(currentSelection->getTileY()-opponent.getTileY()) > opponent.getRange())){
 			archerDamage = opponent.getHP();
-			currentSelection->fight(opponent, frameTime, audio);
+			currentSelection->fight(opponent, frameTime, audio, rangeOfAttack);
 			if(opponent.getHP() <= 0){
 				currentSelection->setAnimating(false);
 				return opponent.kill(frameTime);
@@ -301,7 +301,7 @@ bool UnitManager::fight(Unit& opponent, float frameTime, Audio* audio){
 			}
 		}
 		else{
-			currentSelection->fight(opponent, frameTime, audio); 
+			currentSelection->fight(opponent, frameTime, audio, rangeOfAttack); 
 		}
 		return false;
 	}

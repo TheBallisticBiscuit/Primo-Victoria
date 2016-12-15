@@ -49,7 +49,7 @@ void WingedHussar::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio){
+void WingedHussar::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);

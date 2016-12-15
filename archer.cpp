@@ -48,30 +48,29 @@ void Archer::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
-
+void Archer::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(down);
 		}
 		break;
 	case left:
 		setAttackFrames(left);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(right);
 		}
 		break;
 	case down:
 		setAttackFrames(down);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(up);
 		}
 		break;
 	case right:
 		setAttackFrames(right);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(left);
 		}
 		break;
@@ -79,7 +78,7 @@ void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(getFrameCounter() > ARCHER_ANIMATION_DELAY*8){
 		audio->playCue(ARCHER_ATTACK);
 		setFrameCounter(0);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			setHP(getHP()-opponent.getDamage()/getDef());
 		}
 		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
@@ -90,6 +89,7 @@ void Archer::fight(Unit& opponent, float frameTime, Audio* audio){
 }
 
 bool Archer::kill(float frameTime){
+	setAnimating(true);
 	switch(getLastDirection()){
 	case up:
 		setFrames(ARCHER_DEATH_UP_START, ARCHER_DEATH_UP_END);
@@ -107,7 +107,7 @@ bool Archer::kill(float frameTime){
 	if(!getActive()){
 		return true;
 	}
-	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*6){
+	if(getFrameCounter() > ARCHER_ANIMATION_DELAY*12){
 		setFrameCounter(0);
 		setVisible(false);
 		setActive(false);

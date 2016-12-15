@@ -49,7 +49,7 @@ void Cavalry::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio){
+void Cavalry::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);

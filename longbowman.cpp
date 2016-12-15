@@ -47,30 +47,30 @@ void Longbowman::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Longbowman::fight(Unit& opponent, float frameTime, Audio* audio){
+void Longbowman::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
 
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(down);
 		}
 		break;
 	case left:
 		setAttackFrames(left);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(right);
 		}
 		break;
 	case down:
 		setAttackFrames(down);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(up);
 		}
 		break;
 	case right:
 		setAttackFrames(right);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			opponent.setAttackFrames(left);
 		}
 		break;
@@ -78,7 +78,7 @@ void Longbowman::fight(Unit& opponent, float frameTime, Audio* audio){
 	if(getFrameCounter() > INFANTRY_ANIMATION_DELAY*12){
 		audio->playCue(ARCHER_ATTACK);
 		setFrameCounter(0);
-		if(getRange() <= opponent.getRange()){
+		if(rangeOfAttack <= opponent.getRange()){
 			setHP(getHP()-opponent.getDamage()/getDef());
 		}
 		opponent.setHP(opponent.getHP()-getDamage()/opponent.getDef());
@@ -89,6 +89,7 @@ void Longbowman::fight(Unit& opponent, float frameTime, Audio* audio){
 }
 
 bool Longbowman::kill(float frameTime){
+	setAnimating(true);
 	switch(getLastDirection()){
 	case up:
 		setFrames(LONGBOWMAN_DEATH_UP_START, LONGBOWMAN_DEATH_UP_END);

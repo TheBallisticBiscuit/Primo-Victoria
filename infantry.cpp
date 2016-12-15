@@ -48,7 +48,7 @@ void Infantry::update(float frameTime){
 	Entity::update(frameTime);
 }
 
-void Infantry::fight(Unit& opponent, float frameTime, Audio* audio){
+void Infantry::fight(Unit& opponent, float frameTime, Audio* audio, int rangeOfAttack){
 	switch(getLastDirection()){
 	case up:
 		setAttackFrames(up);

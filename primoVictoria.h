@@ -73,6 +73,8 @@ private:
 	bool isPlayerTurn;
 	bool isLevelInitialized;
 	int level;
+	int lastLevel;
+	int rangeOfAttack;
 	int x1,y1,x2,y2;
 	int spawnUnitCooldown;
 	Country player1Country;

@@ -235,7 +235,7 @@ const int BERSERKER_DEATH_LEFT_END = 147;
 
 #pragma region Newell
 const float CAVALRY_SCALING = 0.66666;
-const float CAVALRY_ANIMATION_DELAY = 0.1;
+const float CAVALRY_ANIMATION_DELAY = 0.15;
 const float CAVALRY_SPEED = 120;
 const int CAVALRY_RUN_RIGHT_START = 0;
 const int CAVALRY_RUN_RIGHT_END = 11;
