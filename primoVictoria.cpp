@@ -457,7 +457,7 @@ void PrimoVictoria::levelOneAI() {
 }
 
 void PrimoVictoria::levelTwoAI() {
-	int spawnOrMove = rand()%2;
+	int spawnOrMove = rand()%(unitManager.numEnemyUnits());
 	int r = 0;
 
 	if (spawnOrMove == 0 || unitManager.numEnemyUnits() <= 0){

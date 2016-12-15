@@ -160,3 +160,11 @@ void ParticleManager::draw(bool isFade)
 		}
 	}
 }
+
+void ParticleManager::onLostDevice() {
+	tm.onLostDevice();
+}
+
+void ParticleManager::onResetDevice() {
+	tm.onResetDevice();
+}
