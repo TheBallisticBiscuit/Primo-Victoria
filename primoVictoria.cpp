@@ -798,7 +798,8 @@ void PrimoVictoria::render()
 				spawnCavalryDisplay.setColorFilter(graphicsNS::GRAY);
 				spawnArcherDisplay.setColorFilter(graphicsNS::GRAY);
 			}
-			else if(spawnUnitCooldown == 0){
+			else if(spawnUnitCooldown == 0 && spawnArcherDisplay.getColorFilter() != graphicsNS::LIME &&
+				spawnInfantryDisplay.getColorFilter() != graphicsNS::LIME && spawnCavalryDisplay.getColorFilter() != graphicsNS::LIME){
 				spawnInfantryDisplay.setColorFilter(graphicsNS::WHITE);
 				spawnCavalryDisplay.setColorFilter(graphicsNS::WHITE);
 				spawnArcherDisplay.setColorFilter(graphicsNS::WHITE);
