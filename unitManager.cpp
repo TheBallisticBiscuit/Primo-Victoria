@@ -146,6 +146,8 @@ void UnitManager::onResetDevice(){
 	berserkerTexture2.onResetDevice();
 	hussarTexture.onResetDevice();
 	hussarTexture2.onResetDevice();
+	longbowmanTexture.onResetDevice();
+	longbowmanTexture2.onResetDevice();
 	archerTexture.onResetDevice();
 	archerTexture2.onResetDevice();
 }
@@ -159,6 +161,8 @@ void UnitManager::onLostDevice(){
 	berserkerTexture2.onLostDevice();
 	hussarTexture.onLostDevice();
 	hussarTexture2.onLostDevice();
+	longbowmanTexture.onLostDevice();
+	longbowmanTexture2.onLostDevice();
 	archerTexture.onLostDevice();
 	archerTexture2.onLostDevice();
 }

@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Programming 2D Games\Object Version\Chapter 7 Sound\SoundExample1\audio\SoundExample1.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 2991263750;
-    Last Modified High = 30561916;
+    Last Modified Low = 30561347;
+    Last Modified High = 3328684488;
 
     Category
     {
@@ -225,12 +225,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3397175314;
-    PC Bank Last Modified High = 30561916;
-    Bank Last Revised Low = 3358618526;
-    Bank Last Revised High = 30561916;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1776120828;
+    Bank Last Revised High = 30561915;
 
     Wave
     {
@@ -250,8 +248,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1286564352;
-            Last Modified High = 30138563;
+            Last Modified Low = 3893530398;
+            Last Modified High = 30555432;
         }
     }
 
@@ -273,8 +271,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 3256498944;
-            Last Modified High = 30138561;
+            Last Modified Low = 3893550419;
+            Last Modified High = 30555432;
         }
     }
 
@@ -296,8 +294,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 4032443648;
-            Last Modified High = 30138437;
+            Last Modified Low = 3893590452;
+            Last Modified High = 30555432;
         }
     }
 
@@ -319,8 +317,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 317476352;
-            Last Modified High = 30138438;
+            Last Modified Low = 3893610493;
+            Last Modified High = 30555432;
         }
     }
 
@@ -342,8 +340,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 657476352;
-            Last Modified High = 30138438;
+            Last Modified Low = 3893630473;
+            Last Modified High = 30555432;
         }
     }
 
@@ -365,8 +363,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2188391244;
-            Last Modified High = 30556504;
+            Last Modified Low = 2905408592;
+            Last Modified High = 30556505;
         }
     }
 
@@ -388,8 +386,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1154732636;
-            Last Modified High = 30556514;
+            Last Modified Low = 2029878248;
+            Last Modified High = 30556536;
         }
     }
 
@@ -411,8 +409,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1002569759;
-            Last Modified High = 30556513;
+            Last Modified Low = 2029928282;
+            Last Modified High = 30556536;
         }
     }
 
@@ -434,8 +432,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 556916817;
-            Last Modified High = 30556514;
+            Last Modified Low = 2029998330;
+            Last Modified High = 30556536;
         }
     }
 
@@ -457,8 +455,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2679416951;
-            Last Modified High = 30556514;
+            Last Modified Low = 2030118416;
+            Last Modified High = 30556536;
         }
     }
 
@@ -480,8 +478,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2071453238;
-            Last Modified High = 30556514;
+            Last Modified Low = 2030128425;
+            Last Modified High = 30556536;
         }
     }
 
@@ -503,31 +501,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 344728231;
-            Last Modified High = 30561351;
-        }
-    }
-
-    Wave
-    {
-        Name = berserkerBattlecry;
-        File = berserkerBattlecry.wav;
-        Build Settings Last Modified Low = 2511927930;
-        Build Settings Last Modified High = 30561916;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 48000;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 273920;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 2411785504;
-            Last Modified High = 30561916;
+            Last Modified Low = 3371767855;
+            Last Modified High = 30561345;
         }
     }
 }
@@ -539,8 +514,6 @@ Sound Bank
     Windows File = Win\SoundsExample1.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 3397585625;
-    Bank Last Modified High = 30561916;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -1109,53 +1082,6 @@ Sound Bank
         }
     }
 
-    Sound
-    {
-        Name = berserkerBattlecry;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = WavesExample1;
-                    Bank Index = 0;
-                    Entry Name = berserkerBattlecry;
-                    Entry Index = 12;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
     Cue
     {
         Name = beep1;
@@ -1417,26 +1343,6 @@ Sound Bank
         {
             Name = swordSlash2;
             Index = 11;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = berserkerBattlecry;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = berserkerBattlecry;
-            Index = 12;
             Weight Min = 0;
             Weight Max = 255;
         }
