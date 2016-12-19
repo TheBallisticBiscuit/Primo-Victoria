@@ -853,19 +853,19 @@ void PrimoVictoria::playerInput() {
 	if(input->isKeyDown(0x51)){
 		keyDownLastFrame = 0x51;
 	}
-	if(input->isKeyDown(0x31)){
+	if(input->isKeyDown(0x31) && level == 2){
 		keyDownLastFrame = 0x31;
 		if(spawnUnitCooldown <= 0){
 			spawnInfantryDisplay.setColorFilter(graphicsNS::LIME);
 		}
 	}
-	if(input->isKeyDown(0x32)){
+	if(input->isKeyDown(0x32) && level == 2){
 		keyDownLastFrame = 0x32;
 		if(spawnUnitCooldown <= 0){
 			spawnCavalryDisplay.setColorFilter(graphicsNS::LIME);
 		}
 	}
-	if(input->isKeyDown(0x33)){
+	if(input->isKeyDown(0x33) && level == 2){
 		keyDownLastFrame = 0x33;
 		if(spawnUnitCooldown <= 0){
 			spawnArcherDisplay.setColorFilter(graphicsNS::LIME);
