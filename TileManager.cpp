@@ -154,7 +154,11 @@ void TileManager::onLostDevice() {
 	grassTexture3.onLostDevice();
 	forestTexture1.onLostDevice();
 	forestTexture2.onLostDevice();
+	forestTexture3.onLostDevice();
+	forestTexture4.onLostDevice();
 	hillsTexture.onLostDevice();
+	cPoint1Texture.onLostDevice();
+	cPoint2Texture.onLostDevice();
 }
 
 void TileManager::onResetDevice() {
@@ -163,7 +167,11 @@ void TileManager::onResetDevice() {
 	grassTexture3.onResetDevice();
 	forestTexture1.onResetDevice();
 	forestTexture2.onResetDevice();
+	forestTexture3.onResetDevice();
+	forestTexture4.onResetDevice();
 	hillsTexture.onResetDevice();
+	cPoint1Texture.onResetDevice();
+	cPoint2Texture.onResetDevice();
 }
  
 #pragma endregion
